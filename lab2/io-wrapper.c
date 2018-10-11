@@ -21,25 +21,10 @@ os_ssize os_write(os_handle fd, void *buffer, os_size count) {
 }
 #endif
 
-os_handle os_open(){
-  int fd = open ("gabi.txt", O_RDONLY);
-  if (fd < 0) {
-    perror ("open");
-    return 0;
-  }
-  return fd;
-}
-void os_close(os_handle x)
-{
-  close(x);
-}
-
 int main(void) {
-  char buf[11];
-  os_handle t=os_open();
-  os_read(t,buf, 10);
-  buf[11]='\0';
+  os_handle fd=os_open();
+  os_read(fd, buf, 10);
   printf("%s\n",buf); 
-  os_close(t);
+  os_close(fd);
 }
 
