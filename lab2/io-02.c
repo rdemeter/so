@@ -21,7 +21,7 @@ int main (void){
   /* deschidem fisierul */
   fd = open ("gabi.txt", O_RDONLY);
   if (fd < 0) {
-    perror ("open gabi");
+    perror ("open gabi.txt");
     exit (EXIT_FAILURE);
   }
 
