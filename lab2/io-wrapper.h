@@ -15,9 +15,7 @@ typedef DWORD os_ssize;
 #error "Unknown OS!"
 #endif
 #include <stdio.h>
+os_handle os_open(char *filename);
 os_ssize os_read(os_handle fd, void* buffer, os_size count);
 os_ssize os_write(os_handle fd, const void* buffer, os_size count);
-
-
-
-
+void os_close(os_handle fd);
