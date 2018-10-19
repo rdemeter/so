@@ -11,7 +11,7 @@ int main()
 {
   string sIdentifier;
   int iStackVariable = 20;
-  pid_t pID = vfork();
+  pid_t pID = fork();
   if (pID == 0) // child
   {
     // Code only executed by child process
