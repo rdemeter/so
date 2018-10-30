@@ -1,32 +1,21 @@
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <sys/stat.h> 
-#include <unistd.h> 
-#include <linux/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define  FIFO_FILE  "myfifo"
 
-#define  FIFO_FILE  "myfifo" 
-#define  SZBUF  80 
-#define  QUIT  "bye" 
+int main(int argc, char* argv[])
+{
+  FILE* fp;
+  if (argc != 2) {
+    fprintf(stderr,"USAGE %s [string]\n",argv[0]);
+    return 1;
+  }
 
-int main(void) 
-{ 
-    FILE* fp; 
-    char readbuf[SZBUF]; 
+  if ( (fp = fopen(FIFO_FILE,"w")) == NULL ) {
+    perror("fopen");
+    return 1;
+  }
 
-    /*create the fifo*/ 
-    umask(0); 
-    mknod(FIFO_FILE, S_IFIFO|0666, 0); 
-
-    printf("Running server... To quit, send via the client the msg 'bye'.\n"); 
-
-    while(1) { 
-        fp = fopen(FIFO_FILE,"r"); 
-        fgets(readbuf, SZBUF, fp); 
-
-        if (!strcmp(readbuf,QUIT)) break; 
-
-        printf("Received string: %s\n",readbuf); 
-        fclose(fp); 
-    } 
-    return 0; 
-} 
+  fprintf(fp,"%s",argv[1]);
+  fclose(fp);
+  return 0;
+}
