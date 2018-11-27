@@ -23,6 +23,8 @@ int main(void)
   rc = sem_getvalue(my_sem, &pvalue);
   printf("sem is %d\n", pvalue);
 
+  getchar();
+
   /* release the lock */
   sem_post(my_sem);
 
