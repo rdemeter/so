@@ -13,7 +13,7 @@ int shm_fd;
 
 int main(int argc, char **argv)
 {
-  shm_fd = shm_open("/MY_SHM2", O_RDWR, 0644);
+  shm_fd = shm_open("/MY_SHM3", O_RDWR, 0644);
   if (shm_fd < 0) {
     perror("open():");
     exit(-1);
