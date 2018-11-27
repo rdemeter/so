@@ -16,6 +16,8 @@ int main(void)
     return 0;
   }
 
+  printf("Asteapta la semafor!\n");
+
   /* get the semaphore */
   sem_wait(my_sem);
 
