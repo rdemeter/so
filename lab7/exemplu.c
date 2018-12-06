@@ -14,7 +14,7 @@ void* afisare_caracter(void *params)
 {
   struct parametri* p = (struct parametri*) params;
   int i;
-  for (i=0;i<p->numar;i++){
+  for (i=0; i<p->numar; i++){
     printf("%c\n", p->caracter);
     //sched_yield();
   }
@@ -24,8 +24,8 @@ void* afisare_caracter(void *params)
 
 int main()
 {
-  pthread_t fir1, fir2, fir3;
-  struct parametri fir1_args, fir2_args, fir3_args;
+  pthread_t fir1, fir2;
+  struct parametri fir1_args, fir2_args;
 
   /* cream un thread care va afisa 'x' de 11 ori */
   fir1_args.caracter = 'x';
@@ -43,19 +43,11 @@ int main()
     exit(1);
   }
 
-  fir3_args.caracter = 'z';
-  fir3_args.numar = 18;
-  if (pthread_create(&fir3, NULL, &afisare_caracter, &fir3_args)) {
-    perror("pthread_create");
-    exit(1);
-  }
-
-  /* asteptam terminarea celor doua fire de executie */
+  /* wait for a thread to terminate */
   if (pthread_join(fir1, NULL))
     perror("pthread_join");
   if (pthread_join(fir2, NULL))
     perror("pthread_join");
-  if(pthread_join(fir3, NULL))
-    perror("pthread_join");
+
   return 0;
 }
