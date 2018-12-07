@@ -5,7 +5,7 @@
 void* thread_function(void)
 {
   char *a = malloc(12);
-  strcpy(a,"hello world");
+  strcpy(a, "hello world");
   pthread_exit((void*)a);
 }
 
