@@ -5,18 +5,16 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define NUM_SELLERS 5
+#define NUM_SELLERS 50
 #define NUM_TICKETS 25000
 
 static int numTickets = NUM_TICKETS;
-
-int total_sold = 0;
 
 pthread_mutex_t mutex;
 
 void *sellerThread(void* arg)
 {
-  int total = 0;
+  long total = 0;
   do {
     pthread_mutex_lock(&mutex);
     if(numTickets <= 0) {
@@ -31,27 +29,28 @@ void *sellerThread(void* arg)
     pthread_mutex_unlock(&mutex);
   } while(numTickets > 0);
 
-  printf("Seller %ld finished! (I sold %d tickets)\n", (long) arg, total);
+  printf("Seller %ld finished! (I sold %ld tickets)\n", (long) arg, total);
 
   // alloc result on heap, not on stack!
-  int *result = malloc(sizeof(int));
+  long *result = malloc(sizeof(long));
   result[0] = total;
   pthread_exit((void*)result);
 }
 
 int main(void)
 {
-  long i;
+  long total_sold = 0;
 
   pthread_t tids[NUM_SELLERS];
 
   pthread_mutex_init(&mutex, NULL);
 
+  long i;
   for(i=0; i < NUM_SELLERS; i++) {
     pthread_create(&tids[i], NULL, sellerThread, (void*)i);
   }
 
-  int **results = malloc(sizeof(int) * NUM_SELLERS);
+  long **results = malloc(sizeof(long) * NUM_SELLERS);
   for(i=0; i < NUM_SELLERS; i++) {
     pthread_join(tids[i], (void**)&results[i]);
     total_sold += results[i][0];
@@ -61,6 +60,6 @@ int main(void)
 
   pthread_mutex_destroy(&mutex);
 
-  printf("Done %d!\n", total_sold);
+  printf("Done %ld!\n", total_sold);
   return 0;
 }
