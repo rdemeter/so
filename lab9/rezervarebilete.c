@@ -5,8 +5,8 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define NUM_SELLERS 5  //50
-#define NUM_TICKETS 25 //250000
+#define NUM_SELLERS 50
+#define NUM_TICKETS 250000
 
 static int numTickets = NUM_TICKETS;
 
