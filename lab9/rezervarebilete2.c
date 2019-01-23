@@ -5,8 +5,8 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define NUM_SELLERS 50
-#define NUM_TICKETS 250000
+#define NUM_SELLERS 5
+#define NUM_TICKETS 25000
 
 static int numTickets = NUM_TICKETS;
 
@@ -33,11 +33,10 @@ void *sellerThread(void* arg)
 
   printf("Seller %ld finished! (I sold %d tickets)\n", (long) arg, total);
 
-  pthread_mutex_lock(&mutex);
-  total_sold += total;
-  pthread_mutex_unlock(&mutex);
-
-  pthread_exit(0);
+  // alloc result on heap, not on stack!
+  int *result = malloc(sizeof(int));
+  result[0] = total;
+  pthread_exit((void*)result);
 }
 
 int main(void)
@@ -52,9 +51,13 @@ int main(void)
     pthread_create(&tids[i], NULL, sellerThread, (void*)i);
   }
 
+  int **results = malloc(sizeof(int) * NUM_SELLERS);
   for(i=0; i < NUM_SELLERS; i++) {
-    pthread_join(tids[i], NULL);
+    pthread_join(tids[i], (void**)&results[i]);
+    total_sold += results[i][0];
+    free(results[i]);
   }
+  free(results);
 
   pthread_mutex_destroy(&mutex);
 
