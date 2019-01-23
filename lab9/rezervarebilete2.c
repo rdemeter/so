@@ -10,7 +10,7 @@
 
 static int numTickets = NUM_TICKETS;
 
-int totalx=0;
+int total_sold = 0;
 
 pthread_mutex_t mutex;
 
@@ -34,7 +34,7 @@ void *sellerThread(void* arg)
   printf("Seller %ld finished! (I sold %d tickets)\n", (long) arg, total);
 
   pthread_mutex_lock(&mutex);
-  totalx+=total;
+  total_sold += total;
   pthread_mutex_unlock(&mutex);
 
   pthread_exit(0);
@@ -58,6 +58,6 @@ int main(void)
 
   pthread_mutex_destroy(&mutex);
 
-  printf("Done %d!\n", totalx);
+  printf("Done %d!\n", total_sold);
   return 0;
 }
