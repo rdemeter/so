@@ -1,8 +1,8 @@
-#include<stdio.h>
-#include<string.h>
-#include<unistd.h>
-#include<stdlib.h>
-#include<signal.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <signal.h>
 
 void signalHandler( int signum ) {
    printf("Interrupt signal %d received.\n", signum);
@@ -21,7 +21,7 @@ int main () {
    while(++i) {
       printf("Going to sleep....\n");
       if( i == 3 ) {
-         raise( SIGINT);
+         raise( SIGINT );
       }
       sleep(1);
    }
