@@ -5,7 +5,7 @@
 #include <signal.h>
 
 void signalHandler( int signum ) {
-   printf("Interrupt signal %d received.\n", signum);
+   printf("Caught signal %d.\n", signum);
 
    // cleanup and close up stuff here
    // terminate program
@@ -19,7 +19,7 @@ int main () {
    signal(SIGINT, signalHandler);
 
    while(++i) {
-      printf("Going to sleep....\n");
+      printf("Going to sleep for 1 second....\n");
       if( i == 3 ) {
          raise( SIGINT );
       }
