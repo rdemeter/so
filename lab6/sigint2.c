@@ -10,7 +10,7 @@ void signalHandler( int signum ) {
    // cleanup and close up stuff here
    // terminate program
 
-   //exit(signum);
+   exit(signum);
 }
 
 int main () {
