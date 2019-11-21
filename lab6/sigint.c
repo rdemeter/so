@@ -1,27 +1,23 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<string.h>
+#include<unistd.h>
+#include<signal.h>
 
-#define __USE_GNU
-#include <string.h>
-#include <signal.h>
-
-static void  sigint_handler(int signum) {
-    printf(" recieved SIGINT\n");
+static void sigint_handler(int signum) {
+  /* actions that should be taken when the signal signum is received */
+  printf(" received sigint!!!\n");
 }
 
 int main(void) {
-    struct sigaction signal;
-    sigset_t mask;
+  struct sigaction sa;
+  memset(&sa, 0, sizeof(sa));
 
-    sigemptyset(&mask);
-    sigaddset(&mask, SIGINT);
+  sa.sa_flags = SA_RESTART;
+  sa.sa_handler = sigint_handler;
+  sigaction(SIGINT, &sa, NULL);
 
-    signal.sa_flags = SA_RESTART;
-    signal.sa_mask = mask;
-    signal.sa_handler = sigint_handler;
-    sigaction(SIGINT, &signal, NULL);
-
-    while(1);
-
-    return 0;
+  while(1) {
+    sleep(1);
+  }
+  return 0;
 }
