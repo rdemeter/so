@@ -5,29 +5,23 @@
 #include <string.h>
 #include <signal.h>
 
-
-static void  usr2_handler(int signum)
-{
+static void  sigint_handler(int signum) {
     printf(" recieved SIGINT\n");
 }
 
-
-
-int main(void)
-{
-    struct sigaction semnale;
+int main(void) {
+    struct sigaction signal;
     sigset_t mask;
 
     sigemptyset(&mask);
     sigaddset(&mask, SIGINT);
 
-    semnale.sa_flags = SA_RESTART;
-    semnale.sa_mask = mask;
-    semnale.sa_handler = usr2_handler;
-    sigaction(SIGINT, &semnale, NULL);
+    signal.sa_flags = SA_RESTART;
+    signal.sa_mask = mask;
+    signal.sa_handler = sigint_handler;
+    sigaction(SIGINT, &signal, NULL);
 
     while(1);
 
-    return 0 ;
-
+    return 0;
 }
