@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <signal.h>
 
+void sighandler(int signum) {
+  printf("caught signal SIGINT\n");
+}
+
 int main() {
   sigset_t set;
  
@@ -12,6 +16,6 @@ int main() {
   /* wait for SIGINT */
   sigsuspend(&set);
   
-  printf("Caught signal SIGINT and exit\n");
+  printf("and exit\n");
   return 0;
 }
