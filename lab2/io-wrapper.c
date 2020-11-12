@@ -7,7 +7,10 @@ os_ssize os_read(os_handle fd, void *buffer, os_size count) {
 os_ssize os_write(os_handle fd, const void *buffer, os_size count) {
   return write(fd, buffer, count);
 }
+
+//
 //todo: os_close()
+
 #elif defined(_WIN32)
 // todo: os_open
 os_ssize os_read(os_handle fd, void *buffer, os_size count) {
@@ -20,7 +23,10 @@ os_ssize os_write(os_handle fd, void *buffer, os_size count) {
   WriteFile(fd, buffer, count, &result, NULL);
   return result;
 }
+
+//
 // todo: os_close()
+
 #endif
 
 int main(void) {
