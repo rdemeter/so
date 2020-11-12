@@ -1,6 +1,8 @@
 #include "io-wrapper.h"
 #ifdef __linux__
+//
 // todo: os_open()
+
 os_ssize os_read(os_handle fd, void *buffer, os_size count) {
   return read(fd, buffer, count);
 }
@@ -12,7 +14,9 @@ os_ssize os_write(os_handle fd, const void *buffer, os_size count) {
 //todo: os_close()
 
 #elif defined(_WIN32)
+//
 // todo: os_open
+
 os_ssize os_read(os_handle fd, void *buffer, os_size count) {
   os_ssize result = -1;
   ReadFile(fd, buffer, count, &result, NULL);
