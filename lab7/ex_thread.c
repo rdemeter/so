@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<pthread.h>
 #include<stdlib.h>
+#include<string.h>
 
 void* thread_function(void)
 {
@@ -13,7 +14,7 @@ int main()
 {
   pthread_t thread_id;
   char *b;
-  pthread_create (&thread_id, NULL, &thread_function, NULL);
+  pthread_create (&thread_id, NULL, (void*)&thread_function, NULL);
 
   //here we are reciving one pointer value so to use that we need double pointer
   pthread_join(thread_id,(void**)&b);
