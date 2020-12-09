@@ -2,11 +2,13 @@
 #include<pthread.h>
 #include<stdlib.h>
 #include<string.h>
+#include<unistd.h>
 
 void* thread_function(void)
 {
   char *a = malloc(12);
   strcpy(a, "hello world");
+  //sleep(10)
   pthread_exit((void*)a);
 }
 
