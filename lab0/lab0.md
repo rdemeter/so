@@ -187,7 +187,7 @@ $ echo "$var1 $my_other_var"
 
 Un script poate primi argumente în linia de comanda. Argumentele sunt referite respectiv folosind parametrii pozitionali: $1, $2, ... $0 este numele scriptului (echivalent cu argv[0] din C).
 
-Numărul de argumente din linia de comandă este dat de $\#. $\# va fi 0 daca nu avem argumente in linia de comandă (echivalentul C - argc - ar fi avut valoarea 1 in acest caz).
+Numărul de argumente din linia de comandă este dat de '$#'. '$#' va fi 0 daca nu avem argumente in linia de comandă (echivalentul C - argc - ar fi avut valoarea 1 in acest caz).
 
 $@ poate fi folosit pentru obtinerea intregii liste de argumente separate prin spatiu.
 
@@ -220,7 +220,7 @@ Lista de parametri este alfa beta gamma
 
 ## shift
 
-Comanda builtin shift este folosita pentru deplasarea parametrilor pozitionali cu valoarea primita ca parametru (sau 1 daca nu este prezenta). Astfel daca se primeste valoarea N, parametrii pozitionali de la N+1 la \$\# vor fi redumiti la $1, $2, ... $\#-N+1
+Comanda builtin shift este folosita pentru deplasarea parametrilor pozitionali cu valoarea primita ca parametru (sau 1 daca nu este prezenta). Astfel daca se primeste valoarea N, parametrii pozitionali de la N+1 la \$\# vor fi redumiti la $1, $2, ... '$#'-N+1
 
 Exemplu:
 ```
