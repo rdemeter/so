@@ -282,16 +282,17 @@ Caracterul dollar este folosit in mai multe situatii in ceea ce se numeste expan
 ### expandarea unui parametru
 
 Se inlocuieste un parametru (variabila) sau se inlocuiesc parametrii pozitionali. $? se traduce in valoarea de retur a ultimei comenzi executate.
-
+```
 $ ls -l | grep 126
 -rwxr-xr-x 1 razvan razvan 126 2007-01-06 21:42 pos2.sh 
 $ echo $?
 0
-
+```
+```
 $ ls -l | grep 1267 
 $ echo $?
 1
-
+```
 
 ### substitutia unei comenzi
 
@@ -455,12 +456,12 @@ echo "produsul este $prod"
 # Functii shell
 
 Ca orice alt limbaj de programare, shell-ul permite lucrul cu functii proceduri. Sintaxa unei functii este:
-
+```
 [function] nume_functie ()
 {
     comenzi
 }
-
+```
 Identificatorul function este optional. Sintaxa de apel este simpla: numele functiei urmat de eventualii parametri.
 
 ATENTIE! In cadrul unei functii argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incat daca dorim sa referim intr-o functie argumentele in linia de comanda va trebui sa-i transmitem ca parametri la apelul functiei.
@@ -503,12 +504,12 @@ Pentru urmatoarele pattern-uri trebuie activata optiunea shopt -s extglob.
 -	!(lista_sabloane) - se potriveste cu toate sabloanele din lista mai putin unul
 
 Exemplu:
-
+```
 $ ls *.sh fun.sh hello.sh pos2.sh pos.sh 
 $ ls ?h* shell2.lyx shell.lyx shell.tex 
 $ ls *{e,y}x lab8.lyx shell2.lyx shell.lyx shell.tex 
 $ ls *[a-h]e* hello.sh shell2.lyx shell.lyx shell.tex
-
+```
 
 # Comenzi utile
 
@@ -517,13 +518,15 @@ O serie de comenzi (interne sau externe) sunt utile în crearea de scripturi she
 ## echo
 
 Comanda echo este folosită pentru a afiẟa un ẟir de caractere, o variabilă la ieẟire standard:
-
+```
 $ echo alfa
 alfa
-
+```
+```
 $ echo $PATH
 /home/razvan/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
 $ echo '$PATH' $PATH
+```
 
 ## cat, tac, head, tail
 
