@@ -24,17 +24,17 @@ $ ./hello.sh
 Hello, World!
 ```
 Se observă că este necesar ca fișierul să fie executabil pentru a putea fi interpretat. Șirul #! de la începutul fișierului poartă denumirea de shebang. Acesta indică sistemului ce program va fi invocat pentru a interpreta scriptul. Exemple pot fi:
-
+```
 #!/bin/sh
 #!/bin/bash
 #!/usr/bin/perl
 #!/usr/bin/python
 #!/usr/bin/awk -f
-
+```
 Spre exemplu, următorul script se șterge pe sine:
-
+```
 #!/bin/rm -f
-
+```
 aici putem scrie orice ... oricum se va șterge
 
 Un script poate fi rulat prin precizarea explicită a interpretorului în linia de comandă:
@@ -119,7 +119,7 @@ $ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2 | uniq | wc -l 3
 
 Comenzilor le pot fi redirectate, respectiv, intrarea standard, iesirea standard si eroarea standard dintr-un fisier. O parte din operatorii folositi pentru redirectare sunt:
 
--	> - redirectarea iesirii standard
+-	'>' - redirectarea iesirii standard
 -	2> - redirectarea erorii standard
 -	2>&1 - redirectarea erorii standard in iesirea standard. Efectiv, unificarea stderr cu stdout.
 -	< - redirectarea intrarii standard
