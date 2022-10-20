@@ -529,26 +529,30 @@ $ echo '$PATH' $PATH
 
 Comanda cat afiẟează conţinutul unui fiẟier sau al intrării standard. Comanda tac afiẟează conţinutul unui fiẟier inversat. Comanda head afiẟează începutul unui fișier sau al intrării standard, în timp ce comanda tail afiẟează sfârșitul acestuia:
 
+```
 $ cat /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
-
+```
+```
 $ tac /etc/passwd
 bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
 monica:x:1005:1005:,,,:/home/students/monica:/bin/bash
 lucian:x:1004:1004:,,,:/home/lucian:/bin/bash
-
+```
+```
 $ head -n 3 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
-
+```
+```
 $ tail -n -3 /etc/passwd
 lucian:x:1004:1004:,,,:/home/lucian:/bin/bash
 monica:x:1005:1005:,,,:/home/students/monica:/bin/bash
 bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
-
+```
 
 ## read
 
@@ -619,7 +623,7 @@ tail [-n lines] files
 Primul argument, daca exista, afiseaza primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
 
 Exemple de comenzi sunt:
-
+```
 $ ls -l
 
 total 44
@@ -635,18 +639,20 @@ drwxr-xr-x	2	razvan razvan 4096 Nov	16	12:43 lab7
 drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
 drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096 Nov	12	20:06 tema1
-
+```
+```
 $ ls -l | head -3
 total 44				
 drwxr-xr-x	2	razvan razvan 4096 Nov	16	00:01 lab1
 drwxr-xr-x	3	razvan razvan 4096 Oct	12	00:02 lab2
-
+```
+```
 $	ls	-l | tail -4
 drwxr-xr-x	2	razvan razvan 4096 Nov	16	12:43 lab7
 drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
 drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096 Nov	12	20:06 tema1
-
+```
 In cazul comenzi tail o optiune utila este -f care mentine fisierul de vizualizat deschis pe masura ce programele scriu in el, spre exemplu pentru a vizualiza un fisier de log pe masura ce informatiile sunt scrise in el:
 ```
 $ tail -f /var/log/apache/access_log
@@ -671,7 +677,7 @@ root	tty1	Wed	Nov	16	11:00 -	down	(00:00)
 razvan	tty1	Wed	Nov	16	00:07 -	00:08	(00:01)
 ```
 O alta optiune utila este -v. Aceasta permite cautarea acelor linii care NU contin cuvantul transmis ca parametru. Spre exemplu, daca dorim afisarea utilizatorilor care nu au ca si director de baza un director de forma /home/nume, vom folosi comanda:
-
+```
 $ grep -v /home /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
@@ -682,24 +688,22 @@ games:x:5:60:games:/usr/games:/bin/sh
 man:x:6:12:man:/var/cache/man:/bin/sh
 lp:x:7:7:lp:/var/spool/lpd:/bin/sh
 mail:x:8:8:mail:/var/mail:/bin/sh
-
-.......
+```
 
 Un alt exemplu de folosire este parsarea output-ului comenzii ps:
-
+```
 $ ps -af | grep lyx
-
 razvan	3767	3719	0	12:19	pts/0	00:00:05	lyx
 razvan	4219	3719	0	12:53	pts/0	00:00:00	grep lyx
-
+```
+```
 $ ps -af | grep lyx | grep -v grep
-
 razvan	3767	3719	0 12:19 pts/0	00:00:05 lyx
-
+```
 Optiunea -n permite afisarea numarului liniei care continea cuvantul cautat.
 
 Putem de asemenea sa afisam numai fisierele care contin acel cuvant (fara afisarea liniilor). Pentru aceasta folosim optiunea -l (listare). De obicei este folosita in conjunctie cu optiunea -R pentru cautarea recursiva in cadrul unei structuri de directoare:
-
+```
 $ grep -r -l "#include <sys/wait.h>" .
 
 ./lab2/lab2.lyx
@@ -713,7 +717,7 @@ $ grep -r -l "#include <sys/wait.h>" .
 ./lab6/lab6.lyx
 ./lab6/mmap.c
 ./lab6/lab6.tex
-
+```
 
 ## tr
 
@@ -732,35 +736,37 @@ $ tr 'A-Z' 'a-z' < file
 In cazul in care setul set2 are mai putine caractere decat setul set1 acestea vor fi multiplicate pentru a ajunge la aceeasi dimensiune.
 
 Urmatorul pas ar fi eliminarea spatiilor redundante. Optiunea -s (squeeze) inlocuieste o succesiune de doua sau mai multe caractere cu unul singur. Un exemplu este:
-
+```
 $ echo shell programming | tr -s 'lm' shel programing
-
+```
 
 ## sort
 
 Comanda sort este utilizata pentru sortarea liniilor alfabetic. Un exemplu de utilizare este:
-
+```
 $ echo -en "alfa\nomega\ngamma\nbeta\n"
 alfa
 omega
 gamma
 beta
-
+```
+```
 $ echo -en "alfa\nomega\ngamma\nbeta\n" | sort
 alfa
 beta
 gamma
 omega
-
+```
 O optiune utila in cazul sort este sortarea dupa valoarea numerica a sirurilor. Pentru aceasta folosim -n. De exemplu:
-
+```
 $ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
 123
 4
 43
 5
 9
-
+```
+```
 $ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
 4
 5
@@ -768,21 +774,22 @@ $ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
 10
 43
 123
-
+```
 De multe ori output-ul apare intr-o forma in care elementele de sortat sunt intr-o alta coloana (nu prima, cea folosita implicit de sort). Pentru aceasta se poate folosi optiunea -k (key). Sintaxa, in cazul folosirii acestei optiuni, este:
-
+```
 sort -k start, end file
-
+```
 Aici start este coloana de start a cheii, iar end este coloana de stop a cheii. Prima coloana este cea dupa care se face sortarea, iar, in cazul in care sunt doua sau mai multe elemente egale, se face deosebirea intre acestea folosind coloana urmatoare din cheie, etc.
 
 Exemplu de utilizare este:
-
+```
 sort -rn -k 2,2 file	; sorteaza dupa a doua coloana
+```
 
 ## uniq
 
 Se pot elimina duplicatele folosind optiunea -u la sort. Totusi, de multe ori este util sa afisam de cate ori apare un cuvant. Pentru aceasta vom folosi comanda uniq cu optiunea -c. Atentie! uniq face eliminarea duplicatelor numai daca liniile sunt sortate. Exemple de utilizare:
-
+```
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | uniq
 
 alfa
@@ -791,17 +798,20 @@ alfa
 beta
 gamma
 alfa
-
+```
+```
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq
 alfa
 beta
 gamma
-
+```
+```
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq -c
 3	alfa
 3	beta
 1	gamma
 
+```
 
 ## wc
 
@@ -813,11 +823,11 @@ Comanda wc (word count) este folosita pentru a contoriza numarul de linii, de cu
 Comanda cut selecteaza numai anumite parti (coloane) ale fisierului de intrare sau ale intrarii standard.
 
 Sintaxa cea mai folosita este:
-
+```
 cut -d delim -f fields
-
+```
 Folosindu-se delimitatorul delim se vor selecta numai campurile fields. Exemple de utilizare sunt:
-
+```
 $ ls -l
 
 total 44					
@@ -832,7 +842,9 @@ drwxr-xr-x	2	razvan razvan 4096	Nov	16	12:43 lab7
 drwxr-xr-x	2	razvan razvan 4096	Nov	20	14:38 lab8
 drwxr-xr-x	5	razvan razvan 4096	Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096	Nov	12	20:06 tema1
+```
 
+```
 $ ls -l | cut -d ' ' -f 1,9
 
 total
@@ -848,7 +860,8 @@ drwxr-xr-x 12:43
 drwxr-xr-x 14:38
 drwxr-xr-x 19:52
 drwxr-xr-x 20:06
-
+```
+```
 $ ls -l | tr -s ' ' | cut -d ' ' -f 1,9
 
 total
@@ -864,6 +877,7 @@ drwxr-xr-x lab7
 drwxr-xr-x lab8
 drwxr-xr-x solab
 drwxr-xr-x tema1
+```
 
 Comenzi din aceeasi categorie sunt paste si join.
 
