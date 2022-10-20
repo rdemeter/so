@@ -186,11 +186,11 @@ $ echo "$var1 $my_other_var"
 # Argumente in linia de comanda
 
 Un script poate primi argumente în linia de comanda. Argumentele sunt referite respectiv folosind parametrii pozitionali: $1, $2, ... $0 este numele scriptului (echivalent cu argv[0] din C).
-
+```
 Numărul de argumente din linia de comandă este dat de $#. $# va fi 0 daca nu avem argumente in linia de comandă (echivalentul C - argc - ar fi avut valoarea 1 in acest caz).
 
 $@ poate fi folosit pentru obtinerea intregii liste de argumente separate prin spatiu.
-
+```
 Exemplu:
 ```
 #!/bin/sh
