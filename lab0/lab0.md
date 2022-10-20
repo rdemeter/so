@@ -489,7 +489,7 @@ fun2 alfa
 
 In interactiunea cu sistemul de fisiere se doreste selectarea rapida a mai multor fisiere dupa cateva caracteristici de nume comune. Operatia efectuata de shell se numeste pattern matching. Exista urmatoarele caractere speciale:
 
--	* - se potriveste cu orice sir de caracter, inclusiv sirul vid
+-	'*' - se potriveste cu orice sir de caracter, inclusiv sirul vid
 -	? - se potriveste cu un singur caracter
 -	[...] - se potriveste cu unul din caracterele din set; poate fi de genul [abc] sau [a-gA-G] sau [0-5h-zH-Z]
 
@@ -618,11 +618,11 @@ Comenzi folosite ca si filtre de text sunt head, tail, grep, sort, uniq, tr, cut
 ## head, tail
 
 Cele doua comenzi sunt folosite pentru afisarea numai a primelor sau a ultimelor linii de text din cadrul unui fisier. Sintaxa lor este asemanatoare:
-
+```
 head [-n lines] files
 
 tail [-n lines] files
-
+```
 Primul argument, daca exista, afiseaza primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
 
 Exemple de comenzi sunt:
@@ -725,17 +725,17 @@ $ grep -r -l "#include <sys/wait.h>" .
 ## tr
 
 Comanda tr (transliterate) este folosita pentru a translata caracterele dintr-un set de caractere intr-un alt set de caractere. Sintaxa de baza este:
-
+```
 tr 'set1' 'set2'
-
+```
 Spre exemplu, daca am dori sa aflam numarul de cuvinte dintr-un text, am translata toate caracterele speciale in spatii cu o comanda de forma:
-
+```
 $ tr '!?":'\[\]{}(),.' ' ' < file
-
+```
 Caracterele [ si ] au fost escapate folosind \. Daca dorim sa translatam literele mari in litere mici, folosim:
-
+```
 $ tr 'A-Z' 'a-z' < file
-
+```
 In cazul in care setul set2 are mai putine caractere decat setul set1 acestea vor fi multiplicate pentru a ajunge la aceeasi dimensiune.
 
 Urmatorul pas ar fi eliminarea spatiilor redundante. Optiunea -s (squeeze) inlocuieste o succesiune de doua sau mai multe caractere cu unul singur. Un exemplu este:
