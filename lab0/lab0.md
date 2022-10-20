@@ -220,7 +220,7 @@ Lista de parametri este alfa beta gamma
 
 ## shift
 
-Comanda builtin shift este folosita pentru deplasarea parametrilor pozitionali cu valoarea primita ca parametru (sau 1 daca nu este prezenta). Astfel daca se primeste valoarea N, parametrii pozitionali de la N+1 la \$\# vor fi redumiti la $1, $2, ... '$#'-N+1
+Comanda builtin shift este folosita pentru deplasarea parametrilor pozitionali cu valoarea primita ca parametru (sau 1 daca nu este prezenta). Astfel daca se primeste valoarea N, parametrii pozitionali de la N+1 la '$#' vor fi redumiti la $1, $2, ... '$#'-N+1
 
 Exemplu:
 ```
