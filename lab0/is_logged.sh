@@ -4,7 +4,7 @@
 # 1 - wrong argument
 # 2 - user not found
 
-if test"$#" -eq 1
+if test "$#" -eq 1
 then
     if who -a | tr -s ' ' | cut -d ' ' -f 1 | grep "^$1$" > /dev/null
     then
