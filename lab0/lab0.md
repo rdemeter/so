@@ -396,80 +396,61 @@ echo " legs."
 # for
 
 Sintaxa pentru for este urmatoarea:
-
+```
 for VARIABILA in LISTA; do
-
-comenzi
-
+    comenzi
 done
-
+```
 LISTA este o insiruire de elemente separate prin spatii. Variabila va lua pe rand aceste valori. Daca se doresc variabile numerice in stilul C se poate folosi constructia (( ... )).
 
 Exemple:
-
+```
 for i in *; do
-
-if test -f "$i"; then
-
-echo "$i este fisier"
-
-fi
-
+    if test -f "$i"; then
+        echo "$i este fisier"
+    fi
 done
 
 for i in "1 2 3"; do
-
-sum=$(($sum + $i))
-
+    sum=$(($sum + $i))
 done
 
 echo "suma este $sum"
 
 for i in $(seq 1 10); do
-
-sum=$(($sum + $i))
-
+    sum=$(($sum + $i))
 done
 
 echo "suma primelor 10 numere este $sum"
 
 for ((i = 0; i < 100; i += 2)); do
-
-sum=$(($sum + $i))
-
+    sum=$(($sum + $i))
 done
 
 echo "suma numerelor pare pana la 100 este $sum"
-
+```
 
 # while
 
 Sintaxa pentru while este urmatoarea:
-
+```
 while CONDITIE; do
-
-comenzi
-
+    comenzi
 done
-
+```
 Conditia are acelasi format ca la if.
 
 Exemplu:
-
+```
 i=1
-
 prod=1
-
 while test $i -le 30; do
-
-prod=$(($prod * $i))
-
-i=$(($i + 5))
-
+    prod=$(($prod * $i))
+    i=$(($i + 5))
 done
 
 echo "produsul este $prod"
-
+```
 
 # Functii shell
 
@@ -537,34 +518,33 @@ O serie de comenzi (interne sau externe) sunt utile în crearea de scripturi she
 
 Comanda echo este folosită pentru a afiẟa un ẟir de caractere, o variabilă la ieẟire standard:
 
-razvan@asgard:~/test/so$ echo alfa
+$ echo alfa
 alfa
 
 $ echo $PATH
-/home/razvan/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games razvan@asgard:~/test/so$ echo '$PATH' $PATH
+/home/razvan/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
+$ echo '$PATH' $PATH
 
 ## cat, tac, head, tail
 
-Comanda cat afiẟează conţinutul unui fiẟier sau al intrării standard. Comanda tac afiẟează conţinutul unui fiẟier inversat. Comanda head afiẟează începutul unui fiẟier sau al intrării standard, în timp ce comanda tail afiẟează sfârẟitul acestuia:
+Comanda cat afiẟează conţinutul unui fiẟier sau al intrării standard. Comanda tac afiẟează conţinutul unui fiẟier inversat. Comanda head afiẟează începutul unui fișier sau al intrării standard, în timp ce comanda tail afiẟează sfârșitul acestuia:
 
-razvan@asgard:~/test/so$ cat /etc/passwd
-
-root:x:0:0:root:/root:/bin/bash
-
-daemon:x:1:1:daemon:/usr/sbin:/bin/sh
-
-bin:x:2:2:bin:/bin:/bin/sh
-
-[...]
-
-razvan@asgard:~/test/so$ tac /etc/passwd bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash monica:x:1005:1005:,,,:/home/students/monica:/bin/bash lucian:x:1004:1004:,,,:/home/lucian:/bin/bash [...]
-
-razvan@asgard:~/test/so$ head -n 3 /etc/passwd
+$ cat /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
 
-razvan@asgard:~/test/so$ tail -n -3 /etc/passwd
+$ tac /etc/passwd
+bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
+monica:x:1005:1005:,,,:/home/students/monica:/bin/bash
+lucian:x:1004:1004:,,,:/home/lucian:/bin/bash
+
+$ head -n 3 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+
+$ tail -n -3 /etc/passwd
 lucian:x:1004:1004:,,,:/home/lucian:/bin/bash
 monica:x:1005:1005:,,,:/home/students/monica:/bin/bash
 bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
@@ -574,11 +554,11 @@ bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
 
 Comanda read este folosită pentru citirea de informaţii de la intrarea standard:
 ```
-razvan@asgard:~/test/so$ read a
+$ read a
 alfa
 ```
 ```
-razvan@asgard:~/test/so$ echo $a
+$ echo $a
 alfa
 ```
 O folosirea frecventă este în combinaţie cu while pentru citirea linie cu linie a conţinutului unui fiẟier:
@@ -593,10 +573,13 @@ am citit c
 
 Comanda find este o comandă fundamentală pentru parcurgerea intrărilor dintr-o ierarhie a sistemului de fiẟiere. Câteva exemple de utilizare sunt prezentate în continuare:
 
--	cautarea headerelor de sistem care încep cu ẟirul std:
-
-razvan@asgard:~/test/so$ find /usr/include/ -type f -name 'std*' /usr/include/c++/4.1.2/ext/stdio_sync_filebuf.h /usr/include/c++/4.1.2/ext/stdio_filebuf.h /usr/include/c++/4.1.2/stdexcept /usr/include/stdio.h
-
+-	cautarea headerelor de sistem care încep cu șirul std:
+```
+$ find /usr/include/ -type f -name 'std*'
+/usr/include/c++/4.1.2/ext/stdio_sync_filebuf.h 
+/usr/include/c++/4.1.2/ext/stdio_filebuf.h 
+/usr/include/c++/4.1.2/stdexcept 
+/usr/include/stdio.h
 /usr/include/linux/stddef.h
 /usr/include/stdlib.h
 /usr/include/bits/stdio-lock.h
@@ -606,13 +589,15 @@ razvan@asgard:~/test/so$ find /usr/include/ -type f -name 'std*' /usr/include/c+
 /usr/include/stdint.h
 /usr/include/nptl/bits/stdio-lock.h
 /usr/include/stdio_ext.h
-
--	căutarea ẟirului mutex în headerele de sistem care conţin ẟirul lock
-
-razvan@asgard:~/test/so$ find /usr/include/ -name '*lock*' -exec grep -H mutex {} \; /usr/include/linux/seqlock.h: * This can be used when code [...] /usr/include/linux/seqlock.h: * own mutexing.
-
-/usr/include/linux/lockdep.h: * rwlocks, mutexes and rwsems) [...] /usr/include/linux/lockdep.h:# define mutex_acquire(l, s, t, i) [...]
-
+```
+-	căutarea șirului mutex în headerele de sistem care conţin ẟirul lock
+```
+$ find /usr/include/ -name '*lock*' -exec grep -H mutex {} \;
+/usr/include/linux/seqlock.h: * This can be used when code [...]
+/usr/include/linux/seqlock.h: * own mutexing.
+/usr/include/linux/lockdep.h: * rwlocks, mutexes and rwsems) [...]
+/usr/include/linux/lockdep.h:# define mutex_acquire(l, s, t, i) [...]
+```
 Opţiunea exec este folosită pentru a rula o comandă pentru fiẟierele găsite. ẞirul {} este special ẟi se înlocuieẟte cu numele fiẟierului găsit de find. Caracterul ; (citat cu ajutorul backslash) indică încheierea comenzii de executat.
 
 
@@ -635,7 +620,7 @@ Primul argument, daca exista, afiseaza primele, respectiv ultimele n linii din t
 
 Exemple de comenzi sunt:
 
-razvan@ragnarok:~/cfiles/solab/labs$ ls -l
+$ ls -l
 
 total 44
 
@@ -650,11 +635,13 @@ drwxr-xr-x	2	razvan razvan 4096 Nov	16	12:43 lab7
 drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
 drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096 Nov	12	20:06 tema1
-razvan@ragnarok:~/cfiles/solab/labs$ ls -l | head -3
+
+$ ls -l | head -3
 total 44				
 drwxr-xr-x	2	razvan razvan 4096 Nov	16	00:01 lab1
 drwxr-xr-x	3	razvan razvan 4096 Oct	12	00:02 lab2
-razvan@ragnarok:~/cfiles/solab/labs$	ls	-l | tail -4
+
+$	ls	-l | tail -4
 drwxr-xr-x	2	razvan razvan 4096 Nov	16	12:43 lab7
 drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
 drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
@@ -746,20 +733,20 @@ In cazul in care setul set2 are mai putine caractere decat setul set1 acestea vo
 
 Urmatorul pas ar fi eliminarea spatiilor redundante. Optiunea -s (squeeze) inlocuieste o succesiune de doua sau mai multe caractere cu unul singur. Un exemplu este:
 
-razvan@ragnarok:~/cfiles/solab/labs$ echo shell programming | tr -s 'lm' shel programing
+$ echo shell programming | tr -s 'lm' shel programing
 
 
 ## sort
 
 Comanda sort este utilizata pentru sortarea liniilor alfabetic. Un exemplu de utilizare este:
 
-razvan@ragnarok:~/cfiles/solab/labs$ echo -en "alfa\nomega\ngamma\nbeta\n"
+$ echo -en "alfa\nomega\ngamma\nbeta\n"
 alfa
 omega
 gamma
 beta
 
-razvan@ragnarok:~/cfiles/solab/labs$ echo -en "alfa\nomega\ngamma\nbeta\n" | sort
+$ echo -en "alfa\nomega\ngamma\nbeta\n" | sort
 alfa
 beta
 gamma
@@ -767,14 +754,14 @@ omega
 
 O optiune utila in cazul sort este sortarea dupa valoarea numerica a sirurilor. Pentru aceasta folosim -n. De exemplu:
 
-razvan@ragnarok:~/cfiles/solab/labs$ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
+$ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
 123
 4
 43
 5
 9
 
-razvan@ragnarok:~/cfiles/solab/labs$ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
+$ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
 4
 5
 9
@@ -883,7 +870,7 @@ Comenzi din aceeasi categorie sunt paste si join.
 # Exemple
 
 In continuare sunt prezentate cateva exemple de script-uri shell.
-
+```
 #!/bin/bash
 #	Afisarea numelui de utilizator si a home directory-ului pentru
 #	utilizatorii care se afla in ultimele N login-uri in sistem, unde
@@ -919,7 +906,9 @@ fi
 done
 
 exit 0
+```
 
+```
 #!/bin/bash
 #	Sa se mute copieze in directorul bkup toate fisierele modificate
 #	cu mai mult de 30 de zile in urma pentru utilizatorul curent
@@ -932,18 +921,17 @@ fi
 #	do not try this if u have a lot of old files and little disk space ;) find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
 
 exit 0
-
+```
 
 # Exerciţii
 
-1.	Creaţi ẟi rulaţi un script shell care afiẟează mesajul Hello, World!. Hint:
-·	folosiţi apostrof (') pentru citare (! este văzut ca un caracter special)
+1.	Creaţi și rulaţi un script shell care afiẟează mesajul Hello, World!. Hint:
+-	folosiţi apostrof (') pentru citare (! este văzut ca un caracter special)
 
 2.	Creaţi un script care afiẟează numărul de argumente primite. Dacă scriptul primeẟte mai mult de două argumente atunci se afiẟează toate mai puţin primele două.
 
 Hint:
-
-·	folosiţi shift
+-	folosiţi shift
 
 3.	Prelucraţi scriptul anterior ca să afiẟeze atât argumentul cât ẟi numărul de caractere eventual cu un cap de tabel. Ceva de forma:
 
@@ -953,126 +941,89 @@ argument	valoare	dimensiune
 5	omega	5
 
 Hint:
+-	trebuie să folosiţi for
+-	folosiţi construcţia ${#myvar} pentru a afla numărul de caractere al variabilei myvar.
 
-·	trebuie să folosiţi for
-
-·	folosiţi construcţia ${#myvar} pentru a afla numărul de caractere al variabilei myvar.
-
-4.	Creaţi un script care să primească un singur argument (scriptul se va întoarce cu eroare - exit 1 - ẟi cu un mesaj specific dacă primeẟte mai mult de un argument sau niciunul). Scriptul va analiza argumentul ẟi va afiẟa
-
-mesajele:
-
-·	"argumentul începe cu o cifră"
-
-·	"argumentul începe cu o literă"
-
-·	"argumentul este o ẟir de caractere" pentru orice altă situaţie
+4.	Creaţi un script care să primească un singur argument (scriptul se va întoarce cu eroare - exit 1 - ẟi cu un mesaj specific dacă primeẟte mai mult de un argument sau niciunul). Scriptul va analiza argumentul ẟi va afișa mesajele:
+-	"argumentul începe cu o cifră"
+-	"argumentul începe cu o literă"
+-	"argumentul este o ẟir de caractere" pentru orice altă situaţie
 
 Hint:
+-	folosiţi case
+-	folosiţi expresii regulate
 
-·	folosiţi case
-
-·	folosiţi expresii regulate
-
-5.	Afiẟati numele utilizatorilor din sistem care încep cu litera 's'. Hint:
-
-·	nu e nevoie de script shell; se poate face cu un one-liner
-
-·	folositi /etc/passwd, grep ẟi cut
+5.	Afișati numele utilizatorilor din sistem care încep cu litera 's'. 
+Hint:
+-	nu e nevoie de script shell; se poate face cu un one-liner
+-	folositi /etc/passwd, grep ẟi cut
 
 6.	Afiẟaţi separate prin tab numele ẟi shell-ul utilizatorilor din sistem care NU au home-ul în /home/...
 
 Hint:
+-	nu e nevoie de script shell
+-	folosiţi /etc/passwd, grep, cut, tr
 
-·	nu e nevoie de script shell
-
-·	folosiţi /etc/passwd, grep, cut, tr
-
-7.	Scrieţi un script shell care să afiẟeze, separate prin virgula, directoarele in care se gasesc executabile gcc. Hint:
-·	folositi whereis gcc, basename ẟi dirname
+7.	Scrieţi un script shell care să afiẟeze, separate prin virgula, directoarele in care se gasesc executabile gcc.
+Hint:
+-	folositi whereis gcc, basename ẟi dirname
 
 8.	Creaţi un script shell care să afiẟeze suma memoriei ocupate de procesele din sistem după cum reiese din ieẟirea comenzii ps -e -o rss. Comparaţi cu rezultatul oferit prin rularea comenzii free.
 
 Hint:
-
-·	folosiţi opţiuni tail pentru a afiẟa toate liniile mai puţin prima (prima este antetul RSS) (man tail)
-
-·	la tail este utila aici forma cu + a argumentului; daca nu gasiti in man nimic despre asta info tail
-
-·	folosiţi expandare aritmetica
+-	folosiţi opţiuni tail pentru a afiẟa toate liniile mai puţin prima (prima este antetul RSS) (man tail)
+-	la tail este utila aici forma cu + a argumentului; daca nu gasiti in man nimic despre asta info tail
+-	folosiţi expandare aritmetica
 
 9.	Un fiẟier conţine linii de forma nume parola. Creaţi un script care să afiẟeze perechea nume parola numai dacă numele are 6 litere. Scriptul va primi fiẟierul ca argument.
 
 Hint:
-
-·	folosiţi while read
+-	folosiţi while read
 
 10.	Creaţi un script care foloseẟte un fiẟier în forma de mai sus. Scriptul trebuie să adauge în sistem utilizatorii. Parola trebuie schimbată la cea prezentă în fiẟier. Scriptul va primi ca argument numele fiẟierului de mai sus. Scriptul va fi non-interactiv - nu va cere utilizatorului nici o informaţie.
 
 Hint:
-
-·	folosiţi useradd (nu adduser - e interactiv) - verificaţi pagina de manual pentru opţiuni
-
-·	folosiţi chpasswd pentru schimbarea în mod non-interactiv a parolei (passwd o schimbă neinteractiv)
-
-·	scriptul trebuie rulat ca root
+-	folosiţi useradd (nu adduser - e interactiv) - verificaţi pagina de manual pentru opţiuni
+-	folosiţi chpasswd pentru schimbarea în mod non-interactiv a parolei (passwd o schimbă neinteractiv)
+-	scriptul trebuie rulat ca root
 
 11.	Instalaţi serverul Apache2 (apt-get install apache2). Folosiţi un script shell pentru a dezinstala toate pachetele instalate.
 
 Hint:
 
-·	folosiţi ieẟirea comenzii dpkg -l 'apache*'; rândurile conţinând pachetele instalate încep cu linia 'ii'
-
-·	pachetele pot fi dezinstalate prin transmiterea lor ca listă de argumente comenzii apt-get remove --purge
-
-·	folosiţi opţiunea -y pentru a dezactiva interactivitatea apt-get
+-	folosiţi ieẟirea comenzii dpkg -l 'apache*'; rândurile conţinând pachetele instalate încep cu linia 'ii'
+-	pachetele pot fi dezinstalate prin transmiterea lor ca listă de argumente comenzii apt-get remove --purge
+-	folosiţi opţiunea -y pentru a dezactiva interactivitatea apt-get
 
 12.	Dezinstalaţi pachetele de mai sus printr-un one-liner (o singură linie shell - fără nevoia unui script).
 
 13.	Folosiţi un one-liner pentru a contoriza toate fiẟierele cu extensia .sh din ierarhia /etc.
 
 Hint:
-
-·	folosiţi find
+-	folosiţi find
 
 14.	Creaţi un script shell pentru a număra toate fiẟierele din /etc pentru care comanda file spune că sunt scripturi Shell:
 
-razvan@asgard:~/junk/so$ file test.bash test.bash: Bourne shell script text executable
+$ file test.bash test.bash: Bourne shell script text executable
 
 Puteţi să faceţi scriptul un one-liner?
 
 Hint:
-
-·	va trebui să folosiţi find în combinaţie cu for (nu am găsit să se poată fără for ... mai caut)
+-	va trebui să folosiţi find în combinaţie cu for (nu am găsit să se poată fără for ... mai caut)
 
 15.	Descărcaţi folosind wget arhiva cu sursele nucleului Linux 1.0
 
 (ftp://ftp.eu.kernel.org/pub/linux/kernel/v1.0/linux-1.0.tar.bz2). Dezarhivaţi (tar xjf ...). Creaţi un script shell care să contorizeze numărul de linii din fiẟierele sursă.
 
 Hint:
-
-·	fiẟierele sursă se consideră cele cu extensia .c sau .h
+-	fișierele sursă se consideră cele cu extensia .c sau .h
 
 Fiecare exerciţiu se punctează cu 1p (oricât de uẟor/greu ar fi)
 
 # Link-uri utile
 
-·	http://www.linuxcommand.org/index.php
-
-·	http://www.comptechdoc.org/os/linux/programming/script/linux_pgscript.html
-
-·	http://tldp.org/LDP/abs/html/index.html
-
-·	http://wiki.lug.ro/mediawiki/index.php/Tutorial_Shell_Scripting
-
-·	http://www.gnu.org/software/bash/manual/bash.html (disponibil si in format info - $ info bash)
-
-
-
-
-
-
-
-
-
-
+-	http://www.linuxcommand.org/index.php
+-	http://www.comptechdoc.org/os/linux/programming/script/linux_pgscript.html
+-	http://tldp.org/LDP/abs/html/index.html
+-	http://wiki.lug.ro/mediawiki/index.php/Tutorial_Shell_Scripting
+-	http://www.gnu.org/software/bash/manual/bash.html (disponibil si in format info - $ info bash)
