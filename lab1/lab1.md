@@ -127,7 +127,11 @@ Alte opţiuni utile sunt:
 - -Lcale - această optiune instruieşte compilatorul să caute și în directorul cale bibliotecile pe care trebuie să le folosească programul; opţiunea se poate specifica de mai multe ori, pentru a adăuga mai multe directoare
 - -lbiblioteca - instruieşte compilatorul că programul are nevoie de biblioteca biblioteca. Fişierul ce conţine biblioteca va fi denumit libbiblioteca.so sau libbiblioteca.a.
 - -Icale - instruieşte compilatorul să caute fişierele antet (headere) şi în directorul cale; opţiunea se poate specifica de mai multe ori, pentru a adăuga mai multe directoare
-- -Onivel-optimizări - instruieşte compilatorul ce nivel de optimizare trebuie aplicat; -O0 va determina compilatorul să nu optimizeze codul generat; -O3 va determina compilatorul să optimizeze la maxim codul generat; -O2 este pragul de unde compilatorul va începe să insereze direct în cod funcţiile inline în loc să le apeleze; -Os va optimiza programul pentru a reduce dimensiunea codului generat, și nu pentru viteză.
+- -Onivel-optimizări - instruieşte compilatorul ce nivel de optimizare trebuie aplicat; 
+    - -O0 va determina compilatorul să nu optimizeze codul generat;
+    - -O3 va determina compilatorul să optimizeze la maxim codul generat;
+    - -O2 este pragul de unde compilatorul va începe să insereze direct în cod funcţiile inline în loc să le apeleze;
+    - -Os va optimiza programul pentru a reduce dimensiunea codului generat, și nu pentru viteză.
 - -g - dacă se foloseşte această opţiune compilatorul va genera în fişierele de ieşire informaţii care pot fi apoi folosite de un debugger (informaţii despre fişierele sursă şi o mapare între codul maşină şi liniile de cod ale fişierelor sursă)
 
 Paginile de ajutor ale GCC (man gcc, info gcc) oferă o listă cu toate opţiunile posibile ale GCC.
@@ -452,7 +456,6 @@ $ ./intro-lib
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
 ```
-
 
 ## Crearea unei biblioteci partajate
 
