@@ -57,11 +57,12 @@ Hello, world!
 ## Opţiuni
 După cum s-a observat, la o rulare a comenzii gcc/g++ se obţine din fişierul sursă un executabil. Folosind diverse opţiuni, putem opri compilarea la una din fazele intermediare:
 - -E - se realizează doar preprocesarea fişierului sursă
-- gcc -E hello.c , se va obține fișierul preprocesat hello.i
+    - gcc -E hello.c , se va obține fișierul preprocesat hello.i
 - -S - se realizează inclusiv faza de compilare
-- gcc -S hello.c , se va obține fișierul în limbaj de asamblare hello.s
+    - gcc -S hello.c , se va obține fișierul în limbaj de asamblare hello.s
 - -c - se realizează inclusiv faza de asamblare
-- gcc -c hello.c , se va obține fișierul obiect hello.o
+    - gcc -c hello.c , se va obține fișierul obiect hello.o
+
 La opţiunile de mai sus se poate folosi opţiunea -o pentru specificarea fişierului de ieşire:
 ```
 $ gcc -c hello.c -o my_obj_hello.o
