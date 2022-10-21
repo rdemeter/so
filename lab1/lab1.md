@@ -25,10 +25,10 @@ POZA
 - Analiza lexicală: textul sursă este preluat sub forma unei secvențe de caractere care sunt grupate apoi în entități numite atomi; atomilor li se atribuie coduri lexicale, astfel ca, la ieșirea acestei faze, programul sursa apare ca o secvența de asemenea coduri. Exemple de atomi: cuvinte cheie, identificatori, constante numerice, semne de punctuație etc. 
 - Analiza sintactică: are ca scop gruparea atomilor rezultați în urma analizei lexicale în structuri sintactice. O structură sintactică poate fi vazută ca un arbore ale carui noduri terminale reprezintă atomi, în timp ce nodurile interioare reprezintă șiruri de atomi care formează o entitate logică. Exemple de structuri sintactice: expresii, instrucțiuni, declarații etc. 
 Pe durata analizei sintactice, de obicei are loc și o analiză semantica, ceea ce inseamnă efectuarea unor verificări legate de: 
-* compatibilitatea tipurilor datelor cu operațiile în care ele sunt implicate 
-* respectarea regulilor de vizibilitate impuse de limbajul sursă.
+    - compatibilitatea tipurilor datelor cu operațiile în care ele sunt implicate 
+    - respectarea regulilor de vizibilitate impuse de limbajul sursă.
 - Generarea de cod intermediar: în această fază are loc transformarea arborelui sintactic într-o secvență de instrucțiuni simple, similare macroinstrucțiunilor unui limbaj de asamblare. Diferența dintre codul intermediar și un limbaj de asamblare este în principal aceea ca, în codul intermediar nu se specifică registrele utilizate în operații. Exemple de reprezentări pentru codul intermediar: notația postfix, instrucțiunile cu trei adrese etc. Codul intermediar prezintă avantajul de a fi mai ușor de optimizat decât codul mașina .
--	Optimizarea de cod: este o fază opțională, al cărei rol este modificarea unor porțiuni din codul intermediar generat, astfel încât programul rezultat să satisfacă anumite criterii de performanță vizând timpul de execuție și/sau spațiul de memorie ocupat.
+- Optimizarea de cod: este o fază opțională, al cărei rol este modificarea unor porțiuni din codul intermediar generat, astfel încât programul rezultat să satisfacă anumite criterii de performanță vizând timpul de execuție și/sau spațiul de memorie ocupat.
 
 - Generarea codului final: presupune transformarea instrucțiunilor codului intermediar (eventual optimizat) în instrucțiuni mașină (sau de asamblare) pentru calculatorul țintă (cel pe care se va executa programul compilat).
 În afară de acțiunile enumerate mai sus, procesul de compilare mai include următoarele: 
@@ -105,12 +105,12 @@ Exemplu 2. intro-02.c
 int suma(int a, int b, int c);
 
 int main() {
-printf("1 + 2 fac %d\n", suma(1, 2, 0));
+    printf("1 + 2 fac %d\n", suma(1, 2, 0));
 return 0;
 }
 
 int suma(int a, int b, int c) {
-return a + b + c;
+    return a + b + c;
 }
 ```
 ```
@@ -165,7 +165,7 @@ Exemplu 3. intro-03-f1.c
 #include <stdio.h>
 
 void f1(void) {
-    printf("Fisierul curent este %s\n",   FILE  );
+    printf("Fisierul curent este %s\n", \__FILE__);
 }
 ```
 Exemplu 3. intro-03-f2.c
@@ -175,16 +175,16 @@ Exemplu 3. intro-03-f2.c
 
 void f2(void)
 {
-    printf("Va aflati la linia %d din fisierul %s\n",   LINE  ,   FILE  );
+    printf("Va aflati la linia %d din fisierul %s\n", \__LINE__, \__FILE__);
 }
 ```
 În programul de mai sus se apelează, respectiv, funcţiile f1 şi f2 în funcţia main pentru a afişa diverse informaţii. Pentru compilarea acestora se transmit toate fişierele C ca argumente comenzii gcc:
-
+```
 $ gcc -Wall intro-03-main.c intro-03-f1.c intro-03-f2.c -o intro-03
 $ ./intro-03
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
-
+```
 Executabilul de ieşire a fost denumit intro-03; pentru acest lucru s-a folosit opţiunea -o. 
 
 Se observă folosirea fişierului header intro-03-util.h pentru declararea funcţiilor f1 şi f2. Declararea unei funcţii se realizează prin precizarea antetului. Fişierul header este inclus în fişierul intro-03-main.c pentru ca acesta să aibă cunoştinţă de formatul de apel al funcţiilor f1 şi f2. Funcţiile f1 şi f2 sunt definite, respectiv, în fişierele intro-03-f1 şi intro-03-f2. Codul acestora este integrat în executabil în momentul link-editării.
@@ -217,7 +217,7 @@ Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fi�
 ```
 Aceste directive de preprocesare au rolul de a proteja declaraţiile din header în cazul în care acesta este inclus de mai multe ori. Astfel, la prima includere nu va fi definit _NUME_HEADER_H (#ifndef), drept pentru care se defineşte _NUME_HEADER_H (#define) şi se prelucrează diversele declaraţii. La următoarea includere _NUME_HEADER_H va fi deja definit (#ifndef) şi nu va mai fi prelucrată partea de declaraţii, evitându-se astfel generarea unor erori de genul "multiple declaration". De remarcat că, pentru fişiere antet diferite este necesar ca simbolurile declarate la început, după modelul de mai sus, să fie diferite.
 
-Directivele de preprocesare __FILE__ şi __LINE__ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate __DATE__ in formatul „MMM DD YYY” şi __TIME__ in formatul „HH:MM:SS”
+Directivele de preprocesare \__FILE__ şi \__LINE__ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate __DATE__ in formatul „MMM DD YYY” şi \__TIME__ in formatul „HH:MM:SS”
 
 # Preprocesorul. Opţiuni de preprocesare
 
@@ -241,9 +241,9 @@ do {	\
   for (i = a; i < b; i++)	\
   c += i;	\
 } while (0)	\
-
-• #if, #ifdef, #ifndef, #else, #elif, #endif folosite pentru compilare condiţionată
 ```
+• #if, #ifdef, #ifndef, #else, #elif, #endif folosite pentru compilare condiţionată
+
 ```
 #define ON	1
 #define OFF	0
@@ -255,7 +255,7 @@ do {	\
 /* C code ... do some other stuff */
 #endif
 ```
-- __FILE__    , __LINE__ ,  __func__ sunt înlocuite cu numele fişierului, linia curentă în fişier şi numele funcţiei
+- \__FILE__    , \__LINE__ , \__func__ sunt înlocuite cu numele fişierului, linia curentă în fişier şi numele funcţiei
 
 - operatorul # este folosit pentru a înlocui o variabilă transmisă unui macro cu numele acesteia
 
