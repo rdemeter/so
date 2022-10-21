@@ -165,7 +165,7 @@ Exemplu 3. intro-03-f1.c
 #include <stdio.h>
 
 void f1(void) {
-    printf("Fisierul curent este %s\n", \__FILE__);
+    printf("Fisierul curent este %s\n", __FILE__);
 }
 ```
 Exemplu 3. intro-03-f2.c
@@ -175,7 +175,7 @@ Exemplu 3. intro-03-f2.c
 
 void f2(void)
 {
-    printf("Va aflati la linia %d din fisierul %s\n", \__LINE__, \__FILE__);
+    printf("Va aflati la linia %d din fisierul %s\n", __LINE__, __FILE__);
 }
 ```
 În programul de mai sus se apelează, respectiv, funcţiile f1 şi f2 în funcţia main pentru a afişa diverse informaţii. Pentru compilarea acestora se transmit toate fişierele C ca argumente comenzii gcc:
@@ -217,7 +217,7 @@ Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fi�
 ```
 Aceste directive de preprocesare au rolul de a proteja declaraţiile din header în cazul în care acesta este inclus de mai multe ori. Astfel, la prima includere nu va fi definit _NUME_HEADER_H (#ifndef), drept pentru care se defineşte _NUME_HEADER_H (#define) şi se prelucrează diversele declaraţii. La următoarea includere _NUME_HEADER_H va fi deja definit (#ifndef) şi nu va mai fi prelucrată partea de declaraţii, evitându-se astfel generarea unor erori de genul "multiple declaration". De remarcat că, pentru fişiere antet diferite este necesar ca simbolurile declarate la început, după modelul de mai sus, să fie diferite.
 
-Directivele de preprocesare \__FILE__ şi \__LINE__ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate __DATE__ in formatul „MMM DD YYY” şi \__TIME__ in formatul „HH:MM:SS”
+Directivele de preprocesare \_\_FILE\_\_ şi \_\_LINE\_\_ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate __DATE__ in formatul „MMM DD YYY” şi \_\_TIME\_\_ in formatul „HH:MM:SS”
 
 # Preprocesorul. Opţiuni de preprocesare
 
