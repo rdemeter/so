@@ -22,18 +22,18 @@ O vedere de ansamblu asupra procesului de compilare este prezentată în imagine
 
 POZA
 
--	Analiza lexicală: textul sursă este preluat sub forma unei secvențe de caractere care sunt grupate apoi în entități numite atomi; atomilor li se atribuie coduri lexicale, astfel ca, la ieșirea acestei faze, programul sursa apare ca o secvența de asemenea coduri. Exemple de atomi: cuvinte cheie, identificatori, constante numerice, semne de punctuație etc. 
--	Analiza sintactică: are ca scop gruparea atomilor rezultați în urma analizei lexicale în structuri sintactice. O structură sintactică poate fi vazută ca un arbore ale carui noduri terminale reprezintă atomi, în timp ce nodurile interioare reprezintă șiruri de atomi care formează o entitate logică. Exemple de structuri sintactice: expresii, instrucțiuni, declarații etc. 
+- Analiza lexicală: textul sursă este preluat sub forma unei secvențe de caractere care sunt grupate apoi în entități numite atomi; atomilor li se atribuie coduri lexicale, astfel ca, la ieșirea acestei faze, programul sursa apare ca o secvența de asemenea coduri. Exemple de atomi: cuvinte cheie, identificatori, constante numerice, semne de punctuație etc. 
+- Analiza sintactică: are ca scop gruparea atomilor rezultați în urma analizei lexicale în structuri sintactice. O structură sintactică poate fi vazută ca un arbore ale carui noduri terminale reprezintă atomi, în timp ce nodurile interioare reprezintă șiruri de atomi care formează o entitate logică. Exemple de structuri sintactice: expresii, instrucțiuni, declarații etc. 
 Pe durata analizei sintactice, de obicei are loc și o analiză semantica, ceea ce inseamnă efectuarea unor verificări legate de: 
--	compatibilitatea tipurilor datelor cu operațiile în care ele sunt implicate 
--	respectarea regulilor de vizibilitate impuse de limbajul sursă.
--	Generarea de cod intermediar: în această fază are loc transformarea arborelui sintactic într-o secvență de instrucțiuni simple, similare macroinstrucțiunilor unui limbaj de asamblare. Diferența dintre codul intermediar și un limbaj de asamblare este în principal aceea ca, în codul intermediar nu se specifică registrele utilizate în operații. Exemple de reprezentări pentru codul intermediar: notația postfix, instrucțiunile cu trei adrese etc. Codul intermediar prezintă avantajul de a fi mai ușor de optimizat decât codul mașina .
+* compatibilitatea tipurilor datelor cu operațiile în care ele sunt implicate 
+* respectarea regulilor de vizibilitate impuse de limbajul sursă.
+- Generarea de cod intermediar: în această fază are loc transformarea arborelui sintactic într-o secvență de instrucțiuni simple, similare macroinstrucțiunilor unui limbaj de asamblare. Diferența dintre codul intermediar și un limbaj de asamblare este în principal aceea ca, în codul intermediar nu se specifică registrele utilizate în operații. Exemple de reprezentări pentru codul intermediar: notația postfix, instrucțiunile cu trei adrese etc. Codul intermediar prezintă avantajul de a fi mai ușor de optimizat decât codul mașina .
 -	Optimizarea de cod: este o fază opțională, al cărei rol este modificarea unor porțiuni din codul intermediar generat, astfel încât programul rezultat să satisfacă anumite criterii de performanță vizând timpul de execuție și/sau spațiul de memorie ocupat.
 
-•	Generarea codului final: presupune transformarea instrucțiunilor codului intermediar (eventual optimizat) în instrucțiuni mașină (sau de asamblare) pentru calculatorul țintă (cel pe care se va executa programul compilat).
+- Generarea codului final: presupune transformarea instrucțiunilor codului intermediar (eventual optimizat) în instrucțiuni mașină (sau de asamblare) pentru calculatorul țintă (cel pe care se va executa programul compilat).
 În afară de acțiunile enumerate mai sus, procesul de compilare mai include următoarele: 
-•	Gestionarea tabelei de simboluri: tabela de simboluri (TS) este o structură de date destinată păstrării de informații despre simbolurile (numele) care apar în programul sursă; compilatorul face referire la aceasta tabelă aproape în toate fazele compilării. 
-•	Tratarea erorilor: un compilator trebuie să fie capabil să recunoască anumite categorii de erori care pot să apară în programul sursă; tratarea unei erori presupune detectarea ei, emiterea unui mesaj corespunzator şi revenirea din eroare, adică, pe cât posibil, continuarea procesului de compilare până la epuizarea textului sursă, astfel încât numarul de compilări necesare eliminării tuturor erorilor dintr-un program să fie cât mai mic. Practic, există erori specifice fiecarei faze de compilare.
+- Gestionarea tabelei de simboluri: tabela de simboluri (TS) este o structură de date destinată păstrării de informații despre simbolurile (numele) care apar în programul sursă; compilatorul face referire la aceasta tabelă aproape în toate fazele compilării. 
+- Tratarea erorilor: un compilator trebuie să fie capabil să recunoască anumite categorii de erori care pot să apară în programul sursă; tratarea unei erori presupune detectarea ei, emiterea unui mesaj corespunzator şi revenirea din eroare, adică, pe cât posibil, continuarea procesului de compilare până la epuizarea textului sursă, astfel încât numarul de compilări necesare eliminării tuturor erorilor dintr-un program să fie cât mai mic. Practic, există erori specifice fiecarei faze de compilare.
 GCC foloseşte pentru compilarea de programe C/C++ comanda gcc, respectiv g++. O invocare tipică este pentru compilarea unui program dintr-un singur fişier sursă:
 ```
 $ gcc hello.c
@@ -56,12 +56,12 @@ Hello, world!
 ```
 ## Opţiuni
 După cum s-a observat, la o rulare a comenzii gcc/g++ se obţine din fişierul sursă un executabil. Folosind diverse opţiuni, putem opri compilarea la una din fazele intermediare:
-• -E - se realizează doar preprocesarea fişierului sursă
-• gcc -E hello.c , se va obține fișierul preprocesat hello.i
-• -S - se realizează inclusiv faza de compilare
-• gcc -S hello.c , se va obține fișierul în limbaj de asamblare hello.s
-• -c - se realizează inclusiv faza de asamblare
-• gcc -c hello.c , se va obține fișierul obiect hello.o
+- -E - se realizează doar preprocesarea fişierului sursă
+- gcc -E hello.c , se va obține fișierul preprocesat hello.i
+- -S - se realizează inclusiv faza de compilare
+- gcc -S hello.c , se va obține fișierul în limbaj de asamblare hello.s
+- -c - se realizează inclusiv faza de asamblare
+- gcc -c hello.c , se va obține fișierul obiect hello.o
 La opţiunile de mai sus se poate folosi opţiunea -o pentru specificarea fişierului de ieşire:
 ```
 $ gcc -c hello.c -o my_obj_hello.o
@@ -75,11 +75,11 @@ Exemplu 1. intro-01.c
 #include <stdio.h>
 
 int main() {
-printf("1 + 2 fac %d\n", suma(1, 2));
+    printf("1 + 2 fac %d\n", suma(1, 2));
 }
 
 int suma(int a, int b, int c) {
-return a + b + c;
+    return a + b + c;
 }
 ```
 În exemplul mai sus, programatorul a uitat că funcţia definită de el pentru adunare primeşte trei parametri şi nu doi. Dacă programul se compilează fără opţiunea -Wall, nu se vor genera erori sau avertismente, dar rezultatul nu va fi cel aşteptat:
@@ -123,13 +123,11 @@ Exemplul prezentat oferă doar una din erorile posibile pe care GCC le detecteaz
 ## Alte opţiuni
 
 Alte opţiuni utile sunt:
-
-
-• -Lcale - această optiune instruieşte compilatorul să caute și în directorul cale bibliotecile pe care trebuie să le folosească programul; opţiunea se poate specifica de mai multe ori, pentru a adăuga mai multe directoare
-• -lbiblioteca - instruieşte compilatorul că programul are nevoie de biblioteca biblioteca. Fişierul ce conţine biblioteca va fi denumit libbiblioteca.so sau libbiblioteca.a.
-• -Icale - instruieşte compilatorul să caute fişierele antet (headere) şi în directorul cale; opţiunea se poate specifica de mai multe ori, pentru a adăuga mai multe directoare
-• -Onivel-optimizări - instruieşte compilatorul ce nivel de optimizare trebuie aplicat; -O0 va determina compilatorul să nu optimizeze codul generat; -O3 va determina compilatorul să optimizeze la maxim codul generat; -O2 este pragul de unde compilatorul va începe să insereze direct în cod funcţiile inline în loc să le apeleze; -Os va optimiza programul pentru a reduce dimensiunea codului generat, și nu pentru viteză.
-• -g - dacă se foloseşte această opţiune compilatorul va genera în fişierele de ieşire informaţii care pot fi apoi folosite de un debugger (informaţii despre fişierele sursă şi o mapare între codul maşină şi liniile de cod ale fişierelor sursă)
+- -Lcale - această optiune instruieşte compilatorul să caute și în directorul cale bibliotecile pe care trebuie să le folosească programul; opţiunea se poate specifica de mai multe ori, pentru a adăuga mai multe directoare
+- -lbiblioteca - instruieşte compilatorul că programul are nevoie de biblioteca biblioteca. Fişierul ce conţine biblioteca va fi denumit libbiblioteca.so sau libbiblioteca.a.
+- -Icale - instruieşte compilatorul să caute fişierele antet (headere) şi în directorul cale; opţiunea se poate specifica de mai multe ori, pentru a adăuga mai multe directoare
+- -Onivel-optimizări - instruieşte compilatorul ce nivel de optimizare trebuie aplicat; -O0 va determina compilatorul să nu optimizeze codul generat; -O3 va determina compilatorul să optimizeze la maxim codul generat; -O2 este pragul de unde compilatorul va începe să insereze direct în cod funcţiile inline în loc să le apeleze; -Os va optimiza programul pentru a reduce dimensiunea codului generat, și nu pentru viteză.
+- -g - dacă se foloseşte această opţiune compilatorul va genera în fişierele de ieşire informaţii care pot fi apoi folosite de un debugger (informaţii despre fişierele sursă şi o mapare între codul maşină şi liniile de cod ale fişierelor sursă)
 
 Paginile de ajutor ale GCC (man gcc, info gcc) oferă o listă cu toate opţiunile posibile ale GCC.
 
@@ -140,19 +138,19 @@ Exemplele de până acum tratează programe scrise într-un singur fişier surs�
 Următoarele fişiere sunt folosite ca suport pentru a exemplifica modul de compilare a unui program provenind din mai multe fişiere sursă:
 
 Exemplu 3. intro-03-main.c
-
+```
 #include <stdio.h>
 #include "intro-03-util.h"
 
 int main(void) {
-	f1 ();
-	f2 ();
+    f1 ();
+    f2 ();
 
-return 0;
+    return 0;
 }
-
+```
 Exemplu 3. intro-03-util.h
-
+```
 #ifndef _INTRO_03_UTIL_H
 #define _INTRO_03_UTIL_H   1
 
@@ -160,14 +158,14 @@ void f1(void);
 void f2(void);
 
 #endif
-
+```
 Exemplu 3. intro-03-f1.c
 ```
 #include "intro-03-util.h"
 #include <stdio.h>
 
 void f1(void) {
-printf("Fisierul curent este %s\n",   FILE  );
+    printf("Fisierul curent este %s\n",   FILE  );
 }
 ```
 Exemplu 3. intro-03-f2.c
@@ -206,7 +204,7 @@ Se observă obţinerea executabilului intro-03-m prin legarea modulelor obiect. 
 Scăderea timpului de dezvoltare prin compilarea numai a surselor care au fost modificate este motivaţia de bază pentru existenţa utilitarelor de automatizare precum make sau nmake.
 
 Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fişiere este folosirea directivelor de procesare #ifndef, #define, #endif prezentate în secţiunea următoare. Un fişier header tipic va avea structura:
-
+```
 #ifndef _NUME_HEADER_H	/* numele fisierului header scris cu majuscule */
 #define _NUME_HEADER_H	1
 
@@ -216,7 +214,7 @@ Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fi�
 /* declaraţii de funcţii */
 
 #endif
-
+```
 Aceste directive de preprocesare au rolul de a proteja declaraţiile din header în cazul în care acesta este inclus de mai multe ori. Astfel, la prima includere nu va fi definit _NUME_HEADER_H (#ifndef), drept pentru care se defineşte _NUME_HEADER_H (#define) şi se prelucrează diversele declaraţii. La următoarea includere _NUME_HEADER_H va fi deja definit (#ifndef) şi nu va mai fi prelucrată partea de declaraţii, evitându-se astfel generarea unor erori de genul "multiple declaration". De remarcat că, pentru fişiere antet diferite este necesar ca simbolurile declarate la început, după modelul de mai sus, să fie diferite.
 
 Directivele de preprocesare __FILE__ şi __LINE__ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate __DATE__ in formatul „MMM DD YYY” şi __TIME__ in formatul „HH:MM:SS”
@@ -226,12 +224,10 @@ Directivele de preprocesare __FILE__ şi __LINE__ sunt expandate de preprocesor 
 Preprocesorul este prima componentă apelată în momentul folosirii comenzii gcc. Preprocesorul pe distribuţiile Linux este GNU CPP. După CPP se apelează compilatorul efectiv (GCC), apoi asamblorul (GAS) şi apoi linker-ul (GNU LD). Rolul CPP este acela de prelucrare a directivelor şi a operatorilor de preprocesare.
 
 Directivele de preprocesare cele mai întâlnite sunt:
+- #include pentru includerea de fişiere (de obicei header) într-un alt fişier
+- #define, #undef folosite pentru definirea, respectiv anularea definirii de macrouri
 
-• #include pentru includerea de fişiere (de obicei header) într-un alt fişier
-
-• #define, #undef folosite pentru definirea, respectiv anularea definirii de macrouri
-
-
+```
 #define MY_MACRO 1	/* macro simplu */
 #undef MY_MACRO
 
@@ -247,8 +243,8 @@ do {	\
 } while (0)	\
 
 • #if, #ifdef, #ifndef, #else, #elif, #endif folosite pentru compilare condiţionată
-
-
+```
+```
 #define ON	1
 #define OFF	0
 #define DEBUG	ON
@@ -258,10 +254,10 @@ do {	\
 #else
 /* C code ... do some other stuff */
 #endif
+```
+- __FILE__    , __LINE__ ,  __func__ sunt înlocuite cu numele fişierului, linia curentă în fişier şi numele funcţiei
 
-• __FILE__    , __LINE__ ,     func     sunt înlocuite cu numele fişierului, linia curentă în fişier şi numele funcţiei
-
-• operatorul # este folosit pentru a înlocui o variabilă transmisă unui macro cu numele acesteia
+- operatorul # este folosit pentru a înlocui o variabilă transmisă unui macro cu numele acesteia
 
 
 Exemplu 4. intro-04.c
@@ -306,13 +302,13 @@ Opţiunea -U este utilă pentru a anula definirea unui macro.
 
 De multe ori, un dezvoltator va dori să poată activa sau dezactiva foarte facil afişarea de mesaje suplimentare
 (de informare sau de debug) în sursele sale. Metoda cea mai simplă pentru a realiza acest lucru este prin intermediul unui macro:
-
+```
 #define DEBUG	1
 
 #ifdef DEBUG
 /* afisare mesaje debug */
 #endif
-
+```
 Dacă se foloseşte opţiunea -D în linia de comandă, atunci definiţia macroului DEBUG poate fi eliminată:
 
 $ gcc -DDEBUG [...]
@@ -351,26 +347,26 @@ Un ultim retuş este afişarea, dacă se doreşte, a fişierului şi liniei unde
 #define Dprintf(msg,...)	/* do nothing */
 #endif
 ```
-Linker-ul. Opţiuni de link-editare. Biblioteci
+# Linker-ul. Opţiuni de link-editare. Biblioteci
 
 Linker-ul este folosit pentru a "unifica" mai multe module obiect şi biblioteci şi a obţine un executabil sau o bibliotecă. Linker-ul are rolul de a rezolva simbolurile nedefinite dintr-un modul obiect prin inspectarea celor existente într-un altul. Erorile de linker apar ca urmare a lipsei unui simbol, ca în exemplul de mai jos:
 
 Exemplu 5. intro-05-main.c
-
+```
 void f(void);
 
 int main (void) {
 f();
-return 0;
+    return 0;
 }
-
+```
 Exemplu 5. intro-05-f.c
 ```
 #include <stdio.h>
 
 void f(void)
 {
-printf ("Hello, World!\n");
+    printf ("Hello, World!\n");
 }
 ```
 ```
@@ -389,15 +385,14 @@ Linker-ul pe distribuţiile Linux este GNU LD. Executabilul asociat este ld. De 
 # Biblioteci
 
 O bibliotecă este o colecţie de funcţii precompilate. În momentul în care un program are nevoie de o funcţie, linker-ul va apela respectiva funcţie din bibliotecă. Numele fişierului reprezentând biblioteca trebuie să aibă prefixul lib:
-
+```
 $ ls -l /usr/lib/libm.*
 -rw-r--r-- 1 root root 481574 Jul 30 23:41 /usr/lib/libm.a
 lrwxrwxrwx 1 root root	14 Aug 25 20:20 /usr/lib/libm.so -> /lib/libm.so.6
-
+```
 Biblioteca matematică este denumită libm.a sau libm.so. În Linux bibliotecile sunt de două tipuri:
-
-• statice, au de obicei, extensia .a
-• dinamice, au extensia .so
+- statice, au de obicei, extensia .a
+- dinamice, au extensia .so
 
 Detalii despre crearea bibliotecilor se găsesc în secţiunea următoare.
 
@@ -461,35 +456,33 @@ Va aflati la linia 5 din fisierul intro-03-f2.c
 ## Crearea unei biblioteci partajate
 
 Spre deosebire de o bibliotecă statică despre care am văzut că nu este nimic altceva decât o arhivă de fișiere obiect, o bibliotecă partajată este ea insăși un fișier obiect. Crearea unei biblioteci partajate se realizează prin intermediul linker-ului. Opțiunea -shared indică compilatorului să creeze un obiect partajat și nu un fișier executabil. Este, de asemenea, indicată folosirea opţiunii -fPIC:
-
+```
 $ gcc -shared -fPIC intro-03-f1.o intro-03-f2.o -o libintro_shared.so
 $ gcc -Wall intro-03-main.c -o intro-lib -lintro_shared -L.
 $ ./intro-lib
 ./intro-lib: error while loading shared libraries: libintro_shared.so:
 cannot open shared object	file: No such file or directory
-
+```
  
 La rularea executabilului se poate observa că nu se poate încărca biblioteca partajată. Cauza este deosebirea dintre bibliotecile statice şi bibliotecile partajate. În cazul bibliotecilor statice codul funcţiei de bibliotecă este copiat în codul executabil la link-editare. De partea cealaltă, în cazul bibliotecilor partajate, codul este încărcat în memorie în momentul rulării.
 
 Astfel, în momentul rulării unui program, loader-ul (programul responsabil cu încărcarea programului în memorie), trebuie să ştie unde să caute biblioteca partajată pentru a o încărca în memorie în cazul în care aceasta nu a fost încărcată deja. Loader-ul foloseşte câteva căi predefinite (/lib, /usr/lib, etc) şi de asemenea locaţii definite în variabila de mediu LD_LIBRARY_PATH:
-
+```
 $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 $ ./intro-lib
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
-
+```
 În exemplul de mai sus variabilei de mediu LD_LIBRARY_PATH i-a fost adăugată calea către directorul curent rezultând în posibilitatea rulării programului. LD_LIBRARY_PATH va rămâne modificată cât timp va rula consola curentă. Pentru a face o modificare a unei variabile de mediu doar pentru o instanță a unui program se face atribuirea noii valori înaintea comenzii de execuție:
-
+```
 $ LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.	./intro-lib
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
 $ ./intro-lib
 ./intro-lib: error while loading shared libraries: libintro_shared.so:
 cannot open shared object	file: No such file or directory
-
-Resurse utile
-
-
+```
+# Resurse utile
 1. GCC Online Documentation
 2. The C Preprocessor
 3. GNU C Library
@@ -501,11 +494,4 @@ Resurse utile
 10. Building and Linking with Libraries
 11. Dynamic Link Library
 13. Dynamic Libraries
-
-Note
-
-1. ^ info make "Using Variables"
-2. ^ http://www.gnu.org/software/make/manual/make.html#Using-Variables
-3. ^ info make "Implicit Rules"
-4. ^ http://www.gnu.org/software/make/manual/make.html#Implicit-Rules
 
