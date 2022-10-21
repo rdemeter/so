@@ -302,7 +302,7 @@ Ca orice limbaj de programare, shell-ul are un set de structuri de control pentr
 
 ## if
 
-Sintaxa pentru if este urmatoarea:
+Sintaxa pentru **if** este urmatoarea:
 ```
 if CONDITIE1; then
     comenzi
@@ -349,7 +349,7 @@ fi
 
 # case
 
-Sintaxa pentru case este următoarea:
+Sintaxa pentru **case** este următoarea:
 ```
 case VARIABILA in
     pattern1) comenzi ;;
@@ -376,7 +376,7 @@ echo " legs."
 
 # for
 
-Sintaxa pentru for este următoarea:
+Sintaxa pentru **for** este următoarea:
 ```
 for VARIABILA in LISTA; do
     comenzi
@@ -413,7 +413,7 @@ echo "suma numerelor pare pana la 100 este $sum"
 
 # while
 
-Sintaxa pentru while este următoarea:
+Sintaxa pentru **while** este următoarea:
 ```
 while CONDITIE; do
     comenzi
@@ -497,7 +497,7 @@ O serie de comenzi (interne sau externe) sunt utile în crearea de scripturi she
 
 ## echo
 
-Comanda echo este folosită pentru a afiẟa un ẟir de caractere, o variabilă la ieẟire standard:
+Comanda **echo** este folosită pentru a afișa un șir de caractere, o variabilă la ieșire standard:
 ```
 $ echo alfa
 alfa
@@ -643,7 +643,7 @@ $ tail -f /var/log/apache/access_log
 
 ## grep
 
-Comanda grep permite localizarea liniilor intr-un fișier care conține o expresie căutată. Sintaxa de baza este
+Comanda **grep** permite localizarea liniilor intr-un fișier care conține o expresie căutată. Sintaxa de baza este
 ```
 $ grep word file
 ```
@@ -922,37 +922,31 @@ exit 0
 
 # Exerciţii
 
-1.	Creaţi și rulaţi un script shell care afișează mesajul Hello, World!. Hint:
+1.	Creaţi și rulaţi un script shell care afișează mesajul Hello, World!.
 -	folosiţi apostrof (') pentru citare (! este văzut ca un caracter special)
 
 2.	Afișati numele utilizatorilor din sistem care încep cu litera 's'. 
-Hint:
 -	nu e nevoie de script shell; se poate face cu un one-liner
 -	folositi /etc/passwd, grep și cut
 
 3.	Afișaţi separate prin tab numele și shell-ul utilizatorilor din sistem care NU au home-ul în /home/...
-Hint:
 -	nu e nevoie de script shell
 -	folosiţi /etc/passwd, grep, cut, tr
 
 4.	Creaţi un script shell care să afiẟeze suma memoriei ocupate de procesele din sistem după cum reiese din ieșirea comenzii ps -e -o rss. Comparaţi cu rezultatul oferit prin rularea comenzii free.
-Hint:
 -	folosiţi opţiuni tail pentru a afiẟa toate liniile mai puţin prima (prima este antetul RSS) (man tail)
 -	la tail este utila aici forma cu + a argumentului; daca nu gasiti in man nimic despre asta info tail
 -	folosiţi expandare aritmetica
 
 5.	Folosiţi un one-liner pentru a contoriza toate fișierele cu extensia .sh din ierarhia /etc.
-Hint:
 -	folosiţi find
 
 6.	Creaţi un script shell pentru a număra toate fiẟierele din /etc pentru care comanda file spune că sunt scripturi Shell:
 $ file test.bash test.bash: Bourne shell script text executable
 Puteţi să faceţi scriptul un one-liner?
-Hint:
 -	va trebui să folosiţi find în combinaţie cu for
 
 7.	Descărcaţi folosind wget arhiva cu sursele nucleului Linux 1.0: (ftp://ftp.eu.kernel.org/pub/linux/kernel/v1.0/linux-1.0.tar.bz2). Dezarhivaţi (tar xjf ...). Creaţi un script shell care să contorizeze numărul de linii din fișierele sursă.
-Hint:
 -	fișierele sursă se consideră cele cu extensia .c sau .h
 
 # Link-uri utile
