@@ -217,7 +217,7 @@ Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fi�
 ```
 Aceste directive de preprocesare au rolul de a proteja declaraţiile din header în cazul în care acesta este inclus de mai multe ori. Astfel, la prima includere nu va fi definit _NUME_HEADER_H (#ifndef), drept pentru care se defineşte _NUME_HEADER_H (#define) şi se prelucrează diversele declaraţii. La următoarea includere _NUME_HEADER_H va fi deja definit (#ifndef) şi nu va mai fi prelucrată partea de declaraţii, evitându-se astfel generarea unor erori de genul "multiple declaration". De remarcat că, pentru fişiere antet diferite este necesar ca simbolurile declarate la început, după modelul de mai sus, să fie diferite.
 
-Directivele de preprocesare \_\_FILE\_\_ şi \_\_LINE\_\_ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate __DATE__ in formatul „MMM DD YYY” şi \_\_TIME\_\_ in formatul „HH:MM:SS”
+Directivele de preprocesare \_\_FILE\_\_ şi \_\_LINE\_\_ sunt expandate de preprocesor la numele fişierului, respectiv numărul liniei. Asemănător sunt expandate \_\_DATE\_\_ in formatul „MMM DD YYY” şi \_\_TIME\_\_ in formatul „HH:MM:SS”
 
 # Preprocesorul. Opţiuni de preprocesare
 
@@ -255,7 +255,7 @@ do {	\
 /* C code ... do some other stuff */
 #endif
 ```
-- \__FILE__    , \__LINE__ , \__func__ sunt înlocuite cu numele fişierului, linia curentă în fişier şi numele funcţiei
+- \_\_FILE\_\_    , \_\_LINE\_\_ , \_\_func\_\_ sunt înlocuite cu numele fişierului, linia curentă în fişier şi numele funcţiei
 
 - operatorul # este folosit pentru a înlocui o variabilă transmisă unui macro cu numele acesteia
 
