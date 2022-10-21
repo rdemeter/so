@@ -326,7 +326,7 @@ Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcă
 În momentul de faţă problema este folosirea mai multor argumente la printf. Acest lucru poate fi rezolvat prin intermediul macrourilor cu număr variabil de parametri, apărute în standardul ISO C99:
 ```
 #ifdef DEBUG
-#define Dprintf(msg,...)	printf(msg,   VA_ARGS  )
+#define Dprintf(msg,...)	printf(msg, __VA_ARGS__)
 #else
 #define Dprintf(msg,...)	/* do nothing */
 #endif
@@ -335,7 +335,7 @@ Singura problema care mai poate apărea este folosirea Dprintf cu un singur argu
 ##. Dacă acesta este folosit peste un argument care nu există, atunci virgula se elimină şi expresia devine corectă. Acest lucru nu se întâmplă în cazul în care argumentul există (altfel spus operatorul ## nu schimbă sensul de până atunci):
 ```
 #ifdef DEBUG
-#define Dprintf(msg,...)	printf(msg, ##  VA_ARGS  )
+#define Dprintf(msg,...)	printf(msg, ## __VA_ARGS__)
 #else
 #define Dprintf(msg,...)	/* do nothing */
 #endif
@@ -343,7 +343,7 @@ Singura problema care mai poate apărea este folosirea Dprintf cu un singur argu
 Un ultim retuş este afişarea, dacă se doreşte, a fişierului şi liniei unde s-a apelat macroul:
 ```
 #ifdef DEBUG
-#define Dprintf(msg,...)	printf("[%s]:%d", msg,   FILE  ,   LINE  , ##  VA_ARGS  )
+#define Dprintf(msg,...)	printf("[%s]:%d", msg, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
 #define Dprintf(msg,...)	/* do nothing */
 #endif
