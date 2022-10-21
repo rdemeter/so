@@ -1,10 +1,10 @@
 # Shell scripting
 
-Shell-ul este principala interfață de comunicare între utilizator și sistemul de operare. Deși, în mod intuitiv, shell-ul este identificat cu o interfață în linia de comandă, poate fi și o interfaţă grafică. Exemplu este Explorer-ul sistemului de operare Windows.
+Shell-ul este principala interfață de comunicare între utilizator și sistemul de operare. Deși, în mod intuitiv, shell-ul este identificat cu o interfață în linia de comandă, poate fi și o interfaţă grafică. Exemplu este File Explorer-ul sistemului de operare Microsoft Windows.
 
-În cele ce urmează vom studia interfaţa de tip CLI (Command Line Interface) oferită de sistemele de operare Unix. Deși cu o curbă de învăţare mai mare decat o interfaţă grafică, CLI permite un control mult mai bun al sistemului. Mai mult, shell-ul dispune de un limbaj de programare. Un program shell, denumit script shell, este folosit pentru a îmbina mai multe comenzi ẟi diverse structuri de control pentru a obţine o nouă funcţionalitate sau pentru automatizarea sarcinilor. În acest fel un script shell este un instrument esenţial pentru sarcinile administrative ẟi alte rutine repetitive care nu necesită funcţionalităţi ale unor limbaje de programare avansate.
+În cele ce urmează vom studia interfaţa de tip CLI (Command Line Interface) oferită de sistemele de operare Unix. Deși cu o curbă de învăţare mai mare decât o interfaţă grafică, CLI permite un control mult mai bun al sistemului. Mai mult, shell-ul dispune de un limbaj de programare. Un program shell, denumit script shell, este folosit pentru a îmbina mai multe comenzi și diverse structuri de control pentru a obţine o nouă funcţionalitate sau pentru automatizarea sarcinilor. În acest fel un script shell este un instrument esenţial pentru sarcinile administrative și alte rutine repetitive care nu necesită funcţionalităţi ale unor limbaje de programare avansate.
 
-În continuare ne vom referi la Bash (Bourne Again SHell). Există ẟi alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, Microsoft oferă PowerShell pe sistemele Windows. PowerShell are o abordarea orientată pe obiecte ẟi un set de funcţionalităţi care acoperă nevoile de administrare ale unui sistem Windows.
+În continuare ne vom referi la Bash (Bourne Again SHell). Există și alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, Microsoft oferă PowerShell pe sistemele Windows. PowerShell are o abordarea orientată pe obiecte și un set de funcţionalităţi care acoperă nevoile de administrare ale unui sistem Windows.
 
 ## Cel mai simplu script shell
 
@@ -34,9 +34,9 @@ Se observă că este necesar ca fișierul să fie executabil pentru a putea fi i
 Spre exemplu, următorul script se șterge pe sine:
 ```
 #!/bin/rm -f
-```
-aici putem scrie orice ... oricum se va șterge
 
+aici putem scrie orice ... oricum se va șterge
+```
 Un script poate fi rulat prin precizarea explicită a interpretorului în linia de comandă:
 
 ```
@@ -46,14 +46,14 @@ Hello, World!
 
 În această situaţie nu este nevoie ca scriptul sa fie executabil și nici nu este nevoie de prezenţa liniei #!/bin/bash.
 
-Caracterul # semnifică începutul unui comentariu care durează pană la sfarẟitul liniei.
+Caracterul # semnifică începutul unui comentariu care durează pană la sfarșitul liniei.
 
 Comanda exit este folosită pentru a indica valoarea de retur a scriptului. Este implicit 0 (cu alte cuvinte nu era necesar să apară în script).
 
 
 # Operatori shell
 
-Shell-ul prezinta o serie de operatori folositi pentru imbinarea comenzilor.
+Shell-ul prezintă o serie de operatori folositi pentru îmbinarea comenzilor.
 
 
 ## Concatenarea comenzilor
@@ -65,9 +65,9 @@ Următorii operatori sunt folosiți pentru concatenarea diverselor comenzi:
 -	command1 || comand2 - command2 este executată numai dacă command1 are valoare de retur diferita de 0
 
 
-## Inlantuirea comenzilor
+## Înlănțuirea comenzilor
 
-Inlăntuirea comenzilor se realizează folosind operatorul | (pipe). În această situatie ieșirea unei comenzi devine intrarea pentru cealaltă comandă.
+Inlănțuirea comenzilor se realizează folosind operatorul | (pipe). În această situatie ieșirea unei comenzi devine intrarea pentru cealaltă comandă.
 
 Câteva exemple sunt prezentate în continuare:
 ```
@@ -115,14 +115,14 @@ pts/0
 $ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2 | uniq | wc -l 3
 ```
 
-## Redirectari
+## Redirectări
 
-Comenzilor le pot fi redirectate, respectiv, intrarea standard, iesirea standard si eroarea standard dintr-un fisier. O parte din operatorii folositi pentru redirectare sunt:
+Comenzilor le pot fi redirectate, respectiv, intrarea standard, ieșirea standard și eroarea standard dintr-un fișier. O parte din operatorii folosiți pentru redirectare sunt:
 
--	\> - redirectarea iesirii standard
+-	\> - redirectarea ieșirii standard
 -	2> - redirectarea erorii standard
--	2>&1 - redirectarea erorii standard in iesirea standard. Efectiv, unificarea stderr cu stdout.
--	< - redirectarea intrarii standard
+-	2>&1 - redirectarea erorii standard in ieșirea standard. Efectiv, unificarea stderr cu stdout.
+-	< - redirectarea intrării standard
 
 Exemple:
 ```
@@ -137,7 +137,7 @@ $ grep "alpha" < file.txt
 
 # Variabile
 
-Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de limbajele cunoscute, variabilele shell nu au tipuri. O variabila poate fi evaluata atat ca numar cat si ca sir de caractere.
+Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de limbajele cunoscute, variabilele shell nu au tipuri. O variabila poate fi evaluată atât ca numar cât și ca șir de caractere.
 
 Exemple de definire de variabile:
 
@@ -150,9 +150,9 @@ my_other_var="a 1 3 4"
 new_var=$var1
 new_var2=${var2}var3
 ```
-ATENTIE! Sintaxa shell este foarte stricta; NU este permis sa existe spatii intre numele variabilei si caracterul = sau intre caracterul = si valoarea variabilei.
+ATENTIE! Sintaxa shell este foarte strictă; NU este permis sa existe spatii intre numele variabilei si caracterul = sau intre caracterul = si valoarea variabilei.
 
-Se observa ca valoarea unei variabile este referita prin folosirea simbolului $.
+Se observă ca valoarea unei variabile este referită prin folosirea simbolului $.
 
 Exemple de folosire de variabile:
 ```
@@ -185,11 +185,11 @@ $ echo "$var1 $my_other_var"
 
 # Argumente in linia de comanda
 
-Un script poate primi argumente în linia de comanda. Argumentele sunt referite respectiv folosind parametrii pozitionali: $1, $2, ... $0 este numele scriptului (echivalent cu argv[0] din C).
+Un script poate primi argumente în linia de comandă. Argumentele sunt referite respectiv folosind parametrii poziționali: $1, $2, ... $0 este numele scriptului (echivalent cu argv[0] din C).
 
 Numărul de argumente din linia de comandă este dat de '$#'. '$#' va fi 0 daca nu avem argumente in linia de comandă (echivalentul C - argc - ar fi avut valoarea 1 in acest caz).
 
-$@ poate fi folosit pentru obtinerea intregii liste de argumente separate prin spatiu.
+$@ poate fi folosit pentru obținerea întregii liste de argumente separate prin spațiu.
 
 Exemplu:
 ```
@@ -218,42 +218,22 @@ Cel de-al doilea parametru este beta gamma
 Lista de parametri este alfa beta gamma
 ```
 
-## shift
-
-Comanda builtin shift este folosita pentru deplasarea parametrilor pozitionali cu valoarea primita ca parametru (sau 1 daca nu este prezenta). Astfel daca se primeste valoarea N, parametrii pozitionali de la N+1 la '$#' vor fi redumiti la $1, $2, ... '$#'-N+1
-
-Exemplu:
-```
-$ cat pos2.sh
-
-#!/bin/sh
-if test $# -ge 2; then
-    echo "Parametrii inainte de shift sunt $@"
-    shift
-    echo "Parametrii dupa shift sunt $@"
-fi
-```
-```
-$ ./pos2.sh a b c
-Parametrii inainte de shift sunt a b c
-Parametrii dupa shift sunt b c
-```
-
 # Caractere speciale
 
-Un set de caractere au semnificatie specială in cadrului shell-ului.
+Un set de caractere au semnificație specială in cadrului shell-ului.
 
-## spatiu
+## spațiu
 
-Caracterul spatiu (blank) este separator pentru argumentele in linia de comandă sau pentru elementele unei liste. Dacă se dorește transmiterea ca parametru a unui argument ce conține spatiu acesta trebuie citat (quoted):
-
+Caracterul spațiu (blank) este separator pentru argumentele in linia de comandă sau pentru elementele unei liste. Dacă se dorește transmiterea ca parametru a unui argument ce conține spatiu acesta trebuie citat (quoted):
+```
 $ ls my\ dir
 $ ls "my dir"
 $ ls 'my dir'
+```
 
 ## backslash
 
-Caracterul backslash forteaza caracterul ce-l precede sa-si pastreze semnificatia literala; cu alte cuvinte, este folosit pentru a intarzia (a escapa) acel caracter:
+Caracterul backslash forțeaza caracterul ce-l precede sa-si pastreze semnificatia literală; cu alte cuvinte, este folosit pentru a intarzia (a escapa) acel caracter:
 
 ```
 $ echo $var1
@@ -266,17 +246,17 @@ $var1
 
 ## ghilimele
 
-Un sir intre ghilimele (double quotes ") va pastra semnificatia literala a caracterelor ce-l compun cu exceptia caracterelor ' (apostrof) si $ (dollar). Caracterul \ (backslash) isi pastreaza semnificatia speciala numai in cazul in care este urmat de $, ', ``, \ sau newline.
+Un șir intre ghilimele (double quotes ") va păstra semnificația literală a caracterelor ce-l compun cu excepția caracterelor ' (apostrof) și $ (dollar). Caracterul \ (backslash) își păstrează semnificația specială numai in cazul în care este urmat de $, ', ``, \ sau newline.
 
 
 ## apostrof
 
-Un sir intre caractere apostrof (single quotes) va pastra semnificatia literala a tuturor caracterelor ce-l compun (nu exista exceptii).
+Un șir între caractere apostrof (single quotes) va păstra semnificatia literală a tuturor caracterelor ce-l compun (nu există excepții).
 
 
 ## dollar - expansion
 
-Caracterul dollar este folosit in mai multe situatii in ceea ce se numeste expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca intr-o variabila iesirea unei functii, etc.
+Caracterul dollar este folosit in mai multe situatii in ceea ce se numește expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca într-o variabila ieșirea unei funcții, etc.
 
 
 ### expandarea unui parametru
@@ -296,7 +276,7 @@ $ echo $?
 
 ### substitutia unei comenzi
 
-Iesirea unei comenzi inlocuieste comanda efectiva:
+Ieșirea unei comenzi inlocuiește comanda efectivă:
 ```
 $ ls -l | wc -l 11
 $ var=$(ls -l | wc -l)
@@ -304,9 +284,9 @@ $ echo $var
 11
 ```
 
-### expansiune aritmetica
+### expansiune aritmetică
 
-Se realizeaza evaluarea unei expresii aritmetice cu furnizarea rezultatului:
+Se realizează evaluarea unei expresii aritmetice cu furnizarea rezultatului:
 ```
 $ num="1+2*3"
 $ echo $num
@@ -317,7 +297,7 @@ $ echo $num
 ```
 # Structuri de control
 
-Ca orice limbaj de programare, shell-ul are un set de structuri de control pentru a permite lucrul cu cicluri si cu decizii.
+Ca orice limbaj de programare, shell-ul are un set de structuri de control pentru a permite lucrul cu cicluri și cu decizii.
 
 
 ## if
@@ -332,9 +312,9 @@ else
     comenzi
 fi
 ```
-Structurile elif si else sunt optionale.
+Structurile elif și else sunt opționale.
 
-Conditia poate aparea in doua formate:
+Condiția poate aparea în două formate:
 
 [ conditie_efectiva ]
 
@@ -342,9 +322,9 @@ sau
 
 test conditie_efectiva
 
-Pentru conditiile posibile consultati pagina de manual a utilitarului test.
+Pentru conditiile posibile consultați pagina de manual a utilitarului test.
 
-ATENTIE! Daca folositi prima varianta este nevoie de spatiu dupa [ si inainte de ].
+ATENTIE! Dacă folosiți prima varianta este nevoie de spatiu dupa [ si inainte de ].
 
 Exemple:
 ```
@@ -369,7 +349,7 @@ fi
 
 # case
 
-Sintaxa pentru case este urmatoarea:
+Sintaxa pentru case este următoarea:
 ```
 case VARIABILA in
     pattern1) comenzi ;;
@@ -396,13 +376,13 @@ echo " legs."
 
 # for
 
-Sintaxa pentru for este urmatoarea:
+Sintaxa pentru for este următoarea:
 ```
 for VARIABILA in LISTA; do
     comenzi
 done
 ```
-LISTA este o insiruire de elemente separate prin spatii. Variabila va lua pe rand aceste valori. Daca se doresc variabile numerice in stilul C se poate folosi constructia (( ... )).
+LISTA este o insiruire de elemente separate prin spații. Variabila va lua pe rând aceste valori. Dacă se doresc variabile numerice in stilul C se poate folosi constructia (( ... )).
 
 Exemple:
 ```
@@ -433,13 +413,13 @@ echo "suma numerelor pare pana la 100 este $sum"
 
 # while
 
-Sintaxa pentru while este urmatoarea:
+Sintaxa pentru while este următoarea:
 ```
 while CONDITIE; do
     comenzi
 done
 ```
-Conditia are acelasi format ca la if.
+Conditia are același format ca la if.
 
 Exemplu:
 ```
@@ -455,16 +435,16 @@ echo "produsul este $prod"
 
 # Functii shell
 
-Ca orice alt limbaj de programare, shell-ul permite lucrul cu functii proceduri. Sintaxa unei functii este:
+Ca orice alt limbaj de programare, shell-ul permite lucrul cu functii proceduri. Sintaxa unei funcții este:
 ```
 [function] nume_functie ()
 {
     comenzi
 }
 ```
-Identificatorul function este optional. Sintaxa de apel este simpla: numele functiei urmat de eventualii parametri.
+Identificatorul function este optional. Sintaxa de apel este simpla: numele funcției urmat de eventualii parametri.
 
-ATENTIE! In cadrul unei functii argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incat daca dorim sa referim intr-o functie argumentele in linia de comanda va trebui sa-i transmitem ca parametri la apelul functiei.
+ATENTIE! In cadrul unei functii argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incât daca dorim să referim intr-o funcție argumentele in linia de comanda va trebui să-i transmitem ca parametri la apelul funcției.
 
 Exemplu:
 ```
@@ -487,13 +467,13 @@ fun2 alfa
 
 # Pattern matching
 
-In interactiunea cu sistemul de fisiere se doreste selectarea rapida a mai multor fisiere dupa cateva caracteristici de nume comune. Operatia efectuata de shell se numeste pattern matching. Exista urmatoarele caractere speciale:
+In interactiunea cu sistemul de fisiere se doreste selectarea rapida a mai multor fisiere dupa cateva caracteristici de nume comune. Operația efectuată de shell se numeste pattern matching. Există urmatoarele caractere speciale:
 
 -	'*' - se potriveste cu orice sir de caracter, inclusiv sirul vid
 -	? - se potriveste cu un singur caracter
 -	[...] - se potriveste cu unul din caracterele din set; poate fi de genul [abc] sau [a-gA-G] sau [0-5h-zH-Z]
 
-Pentru urmatoarele pattern-uri trebuie activata optiunea shopt -s extglob.
+Pentru următoarele pattern-uri trebuie activată optiunea shopt -s extglob.
 
 -	{sir1,sir2,sir3,..} - se potriveste cu unul dintre sirurile dintre acolade
 
@@ -530,7 +510,7 @@ $ echo '$PATH' $PATH
 
 ## cat, tac, head, tail
 
-Comanda cat afiẟează conţinutul unui fiẟier sau al intrării standard. Comanda tac afiẟează conţinutul unui fiẟier inversat. Comanda head afiẟează începutul unui fișier sau al intrării standard, în timp ce comanda tail afiẟează sfârșitul acestuia:
+Comanda **cat** afișează conţinutul unui fișier sau al intrării standard. Comanda **tac** afișează conţinutul unui fișier inversat. Comanda **head** afișează începutul unui fișier sau al intrării standard, în timp ce comanda **tail** afișează sfârșitul acestuia:
 
 ```
 $ cat /etc/passwd
@@ -559,7 +539,7 @@ bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
 
 ## read
 
-Comanda read este folosită pentru citirea de informaţii de la intrarea standard:
+Comanda **read** este folosită pentru citirea de informaţii de la intrarea standard:
 ```
 $ read a
 alfa
@@ -578,7 +558,7 @@ am citit c
 
 ## find
 
-Comanda find este o comandă fundamentală pentru parcurgerea intrărilor dintr-o ierarhie a sistemului de fiẟiere. Câteva exemple de utilizare sunt prezentate în continuare:
+Comanda **find** este o comandă fundamentală pentru parcurgerea intrărilor dintr-o ierarhie a sistemului de fișiere. Câteva exemple de utilizare sunt prezentate în continuare:
 
 -	cautarea headerelor de sistem care încep cu șirul std:
 ```
@@ -597,7 +577,7 @@ $ find /usr/include/ -type f -name 'std*'
 /usr/include/nptl/bits/stdio-lock.h
 /usr/include/stdio_ext.h
 ```
--	căutarea șirului mutex în headerele de sistem care conţin ẟirul lock
+-	căutarea șirului mutex în headerele de sistem care conţin șirul lock
 ```
 $ find /usr/include/ -name '*lock*' -exec grep -H mutex {} \;
 /usr/include/linux/seqlock.h: * This can be used when code [...]
@@ -605,7 +585,7 @@ $ find /usr/include/ -name '*lock*' -exec grep -H mutex {} \;
 /usr/include/linux/lockdep.h: * rwlocks, mutexes and rwsems) [...]
 /usr/include/linux/lockdep.h:# define mutex_acquire(l, s, t, i) [...]
 ```
-Opţiunea exec este folosită pentru a rula o comandă pentru fiẟierele găsite. ẞirul {} este special ẟi se înlocuieẟte cu numele fiẟierului găsit de find. Caracterul ; (citat cu ajutorul backslash) indică încheierea comenzii de executat.
+Opţiunea exec este folosită pentru a rula o comandă pentru fișierele găsite. Șirul {} este special și se înlocuiește cu numele fișierului găsit de find. Caracterul ; (citat cu ajutorul backslash) indică încheierea comenzii de executat.
 
 
 # Filtre de text
@@ -663,17 +643,17 @@ $ tail -f /var/log/apache/access_log
 
 ## grep
 
-Comanda grep permite localizarea liniilor intr-un fisier care contine o expresie cautata. Sintaxa de baza este
+Comanda grep permite localizarea liniilor intr-un fișier care conține o expresie căutată. Sintaxa de baza este
 ```
 $ grep word file
 ```
-file este numele fisierului in care vrem sa gasim cuvantul word. Un exemplu de utilizare este:
+file este numele fișierului în care vrem să gasim cuvântul word. Un exemplu de utilizare este:
 ```
 $ grep latex lab2html.sh latex2html "$BASE.tex" 2>&1 > /dev/null latex "$BASE.tex" 2>&1 > /dev/null
 ```
-De multe ori dorim sa realizam cautarea in mod case-insensitive (adica sa nu conteze faptul ca se cauta UNIX sau unix). Pentru aceasta folosim optiunea -i.
+De multe ori dorim să realizăm căutarea în mod case-insensitive (adică să nu conteze faptul ca se caută UNIX sau unix). Pentru aceasta folosim optiunea -i.
 
-Cand nu se precizeaza un fisier se foloseste intrarea standard, grep devenind ideal pentru lucrul cu pipes. De exemplu:
+Când nu se precizează un fișier se folosește intrarea standard, grep devenind ideal pentru lucrul cu pipes. De exemplu:
 ```
 $ last	| head -100 | grep tty
 root	tty1	Wed	Nov	16	11:00 -	down	(00:00)
@@ -705,7 +685,7 @@ razvan	3767	3719	0 12:19 pts/0	00:00:05 lyx
 ```
 Optiunea -n permite afisarea numarului liniei care continea cuvantul cautat.
 
-Putem de asemenea sa afisam numai fisierele care contin acel cuvant (fara afisarea liniilor). Pentru aceasta folosim optiunea -l (listare). De obicei este folosita in conjunctie cu optiunea -R pentru cautarea recursiva in cadrul unei structuri de directoare:
+Putem de asemenea să afișăm numai fișierele care conțin acel cuvânt (fără afișarea liniilor). Pentru aceasta folosim opțiunea -l (listare). De obicei este folosită în conjuncție cu opțiunea -R pentru căutarea recursivă in cadrul unei structuri de directoare:
 ```
 $ grep -r -l "#include <sys/wait.h>" .
 
@@ -724,7 +704,7 @@ $ grep -r -l "#include <sys/wait.h>" .
 
 ## tr
 
-Comanda tr (transliterate) este folosita pentru a translata caracterele dintr-un set de caractere intr-un alt set de caractere. Sintaxa de baza este:
+Comanda **tr** (transliterate) este folosita pentru a translata caracterele dintr-un set de caractere intr-un alt set de caractere. Sintaxa de baza este:
 ```
 tr 'set1' 'set2'
 ```
@@ -745,7 +725,7 @@ $ echo shell programming | tr -s 'lm' shel programing
 
 ## sort
 
-Comanda sort este utilizata pentru sortarea liniilor alfabetic. Un exemplu de utilizare este:
+Comanda **sort** este utilizată pentru sortarea liniilor alfabetic. Un exemplu de utilizare este:
 ```
 $ echo -en "alfa\nomega\ngamma\nbeta\n"
 alfa
@@ -778,7 +758,7 @@ $ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
 43
 123
 ```
-De multe ori output-ul apare intr-o forma in care elementele de sortat sunt intr-o alta coloana (nu prima, cea folosita implicit de sort). Pentru aceasta se poate folosi optiunea -k (key). Sintaxa, in cazul folosirii acestei optiuni, este:
+De multe ori output-ul apare intr-o forma in care elementele de sortat sunt intr-o altă coloană (nu prima, cea folosita implicit de sort). Pentru aceasta se poate folosi opțiunea -k (key). Sintaxa, în cazul folosirii acestei optiuni, este:
 ```
 sort -k start, end file
 ```
@@ -791,10 +771,9 @@ sort -rn -k 2,2 file	; sorteaza dupa a doua coloana
 
 ## uniq
 
-Se pot elimina duplicatele folosind optiunea -u la sort. Totusi, de multe ori este util sa afisam de cate ori apare un cuvant. Pentru aceasta vom folosi comanda uniq cu optiunea -c. Atentie! uniq face eliminarea duplicatelor numai daca liniile sunt sortate. Exemple de utilizare:
+Se pot elimina duplicatele folosind optiunea -u la sort. Totusi, de multe ori este util sa afisam de cate ori apare un cuvânt. Pentru aceasta vom folosi comanda **uniq** cu optiunea -c. Atentie! uniq face eliminarea duplicatelor numai daca liniile sunt sortate. Exemple de utilizare:
 ```
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | uniq
-
 alfa
 beta
 alfa
@@ -818,18 +797,18 @@ $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq -c
 
 ## wc
 
-Comanda wc (word count) este folosita pentru a contoriza numarul de linii, de cuvinte sau de caractere dintr-un text sau de la intrarea standard. Pentru aceasta i se pot specifica optiunile -c, -w, -l.
+Comanda **wc** (word count) este folosita pentru a contoriza numarul de linii, de cuvinte sau de caractere dintr-un text sau de la intrarea standard. Pentru aceasta i se pot specifica optiunile -c, -w, -l.
 
 
 ## cut
 
-Comanda cut selecteaza numai anumite parti (coloane) ale fisierului de intrare sau ale intrarii standard.
+Comanda **cut** selecteaza numai anumite părți (coloane) ale fișierului de intrare sau ale intrării standard.
 
-Sintaxa cea mai folosita este:
+Sintaxa cea mai folosită este:
 ```
 cut -d delim -f fields
 ```
-Folosindu-se delimitatorul delim se vor selecta numai campurile fields. Exemple de utilizare sunt:
+Folosindu-se delimitatorul delim se vor selecta numai câmpurile fields. Exemple de utilizare sunt:
 ```
 $ ls -l
 
@@ -935,107 +914,46 @@ if ! test -d ~/bkup; then
 fi
 
 #	cauta fisirele dorite
-#	do not try this if u have a lot of old files and little disk space ;) find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
+#	do not try this if u have a lot of old files and little disk space ;) 
+find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
 
 exit 0
 ```
 
 # Exerciţii
 
-1.	Creaţi și rulaţi un script shell care afiẟează mesajul Hello, World!. Hint:
+1.	Creaţi și rulaţi un script shell care afișează mesajul Hello, World!. Hint:
 -	folosiţi apostrof (') pentru citare (! este văzut ca un caracter special)
 
-2.	Creaţi un script care afiẟează numărul de argumente primite. Dacă scriptul primeẟte mai mult de două argumente atunci se afiẟează toate mai puţin primele două.
-
-Hint:
--	folosiţi shift
-
-3.	Prelucraţi scriptul anterior ca să afiẟeze atât argumentul cât ẟi numărul de caractere eventual cu un cap de tabel. Ceva de forma:
-
-argument	valoare	dimensiune
-3	alfa	4
-4	epsilon	7
-5	omega	5
-
-Hint:
--	trebuie să folosiţi for
--	folosiţi construcţia ${#myvar} pentru a afla numărul de caractere al variabilei myvar.
-
-4.	Creaţi un script care să primească un singur argument (scriptul se va întoarce cu eroare - exit 1 - ẟi cu un mesaj specific dacă primeẟte mai mult de un argument sau niciunul). Scriptul va analiza argumentul ẟi va afișa mesajele:
--	"argumentul începe cu o cifră"
--	"argumentul începe cu o literă"
--	"argumentul este o ẟir de caractere" pentru orice altă situaţie
-
-Hint:
--	folosiţi case
--	folosiţi expresii regulate
-
-5.	Afișati numele utilizatorilor din sistem care încep cu litera 's'. 
+2.	Afișati numele utilizatorilor din sistem care încep cu litera 's'. 
 Hint:
 -	nu e nevoie de script shell; se poate face cu un one-liner
--	folositi /etc/passwd, grep ẟi cut
+-	folositi /etc/passwd, grep și cut
 
-6.	Afiẟaţi separate prin tab numele ẟi shell-ul utilizatorilor din sistem care NU au home-ul în /home/...
-
+3.	Afișaţi separate prin tab numele și shell-ul utilizatorilor din sistem care NU au home-ul în /home/...
 Hint:
 -	nu e nevoie de script shell
 -	folosiţi /etc/passwd, grep, cut, tr
 
-7.	Scrieţi un script shell care să afiẟeze, separate prin virgula, directoarele in care se gasesc executabile gcc.
-Hint:
--	folositi whereis gcc, basename ẟi dirname
-
-8.	Creaţi un script shell care să afiẟeze suma memoriei ocupate de procesele din sistem după cum reiese din ieẟirea comenzii ps -e -o rss. Comparaţi cu rezultatul oferit prin rularea comenzii free.
-
+4.	Creaţi un script shell care să afiẟeze suma memoriei ocupate de procesele din sistem după cum reiese din ieșirea comenzii ps -e -o rss. Comparaţi cu rezultatul oferit prin rularea comenzii free.
 Hint:
 -	folosiţi opţiuni tail pentru a afiẟa toate liniile mai puţin prima (prima este antetul RSS) (man tail)
 -	la tail este utila aici forma cu + a argumentului; daca nu gasiti in man nimic despre asta info tail
 -	folosiţi expandare aritmetica
 
-9.	Un fiẟier conţine linii de forma nume parola. Creaţi un script care să afiẟeze perechea nume parola numai dacă numele are 6 litere. Scriptul va primi fiẟierul ca argument.
-
-Hint:
--	folosiţi while read
-
-10.	Creaţi un script care foloseẟte un fiẟier în forma de mai sus. Scriptul trebuie să adauge în sistem utilizatorii. Parola trebuie schimbată la cea prezentă în fiẟier. Scriptul va primi ca argument numele fiẟierului de mai sus. Scriptul va fi non-interactiv - nu va cere utilizatorului nici o informaţie.
-
-Hint:
--	folosiţi useradd (nu adduser - e interactiv) - verificaţi pagina de manual pentru opţiuni
--	folosiţi chpasswd pentru schimbarea în mod non-interactiv a parolei (passwd o schimbă neinteractiv)
--	scriptul trebuie rulat ca root
-
-11.	Instalaţi serverul Apache2 (apt-get install apache2). Folosiţi un script shell pentru a dezinstala toate pachetele instalate.
-
-Hint:
-
--	folosiţi ieẟirea comenzii dpkg -l 'apache*'; rândurile conţinând pachetele instalate încep cu linia 'ii'
--	pachetele pot fi dezinstalate prin transmiterea lor ca listă de argumente comenzii apt-get remove --purge
--	folosiţi opţiunea -y pentru a dezactiva interactivitatea apt-get
-
-12.	Dezinstalaţi pachetele de mai sus printr-un one-liner (o singură linie shell - fără nevoia unui script).
-
-13.	Folosiţi un one-liner pentru a contoriza toate fiẟierele cu extensia .sh din ierarhia /etc.
-
+5.	Folosiţi un one-liner pentru a contoriza toate fișierele cu extensia .sh din ierarhia /etc.
 Hint:
 -	folosiţi find
 
-14.	Creaţi un script shell pentru a număra toate fiẟierele din /etc pentru care comanda file spune că sunt scripturi Shell:
-
+6.	Creaţi un script shell pentru a număra toate fiẟierele din /etc pentru care comanda file spune că sunt scripturi Shell:
 $ file test.bash test.bash: Bourne shell script text executable
-
 Puteţi să faceţi scriptul un one-liner?
-
 Hint:
--	va trebui să folosiţi find în combinaţie cu for (nu am găsit să se poată fără for ... mai caut)
+-	va trebui să folosiţi find în combinaţie cu for
 
-15.	Descărcaţi folosind wget arhiva cu sursele nucleului Linux 1.0
-
-(ftp://ftp.eu.kernel.org/pub/linux/kernel/v1.0/linux-1.0.tar.bz2). Dezarhivaţi (tar xjf ...). Creaţi un script shell care să contorizeze numărul de linii din fiẟierele sursă.
-
+7.	Descărcaţi folosind wget arhiva cu sursele nucleului Linux 1.0: (ftp://ftp.eu.kernel.org/pub/linux/kernel/v1.0/linux-1.0.tar.bz2). Dezarhivaţi (tar xjf ...). Creaţi un script shell care să contorizeze numărul de linii din fișierele sursă.
 Hint:
 -	fișierele sursă se consideră cele cu extensia .c sau .h
-
-Fiecare exerciţiu se punctează cu 1p (oricât de uẟor/greu ar fi)
 
 # Link-uri utile
 
