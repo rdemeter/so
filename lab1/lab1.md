@@ -20,7 +20,7 @@ La numărul impresionant de limbaje de mai sus se adaugă şi numărul mare de p
 O vedere de ansamblu asupra procesului de compilare este prezentată în imaginea de mai jos. 
 
 
-![](https://github.com/rdemeter/so/lab1/fig1.png)
+![](https://github.com/rdemeter/so/blob/master/lab1/fig1.png)
 
 - Analiza lexicală: textul sursă este preluat sub forma unei secvențe de caractere care sunt grupate apoi în entități numite atomi; atomilor li se atribuie coduri lexicale, astfel ca, la ieșirea acestei faze, programul sursa apare ca o secvența de asemenea coduri. Exemple de atomi: cuvinte cheie, identificatori, constante numerice, semne de punctuație etc. 
 - Analiza sintactică: are ca scop gruparea atomilor rezultați în urma analizei lexicale în structuri sintactice. O structură sintactică poate fi vazută ca un arbore ale carui noduri terminale reprezintă atomi, în timp ce nodurile interioare reprezintă șiruri de atomi care formează o entitate logică. Exemple de structuri sintactice: expresii, instrucțiuni, declarații etc. 
