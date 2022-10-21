@@ -186,8 +186,7 @@ Exemplu 3. intro-03-f2.c
 #include "intro-03-util.h"
 #include <stdio.h>
 
-void f2(void)
-{
+void f2(void) {
     printf("Va aflati la linia %d din fisierul %s\n", __LINE__, __FILE__);
 }
 ```
@@ -279,9 +278,9 @@ Exemplu 4. intro-04.c
 #define expand_macro(a) printf ("variabila %s are valoarea %d\n", #a, a)
 
 int main (void) {
-int my_uber_var = 12345;
-expand_macro (my_uber_var);
-return 0;
+    int my_uber_var = 12345;
+    expand_macro (my_uber_var);
+    return 0;
 } 
 ```
 ```
@@ -289,7 +288,7 @@ $ gcc -Wall intro-04.c
 $ ./a.out
 variabila my_uber_var are valoarea 12345
 ```
-• operatorul ## (token paste) este folosit pentru concatenarea între un argument al macrodefiniţiei şi un
+- operatorul ## (token paste) este folosit pentru concatenarea între un argument al macrodefiniţiei şi un
 alt şir de caractere sau între două argumente ale macrodefiniţiei.
 
 # Opţiuni pentru preprocesor la apelul gcc
@@ -298,17 +297,18 @@ Preprocesorului îi pot fi transmise opţiuni prin parametri transmişi comenzii
 
 Opţiunea -I este utilă pentru a preciza locul în care se află fişierele incluse. Astfel, daca fişierul header
 utils.h se află în directorul includes/, utilizatorul poate include fişierul în forma
-
+```
 #include "utils.h"
-
+```
 dar va trebui să precizeze calea către fişier folosind opţiunea -I:
-
+```
 $ gcc -Iincludes [...]
-
+```
 Opţiunea -D este utilă pentru a defini macrouri în linia de comandă:
-
+```
 $ gcc -D   DEBUG   [...]
 $ gcc -D SIMPLE_MACRO=10 [...]	; echivalent cu #define SIMPLE_MACRO	10
+```
 Opţiunea -U este utilă pentru a anula definirea unui macro.
 
 # Debugging folosind directive de preprocesare
@@ -377,8 +377,7 @@ Exemplu 5. intro-05-f.c
 ```
 #include <stdio.h>
 
-void f(void)
-{
+void f(void) {
     printf ("Hello, World!\n");
 }
 ```
@@ -419,9 +418,8 @@ Exemplu 6. intro-06.c
 #define RAD	(M_PI / 4)
 
 int main (void) {
-printf ("sin = %g, cos = %g\n", sin (RAD), cos (RAD));
-
-return 0;
+    printf ("sin = %g, cos = %g\n", sin (RAD), cos (RAD));
+    return 0;
 }
 ```
 ```
