@@ -137,7 +137,7 @@ $ grep "alpha" < file.txt
 
 # Variabile
 
-Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de limbajele cunoscute, variabilele shell nu au tipuri. O variabila poate fi evaluată atât ca numar cât și ca șir de caractere.
+Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de limbajele cunoscute, variabilele shell nu au tipuri. O variabila poate fi evaluată atât ca număr cât și ca șir de caractere.
 
 Exemple de definire de variabile:
 
@@ -183,7 +183,7 @@ $ echo "$var1 $my_other_var"
 2 a 1 3 4
 ```
 
-# Argumente in linia de comanda
+# Argumente în linia de comandă
 
 Un script poate primi argumente în linia de comandă. Argumentele sunt referite respectiv folosind parametrii poziționali: $1, $2, ... $0 este numele scriptului (echivalent cu argv[0] din C).
 
@@ -233,7 +233,7 @@ $ ls 'my dir'
 
 ## backslash
 
-Caracterul backslash forțeaza caracterul ce-l precede sa-si pastreze semnificatia literală; cu alte cuvinte, este folosit pentru a intarzia (a escapa) acel caracter:
+Caracterul **backslash** forțeaza caracterul ce-l precede să-și păstreze semnificația literală; cu alte cuvinte, este folosit pentru a intârzia (a escapa) acel caracter:
 
 ```
 $ echo $var1
@@ -246,22 +246,20 @@ $var1
 
 ## ghilimele
 
-Un șir intre ghilimele (double quotes ") va păstra semnificația literală a caracterelor ce-l compun cu excepția caracterelor ' (apostrof) și $ (dollar). Caracterul \ (backslash) își păstrează semnificația specială numai in cazul în care este urmat de $, ', ``, \ sau newline.
+Un șir intre ghilimele (double quotes ") va păstra semnificația literală a caracterelor ce-l compun cu excepția caracterelor ' (apostrof) și $ (dollar). Caracterul \ (backslash) își păstrează semnificația specială numai în cazul în care este urmat de $, ', ``, \ sau newline.
 
 
 ## apostrof
 
 Un șir între caractere apostrof (single quotes) va păstra semnificatia literală a tuturor caracterelor ce-l compun (nu există excepții).
 
-
 ## dollar - expansion
 
 Caracterul dollar este folosit in mai multe situatii in ceea ce se numește expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca într-o variabila ieșirea unei funcții, etc.
 
-
 ### expandarea unui parametru
 
-Se inlocuieste un parametru (variabila) sau se inlocuiesc parametrii pozitionali. $? se traduce in valoarea de retur a ultimei comenzi executate.
+Se înlocuiește un parametru (variabila) sau se înlocuiesc parametrii poziționali. $? se traduce in valoarea de retur a ultimei comenzi executate.
 ```
 $ ls -l | grep 126
 -rwxr-xr-x 1 razvan razvan 126 2007-01-06 21:42 pos2.sh 
@@ -302,7 +300,7 @@ Ca orice limbaj de programare, shell-ul are un set de structuri de control pentr
 
 ## if
 
-Sintaxa pentru **if** este urmatoarea:
+Sintaxa pentru **if** este următoarea:
 ```
 if CONDITIE1; then
     comenzi
@@ -312,7 +310,7 @@ else
     comenzi
 fi
 ```
-Structurile elif și else sunt opționale.
+Structurile **elif** și **else** sunt opționale.
 
 Condiția poate aparea în două formate:
 
@@ -322,9 +320,9 @@ sau
 
 test conditie_efectiva
 
-Pentru conditiile posibile consultați pagina de manual a utilitarului test.
+Pentru condițiile posibile consultați pagina de manual a utilitarului test.
 
-ATENTIE! Dacă folosiți prima varianta este nevoie de spatiu dupa [ si inainte de ].
+ATENTIE! Dacă folosiți prima variantă este nevoie de spatiu după [ si inainte de ].
 
 Exemple:
 ```
@@ -382,7 +380,7 @@ for VARIABILA in LISTA; do
     comenzi
 done
 ```
-LISTA este o insiruire de elemente separate prin spații. Variabila va lua pe rând aceste valori. Dacă se doresc variabile numerice in stilul C se poate folosi constructia (( ... )).
+LISTA este o inșiruire de elemente separate prin spații. Variabila va lua pe rând aceste valori. Dacă se doresc variabile numerice în stilul C se poate folosi construcția (( ... )).
 
 Exemple:
 ```
@@ -391,19 +389,22 @@ for i in *; do
         echo "$i este fisier"
     fi
 done
-
+```
+```
 for i in "1 2 3"; do
     sum=$(($sum + $i))
 done
 
 echo "suma este $sum"
-
+```
+```
 for i in $(seq 1 10); do
     sum=$(($sum + $i))
 done
 
 echo "suma primelor 10 numere este $sum"
-
+```
+```
 for ((i = 0; i < 100; i += 2)); do
     sum=$(($sum + $i))
 done
@@ -435,16 +436,16 @@ echo "produsul este $prod"
 
 # Functii shell
 
-Ca orice alt limbaj de programare, shell-ul permite lucrul cu functii proceduri. Sintaxa unei funcții este:
+Ca orice alt limbaj de programare, shell-ul permite lucrul cu funcții proceduri. Sintaxa unei funcții este:
 ```
 [function] nume_functie ()
 {
     comenzi
 }
 ```
-Identificatorul function este optional. Sintaxa de apel este simpla: numele funcției urmat de eventualii parametri.
+Identificatorul function este optional. Sintaxa de apel este simplă: numele funcției urmat de eventualii parametri.
 
-ATENTIE! In cadrul unei functii argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incât daca dorim să referim intr-o funcție argumentele in linia de comanda va trebui să-i transmitem ca parametri la apelul funcției.
+ATENTIE! In cadrul unei funcții argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incât dacă dorim să referim într-o funcție argumentele în linia de comandă va trebui să-i transmitem ca parametri la apelul funcției.
 
 Exemplu:
 ```
@@ -467,9 +468,9 @@ fun2 alfa
 
 # Pattern matching
 
-In interactiunea cu sistemul de fisiere se doreste selectarea rapida a mai multor fisiere dupa cateva caracteristici de nume comune. Operația efectuată de shell se numeste pattern matching. Există urmatoarele caractere speciale:
+In interactiunea cu sistemul de fișiere se dorește selectarea rapidă a mai multor fișiere după câteva caracteristici de nume comune. Operația efectuată de shell se numește pattern matching. Există următoarele caractere speciale:
 
--	'*' - se potriveste cu orice sir de caracter, inclusiv sirul vid
+-	'*' - se potriveste cu orice șir de caracter, inclusiv șirul vid
 -	? - se potriveste cu un singur caracter
 -	[...] - se potriveste cu unul din caracterele din set; poate fi de genul [abc] sau [a-gA-G] sau [0-5h-zH-Z]
 
@@ -548,7 +549,7 @@ alfa
 $ echo $a
 alfa
 ```
-O folosirea frecventă este în combinaţie cu while pentru citirea linie cu linie a conţinutului unui fiẟier:
+O folosire frecventă este în combinaţie cu while pentru citirea linie cu linie a conţinutului unui fișier:
 ```
 $ cat out.txt | while read a; do echo "am citit $a"; done
 am citit a
@@ -590,20 +591,20 @@ Opţiunea exec este folosită pentru a rula o comandă pentru fișierele găsite
 
 # Filtre de text
 
-Variabilele, structurile de control si procedurile sunt intalnite in toate limbajele de programare. Ce face insa un script shell indicat pentru sarcini administrative si repetitive este posibilitatea de imbinare a comenzilor simple, de lucru cu fisierele sistemului pentru a obtine informatiile dorite si pentru a adauga o noua functionalitate. De obicei aceste sarcini necesita o procesare sofisticata. In aceste situatii se folosesc filtrele de text.
+Variabilele, structurile de control și procedurile sunt întâlnite în toate limbajele de programare. Ce face insa un script shell indicat pentru sarcini administrative și repetitive este posibilitatea de îmbinare a comenzilor simple, de lucru cu fișierele sistemului pentru a obține informatiile dorite și pentru a adăuga o nouă funcționalitate. De obicei aceste sarcini necesita o procesare sofisticată. În aceste situații se folosesc filtrele de text.
 
-Comenzi folosite ca si filtre de text sunt head, tail, grep, sort, uniq, tr, cut.
+Comenzi folosite ca și filtre de text sunt head, tail, grep, sort, uniq, tr, cut.
 
 
 ## head, tail
 
-Cele doua comenzi sunt folosite pentru afisarea numai a primelor sau a ultimelor linii de text din cadrul unui fisier. Sintaxa lor este asemanatoare:
+Cele doua comenzi sunt folosite pentru afișarea numai a primelor sau a ultimelor linii de text din cadrul unui fișier. Sintaxa lor este asemanatoare:
 ```
 head [-n lines] files
 
 tail [-n lines] files
 ```
-Primul argument, daca exista, afiseaza primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
+Primul argument, dacă există, afiseaza primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
 
 Exemple de comenzi sunt:
 ```
@@ -636,7 +637,7 @@ drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
 drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096 Nov	12	20:06 tema1
 ```
-In cazul comenzi tail o optiune utila este -f care mentine fisierul de vizualizat deschis pe masura ce programele scriu in el, spre exemplu pentru a vizualiza un fisier de log pe masura ce informatiile sunt scrise in el:
+În cazul comenzi **tail** o opțiune utilă este -f care menține fișierul de vizualizat deschis pe masura ce programele scriu in el, spre exemplu pentru a vizualiza un fișier de log pe măsura ce informațiile sunt scrise în el:
 ```
 $ tail -f /var/log/apache/access_log
 ```
@@ -659,7 +660,7 @@ $ last	| head -100 | grep tty
 root	tty1	Wed	Nov	16	11:00 -	down	(00:00)
 razvan	tty1	Wed	Nov	16	00:07 -	00:08	(00:01)
 ```
-O alta optiune utila este -v. Aceasta permite cautarea acelor linii care NU contin cuvantul transmis ca parametru. Spre exemplu, daca dorim afisarea utilizatorilor care nu au ca si director de baza un director de forma /home/nume, vom folosi comanda:
+O altă opțiune utilă este -v. Aceasta permite căutarea acelor linii care NU conțin cuvantul transmis ca parametru. Spre exemplu, dacă dorim afișarea utilizatorilor care nu au ca și director de baza un director de forma /home/nume, vom folosi comanda:
 ```
 $ grep -v /home /etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -708,7 +709,7 @@ Comanda **tr** (transliterate) este folosita pentru a translata caracterele dint
 ```
 tr 'set1' 'set2'
 ```
-Spre exemplu, daca am dori sa aflam numarul de cuvinte dintr-un text, am translata toate caracterele speciale in spatii cu o comanda de forma:
+Spre exemplu, daca am dori să aflăm numărul de cuvinte dintr-un text, am translata toate caracterele speciale în spații cu o comanda de forma:
 ```
 $ tr '!?":'\[\]{}(),.' ' ' < file
 ```
@@ -716,7 +717,7 @@ Caracterele [ si ] au fost escapate folosind \. Daca dorim sa translatam literel
 ```
 $ tr 'A-Z' 'a-z' < file
 ```
-In cazul in care setul set2 are mai putine caractere decat setul set1 acestea vor fi multiplicate pentru a ajunge la aceeasi dimensiune.
+In cazul în care setul set2 are mai puține caractere decât setul set1 acestea vor fi multiplicate pentru a ajunge la aceeasi dimensiune.
 
 Urmatorul pas ar fi eliminarea spatiilor redundante. Optiunea -s (squeeze) inlocuieste o succesiune de doua sau mai multe caractere cu unul singur. Un exemplu este:
 ```
@@ -740,7 +741,7 @@ beta
 gamma
 omega
 ```
-O optiune utila in cazul sort este sortarea dupa valoarea numerica a sirurilor. Pentru aceasta folosim -n. De exemplu:
+O optiune utilă in cazul sort este sortarea după valoarea numerică a șirurilor. Pentru aceasta folosim -n. De exemplu:
 ```
 $ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
 123
