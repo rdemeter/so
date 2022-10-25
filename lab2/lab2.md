@@ -135,34 +135,38 @@ Exemplu 9. Makefile.ex3
 CC = gcc
 CFLAGS = -Wall -g all: intro-04
 intro-04: intro-04.o
-$(CC) $^ -o $@
+    $(CC) $^ -o $@
 
 intro-04.o: intro-04.c
-$(CC) $(CFLAGS) -c $<
+    $(CC) $(CFLAGS) -c $<
 
-.PHONY: clean clean:
-rm -f *.o *~ intro-04
+.PHONY: clean
+clean:
+    rm -f *.o *~ intro-04
 ```
-În exemplul de mai sus au fost definite variabilele CC şi CFLAGS. Variabila CC reprezintă compilatorul folosit, iar variabila CFLAGS reprezintă opţiunile (flag-urile) de compilare utilizate; în cazul de faţă sunt afişarea avertismentelor şi compilarea cu suport de depanare. Referirea unei variabile se realizează prin intermediul construcţiei $(VAR_NAME). Astfel, $(CC) se înlocuieşte cu gcc, iar $(CFLAGS) se înlocuieşte cu -Wall -g.
+În exemplul de mai sus au fost definite variabilele CC şi CFLAGS. Variabila CC reprezintă compilatorul folosit, iar variabila CFLAGS reprezintă opţiunile (flag-urile) de compilare utilizate; în cazul de faţă sunt afişarea avertismentelor şi compilarea cu suport de depanare.
+```
+Referirea unei variabile se realizează prin intermediul construcţiei $(VAR_NAME).
+Astfel, $(CC) se înlocuieşte cu gcc, iar $(CFLAGS) se înlocuieşte cu -Wall -g.
+```
                              
 ```
-Nişte variabile predefinite sunt $@, $^ şi $<. $@ se expandează la numele target-ului. $^ se expandează la lista de cerinţe, iar $< se expandează la prima cerinţă.
+Nişte variabile predefinite sunt $@, $^ şi $<.
+- $@ se expandează la numele target-ului. 
+- $^ se expandează la lista de cerinţe,
+- $< se expandează la prima cerinţă.
 ```
                                                                                                                                În acest fel, comanda
 
 ```
 $(CC) $^ -o $@
-```
 se expandează la
-```
 gcc intro-04.o -o intro-04
 ```
 iar comanda
 ```
 $(CC) $(CFLAGS) -c $<
-```
 se expandează la
-```
 gcc -Wall -g -c intro-04.c
 ```
 Pentru mai multe detalii despre variabile consultaţi pagina info sau manualul online.
