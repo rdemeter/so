@@ -215,9 +215,9 @@ $ ./intro-03-m
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
 ```
-Se observă obţinerea executabilului intro-03-m prin legarea modulelor obiect. Această abordare are avantajul eficienţei. Dacă se modifică fişierul sursă intro-03-f2 atunci doar acesta va trebui compilat şi refăcută link-editarea. Dacă s-ar fi obţinut un executabil direct din surse atunci s-ar fi compilat toate cele trei fişiere şi apoi refăcută link-editarea. Timpul consumat ar fi mult mai mare, în special în perioada de dezvoltare când fazele de compilare sunt dese şi se doreşte compilarea doar a fişierelor sursă modificate.
+Se observă obţinerea executabilului intro-03-m prin legarea modulelor obiect. Această abordare are avantajul eficienţei. Dacă se modifică fişierul sursă intro-03-f2.c atunci doar acesta va trebui compilat şi refăcută link-editarea. Dacă s-ar fi obţinut un executabil direct din surse atunci s-ar fi compilat toate cele trei fişiere şi apoi refăcută link-editarea. Timpul consumat ar fi mult mai mare, în special în perioada de dezvoltare când fazele de compilare sunt dese şi se doreşte compilarea doar a fişierelor sursă modificate.
 
-Scăderea timpului de dezvoltare prin compilarea numai a surselor care au fost modificate este motivaţia de bază pentru existenţa utilitarelor de automatizare precum make sau nmake.
+Scăderea timpului de dezvoltare prin compilarea numai a surselor care au fost modificate este motivaţia de bază pentru existenţa utilitarelor de automatizare precum **make** sau **nmake**.
 
 Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fişiere este folosirea directivelor de procesare #ifndef, #define, #endif prezentate în secţiunea următoare. Un fişier header tipic va avea structura:
 ```
@@ -327,9 +327,9 @@ De multe ori, un dezvoltator va dori să poată activa sau dezactiva foarte faci
 #endif
 ```
 Dacă se foloseşte opţiunea -D în linia de comandă, atunci definiţia macroului DEBUG poate fi eliminată:
-
+```
 $ gcc -DDEBUG [...]
-
+```
 Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcării codului. Se poate încerca modularizarea afişării mesajelor de debug printr-o construcţie de forma:
 ```
 #ifdef DEBUG
@@ -347,8 +347,7 @@ Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcă
 #define Dprintf(msg,...)	/* do nothing */
 #endif
 ```
-Singura problema care mai poate apărea este folosirea Dprintf cu un singur argument. În acest caz macroul se expandează la printf (msg,), expresie invalidă în C. Pentru a elimina acest incovenient se foloseşte operatorul
-##. Dacă acesta este folosit peste un argument care nu există, atunci virgula se elimină şi expresia devine corectă. Acest lucru nu se întâmplă în cazul în care argumentul există (altfel spus operatorul ## nu schimbă sensul de până atunci):
+Singura problema care mai poate apărea este folosirea Dprintf cu un singur argument. În acest caz macroul se expandează la printf (msg,), expresie invalidă în C. Pentru a elimina acest incovenient se foloseşte operatorul ##. Dacă acesta este folosit peste un argument care nu există, atunci virgula se elimină şi expresia devine corectă. Acest lucru nu se întâmplă în cazul în care argumentul există (altfel spus operatorul ## nu schimbă sensul de până atunci):
 ```
 #ifdef DEBUG
 #define Dprintf(msg,...)	printf(msg, ## __VA_ARGS__)
@@ -489,7 +488,7 @@ Va aflati la linia 5 din fisierul intro-03-f2.c
 ```
 În exemplul de mai sus variabilei de mediu LD_LIBRARY_PATH i-a fost adăugată calea către directorul curent rezultând în posibilitatea rulării programului. LD_LIBRARY_PATH va rămâne modificată cât timp va rula consola curentă. Pentru a face o modificare a unei variabile de mediu doar pentru o instanță a unui program se face atribuirea noii valori înaintea comenzii de execuție:
 ```
-$ LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.	./intro-lib
+$ LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.  ./intro-lib
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
 $ ./intro-lib
