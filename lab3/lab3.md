@@ -70,12 +70,9 @@ int main()
 ```
 După cum se observă din comentariile de mai sus, apelul de sistem fork întoarce PID-ul noului proces în procesul părinte și valoarea 0 în procesul copil.
 
- 	Pentru aflarea PID-ului procesului curent ori al procesului părinte se va apela una din funcţiile de mai jos.
-
-Funcţia getpid întoarce PID-ul procesului apelant: pid_t getpid(void);
-
-Funcția getppid întoarce PID-ul părinte al procesului apelant:  pid_t getppid(void);
-
+Pentru aflarea PID-ului procesului curent ori al procesului părinte se va apela una din funcţiile de mai jos:
+- funcţia **getpid** întoarce PID-ul procesului apelant: pid_t getpid(void);
+- funcția **getppid** întoarce PID-ul părinte al procesului apelant:  pid_t getppid(void);
 
 Exemplu 4. ex2_fork.cpp
 ```
@@ -88,33 +85,33 @@ using namespace std;
 
 int globalVariable = 2;
 int main() {  
-	string sIdentifier;  
-	int    iStackVariable = 20;
-	pid_t pID = fork();  
-	if (pID == 0)                // child
-	{  
-		// Code only executed by child process
-		sIdentifier = "Child Process: ";
-		globalVariable++;  
-		iStackVariable++;  
-	}  
-	else if (pID < 0)            // failed to fork
-	{  
-		cerr << "Failed to fork" << endl;
-		exit(1);  
-		// Throw exception  
-	}  
-	else                         // parent  
-	{  
-		// Code only executed by parent process
-		sIdentifier = "Parent Process:";
-	}  
-	// Code executed by both parent and child.
-	cout << sIdentifier;
-	cout << " Global variable: " << globalVariable;
-	cout << " Stack variable: "  << iStackVariable << endl;
+  string sIdentifier;  
+  int    iStackVariable = 20;
+  pid_t pID = fork();  
+    if (pID == 0)                // child
+    {  
+      // Code only executed by child process
+      sIdentifier = "Child Process: ";
+      globalVariable++;  
+      iStackVariable++;  
+    }  
+    else if (pID < 0)            // failed to fork
+    {  
+      cerr << "Failed to fork" << endl;
+      exit(1);  
+      // Throw exception  
+    }  
+    else                         // parent  
+    {  
+      // Code only executed by parent process
+      sIdentifier = "Parent Process:";
+    }  
+    // Code executed by both parent and child.
+    cout << sIdentifier;
+    cout << " Global variable: " << globalVariable;
+    cout << " Stack variable: "  << iStackVariable << endl;
 
-	return 0;
+    return 0;
 }
 ```
 Compilarea si rularea aplicației:
@@ -204,7 +201,7 @@ Comanda info forks afișează informații legate de toate procesele aflate sub c
 De asemenea, comanda fork poate fi utilizată pentru a seta unul din procesele din listă drept cel activ (care este urmărit de debugger).
 ```
 (gdb) fork fork-id
-``
+```
 unde fork-id este identificatorul asociat procesului, așa cum apare în lista afișată de comanda info forks.
 
 Atunci când un anumit proces nu mai trebuie urmărit, el poate fi înlăturat din listă folosind comenzile detach fork şi delete fork:
@@ -219,35 +216,35 @@ Pentru a ilustra aceste comenzi într-un exemplu concret, să considerăm progra
 Exemplu 5. forktest.c
 ```
 // forktest.c
-1#include	<stdio.h>
-2#include	<sys/types.h>
-3#include	<sys/wait.h>
-4#include	<unistd.h>
+1#include <stdio.h>
+2#include <sys/types.h>
+3#include <sys/wait.h>
+4#include <unistd.h>
 5
 67int main(int argc, char** argv) {
-8	pid_t childPID = fork();
+8   pid_t childPID = fork();
 9
-10	if (childPID < 0) {
-11	// An error occured
-12	fprintf(stderr, "Could not fork!\n");
-13	return -1;
-14	} else if (childPID == 0) {
+10  if (childPID < 0) {
+11    // An error occured
+12    fprintf(stderr, "Could not fork!\n");
+13    return -1;
+14  } else if (childPID == 0) {
 15
-16	// We are in the child process
-17	printf("The child process is executing...\n");
-18	sleep(2);
+16  // We are in the child process
+17  printf("The child process is executing...\n");
+18  sleep(2);
 19
-20	} else {
+20  } else {
 21
-22	// We are in the parent process
-23	if (wait(NULL) < 0) {
-24	fprintf(stderr, "Could not wait for child!\n");
-25	return -1;
-26	}
-27	printf("Everything is done!\n");
-28	}
-29	return 0;
-30	}
+22  // We are in the parent process
+23  if (wait(NULL) < 0) {
+24    fprintf(stderr, "Could not wait for child!\n");
+25    return -1;
+26  }
+27  printf("Everything is done!\n");
+28  }
+29  return 0;
+30 }
 ```
 Dacă vom rula programul cu parametrii impliciţi de depanare, vom constata că gdb va urmări exclusiv execuţia procesului părinte:
 ```
@@ -308,7 +305,6 @@ Există două tipuri de pipe-uri:
 
 • pipe-uri cu nume - există ca fişiere cu drepturi de acces. Aceasta înseamnă că ele vor exista în continuare independent de procesul care le creează şi pot fi folosite de procese neînrudite.
 
-
 ## Pipe-uri anonime
 
 Pipe-ul este un mecanism de comunicare unidirecţională între două procese. În majoritatea implementărilor de UNIX un pipe apare ca o zonă de memorie de o anumită dimensiune în spaţiul nucleului. Procesele care comunică printr-un pipe trebuie să aibă un grad de rudenie; de obicei, un proces care creează un pipe va apela după aceea fork, iar pipe-ul se va folosi pentru comunicarea între părinte şi fiu. În orice caz procesele care comunică prin pipe nu pot fi create de utilizatori diferiţi ai sistemului.
@@ -326,8 +322,8 @@ Apelul returnează 0 în caz de succes şi -1 în caz de eroare. Observaţii:
 
 Majoritatea aplicaţiilor care folosesc pipe-uri închid în fiecare dintre procese capătul de pipe neutilizat în comunicarea unidirecţională. Dacă unul dintre descriptori este închis se aplică regulile:
 
-1. O citire dintr-un pipe pentru care descriptorul de scriere a fost închis, după ce toate datele au fost citite, va returna 0, ceea ce indică sfârşitul fişierului. Descriptorul de scriere poate fi duplicat astfel încât mai multe procese să poată scrie în pipe. De regulă, în cazul pipe-urilor anonime există doar două procese, unul care scrie şi altul care citeşte pe când în cazul fişierelor FIFO pot exista mai multe procese care scriu date.
-2. O scriere într-un pipe pentru care descriptorul de citire a fost închis cauzează generarea semnalului SIGPIPE. Dacă semnalul este captat şi se revine din rutina de tratare, funcţia de sistem write returnează eroare şi variabila errno are valoarea EPIPE.
+- O citire dintr-un pipe pentru care descriptorul de scriere a fost închis, după ce toate datele au fost citite, va returna 0, ceea ce indică sfârşitul fişierului. Descriptorul de scriere poate fi duplicat astfel încât mai multe procese să poată scrie în pipe. De regulă, în cazul pipe-urilor anonime există doar două procese, unul care scrie şi altul care citeşte pe când în cazul fişierelor FIFO pot exista mai multe procese care scriu date.
+- O scriere într-un pipe pentru care descriptorul de citire a fost închis cauzează generarea semnalului SIGPIPE. Dacă semnalul este captat şi se revine din rutina de tratare, funcţia de sistem write returnează eroare şi variabila errno are valoarea EPIPE.
 
 Cea mai frecventă greşeală relativ la lucrul cu pipe-urile constă în faptul că nu se trimite EOF prin pipe (citirea din pipe nu se termină) decât dacă sunt închise TOATE capetele de scriere din TOATE procesele care au deschis descriptorul de scriere în pipe (în cazul unui fork, nu uitaţi să închideţi capetele pipe-ului în procesul părinte).
 
@@ -381,16 +377,16 @@ Apelul de sistem pentru crearea FIFO este:
 int mkfifo(const char *pathname, mode_t mode);
 
 Parametrii sunt:
-•	pathname -  reprezintă numele de cale al fişierului FIFO.
-•	mode -        reprezintă un întreg ce indică drepturile de acces ale fişierului FIFO.
+- pathname - reprezintă numele de cale al fişierului FIFO.
+- mode - reprezintă un întreg ce indică drepturile de acces ale fişierului FIFO.
 
 Apelul returnează 0 în caz de succes si -1 în caz de eroare.
 
 Observaţii: după ce FIFO a fost creat, acestuia i se pot aplica toate funcţiile pentru operaţii cu fişiere: open, close, read, write la fel ca şi altor fişiere.
 
 Modul de comportare al unui FIFO este afectat de flagul O_NONBLOCK astfel:
-1. Dacă O_NONBLOCK nu este specificat (cazul normal), atunci un open  pentru citire se va bloca până când un alt proces deschide acelaşi FIFO pentru scriere. Analog, dacă deschiderea este pentru scriere, se poate produce blocare până când un alt proces efectuează deschiderea pentru citire.
-2. Dacă se specifică O_NONBLOCK, atunci deschiderea pentru citire revine imediat, dar o deschidere pentru scriere poate returna eroare cu errno având valoarea ENXIO, dacă nu există un alt proces care a deschis acelaşi FIFO pentru citire.
+- Dacă O_NONBLOCK nu este specificat (cazul normal), atunci un open  pentru citire se va bloca până când un alt proces deschide acelaşi FIFO pentru scriere. Analog, dacă deschiderea este pentru scriere, se poate produce blocare până când un alt proces efectuează deschiderea pentru citire.
+- Dacă se specifică O_NONBLOCK, atunci deschiderea pentru citire revine imediat, dar o deschidere pentru scriere poate returna eroare cu errno având valoarea ENXIO, dacă nu există un alt proces care a deschis acelaşi FIFO pentru citire.
 Atunci când ultimul proces care scrie într-un FIFO îl închide, se va genera un "sfârşit de fişier" pentru procesul care citeşte din FIFO.
 
 Exemplu 7. fifoserver.c
