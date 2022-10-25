@@ -5,16 +5,16 @@
 **Make** este un utilitar care permite automatizarea și eficientizarea sarcinilor. In mod particular este folosit pentru automatizarea compilării programelor. După cum s-a precizat, pentru obținerea unui executabil provenind din mai multe surse este ineficientă compilarea de fiecare dată a fiecărui fișier și apoi link-editarea.
 Se compilează fiecare fișier separat, iar la o modificare se va recompila doar fișierul modificat.
 
-Exemplu simplu Makefile
+## Exemplu simplu Makefile
 
 Utilitarul Make foloseşte un fişier de configurare denumit Makefile. Un astfel de fişier conţine reguli şi comenzi de automatizare. În continuare este prezentat un exemplu foarte simplu de Makefile cu ajutorul căruia se va specifica sintaxa Make.
 
 Exemplu 7. Makefile
 ```
 all:
-        gcc -Wall intro-04.c -o intro-04
- clean:
-        rm -f intro-04
+    gcc -Wall intro-04.c -o intro-04
+clean:
+    rm -f intro-04
 ```
 Pentru rularea exemplului de mai sus se folosesc comenzile:
 ```
@@ -67,13 +67,13 @@ Exemplu 8. Makefile.ex2
 all: intro-04
 
 intro-04: intro-04.o
-gcc intro-04.o -o intro-04
+    gcc intro-04.o -o intro-04
 
 intro-04.o: intro-04.c
-gcc -Wall -c intro-04.c
+    gcc -Wall -c intro-04.c
 
 clean:
-         rm -f *.o *~ intro-04
+    rm -f *.o *~ intro-04
 ```
 Se observă prezenţa regulii all care va fi executată implicit. all are ca dependinţă intro-04 şi nu execută nicio
 comandă; intro-04 are ca dependinţă intro-04.o şi realizează link-editarea fişierului intro-04.o; intro-04.o are
@@ -143,9 +143,7 @@ $(CC) $(CFLAGS) -c $<
 .PHONY: clean clean:
 rm -f *.o *~ intro-04
 ```
-În exemplul de mai sus au fost definite variabilele CC şi CFLAGS. Variabila CC reprezintă compilatorul folosit, iar variabila CFLAGS reprezintă opţiunile (flag-urile) de compilare utilizate; în cazul de faţă sunt afişarea avertismentelor şi compilarea cu suport de depanare. Referirea unei variabile se realizează prin
-intermediul construcţiei $(VAR_NAME). Astfel, $(CC) se înlocuieşte cu gcc, iar $(CFLAGS) se înlocuieşte
-cu -Wall -g.
+În exemplul de mai sus au fost definite variabilele CC şi CFLAGS. Variabila CC reprezintă compilatorul folosit, iar variabila CFLAGS reprezintă opţiunile (flag-urile) de compilare utilizate; în cazul de faţă sunt afişarea avertismentelor şi compilarea cu suport de depanare. Referirea unei variabile se realizează prin intermediul construcţiei $(VAR_NAME). Astfel, $(CC) se înlocuieşte cu gcc, iar $(CFLAGS) se înlocuieşte cu -Wall -g.
 
 Nişte variabile predefinite sunt $@, $^ şi $<. $@ se expandează la numele target-ului. $^ se expandează la lista de cerinţe, iar $< se expandează la prima cerinţă. În acest fel, comanda
 ```
@@ -417,7 +415,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0x08048411 in main () at exemplul-6.c:16
 16	*bug=f(1, 2);
 ```
-Comanda continue se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este print. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. print poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, print poate afişa structuri de date precum struct şi union.
+Comanda **continue** se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este **print**. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. print poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, print poate afişa structuri de date precum struct şi union.
 ```
 $ gdb a.out
 (gdb) break f
