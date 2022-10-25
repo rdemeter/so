@@ -144,9 +144,12 @@ $(CC) $(CFLAGS) -c $<
 rm -f *.o *~ intro-04
 ```
 În exemplul de mai sus au fost definite variabilele CC şi CFLAGS. Variabila CC reprezintă compilatorul folosit, iar variabila CFLAGS reprezintă opţiunile (flag-urile) de compilare utilizate; în cazul de faţă sunt afişarea avertismentelor şi compilarea cu suport de depanare. Referirea unei variabile se realizează prin intermediul construcţiei $(VAR_NAME). Astfel, $(CC) se înlocuieşte cu gcc, iar $(CFLAGS) se înlocuieşte cu -Wall -g.
+                             
 ```
 Nişte variabile predefinite sunt $@, $^ şi $<. $@ se expandează la numele target-ului. $^ se expandează la lista de cerinţe, iar $< se expandează la prima cerinţă.
-```                                                                                                                             În acest fel, comanda
+```
+                                                                                                                               În acest fel, comanda
+
 ```
 $(CC) $^ -o $@
 ```
