@@ -286,16 +286,16 @@ Regulile implicite intră în vigoare şi se obţin, pe rând, fişierele obiect
 
 Exist câteva unelte GNU care pot fi folosite atunci când nu reuşim să facem un program să ne asculte. gdb, acronimul de la "Gnu DeBugger" este probabil cel mai util dintre ele, dar există și altele, cum ar fi ElectricFence, gprof sau mtrace. gdb va fi prezentat pe scurt în secţiunile ce urmează.
 
-GDB
+## GDB
 
 Dacă doriţi să depanaţi un program cu GDB nu uitaţi să compilaţi programul cu optiunea -g. Folosirea acestei opţiuni duce la includerea în executabil a informaţiilor de debug.
 
-Rularea GDB
+## Rularea GDB
 
 GDB poate fi folosit în două moduri pentru a depana programul:
 
-• rulându-l folosind comanda gdb
-• folosind fisierul core generat în urma unei erori grave (de obicei segmentation fault)
+- rulându-l folosind comanda gdb
+- folosind fisierul core generat în urma unei erori grave (de obicei segmentation fault)
 
 
 Cea de a doua modalitate este utilă în cazul în care bug-ul nu a fost corectat înainte de lansarea programului.
@@ -304,29 +304,24 @@ Cea de a doua modalitate este utilă în cazul în care bug-ul nu a fost corecta
 Cea mai simplă formă de depanare cu ajutorul GDB este cea în care dorim să determinăm linia programului la care s-a produs eroarea. Pentru exemplificare considerăm următorul program:
 
 Exemplu 13. exemplul-6.c
-
+```
 #include <stdio.h>
-
 int f(int a, int b)
 {
-int c;
-
-c = a + b;
-
-return c;
+    int c;
+    c = a + b;
+    return c;
 }
 
 int main()
 {
-char *bug = 0;
-
-*bug = f(1, 2);
-
-return 0;
+    char *bug = 0;
+    *bug = f(1, 2);
+    return 0;
 }
-
+```
 După compilarea programului acesta poate fi depanat folosind GDB. După încărcarea programului de depanat, GDB într-un mod interactiv. Utilizatorul poate folosi apoi comenzi pentru a depana programul:
-
+```
 $ gcc -Wall -g exemplul-6.c
 $ gdb a.out
 [...]
@@ -337,10 +332,10 @@ Program received signal SIGSEGV, Segmentation fault.
 0x08048411 in main () at exemplul-6.c:16
 16	*bug=f(1, 2);
 (gdb)
-
+```
  
-Prima comandă folosită este run. Această comandă va porni execuţia programului. Dacă această comandă primeşte argumente de la utilizator, acestea vor fi transmise programului. Înainte de a trece la prezentarea unor comenzi de bază din gdb, să demonstrăm cum se poate depana un program cu ajutorul fişierului core:
-
+Prima comandă folosită este **run**. Această comandă va porni execuţia programului. Dacă această comandă primeşte argumente de la utilizator, acestea vor fi transmise programului. Înainte de a trece la prezentarea unor comenzi de bază din gdb, să demonstrăm cum se poate depana un program cu ajutorul fişierului core:
+```
 # ulimit -c 4
 # ./a.out
 Segmentation fault (core dumped)
@@ -350,11 +345,11 @@ Program terminated with signal 11, Segmentation fault.
 #0	0x08048411 in main () at exemplul-6.c:16
 16	*bug=f(1, 2); 
 (gdb)
+```
+## Comenzi de bază GDB
 
-Comenzi de bază GDB
-
-Câteva din comenzile de bază în gdb sunt breakpoint, next şi step. Prima dintre ele primeşte ca argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50) sau o adresă (ex: break *0x80483d3). Comanda next va continua execuția programului până ce se va ajunge la următoarea linie din codul sursă. Dacă linia de executat conţine un apel de funcţie, funcţia se va executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească step. Folosirea acestor comenzi este exemplificată mai jos:
-
+Câteva din comenzile de bază în gdb sunt **breakpoint**, **next** şi **step**. Prima dintre ele primeşte ca argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50) sau o adresă (ex: break *0x80483d3). Comanda next va continua execuția programului până ce se va ajunge la următoarea linie din codul sursă. Dacă linia de executat conţine un apel de funcţie, funcţia se va executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească step. Folosirea acestor comenzi este exemplificată mai jos:
+```
 $ gdb a.out
 (gdb) break main
 Breakpoint 1 at 0x80483f6: file exemplul-6.c, line 14. 
@@ -392,9 +387,9 @@ Program received signal SIGSEGV, Segmentation fault.
 0x08048411 in main () at exemplul-6.c:16
 16	*bug=f(1, 2); 
 (gdb)
-
-O altă comandă utilă este list. Aceasta va lista fişierul sursă al programului depanat. Comanda primeşte ca argument un număr de linie (eventual nume fişier), o funcţie sau o adresă de la care să listeze. Al doilea argument este opţional şi precizează câte linii vor fi afişate. În cazul în care comanda nu are niciun parametru, ea va lista de unde s-a oprit ultima afişare.
-
+```
+O altă comandă utilă este **list**. Aceasta va lista fişierul sursă al programului depanat. Comanda primeşte ca argument un număr de linie (eventual nume fişier), o funcţie sau o adresă de la care să listeze. Al doilea argument este opţional şi precizează câte linii vor fi afişate. În cazul în care comanda nu are niciun parametru, ea va lista de unde s-a oprit ultima afişare.
+```
 $ gdb a.out
 (gdb) list exemplul-6.c:1
 1	/* exemplul-6.c */
@@ -421,9 +416,9 @@ Continuing.
 Program received signal SIGSEGV, Segmentation fault.
 0x08048411 in main () at exemplul-6.c:16
 16	*bug=f(1, 2);
-
+```
 Comanda continue se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este print. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. print poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, print poate afişa structuri de date precum struct şi union.
-
+```
 $ gdb a.out
 (gdb) break f
 Breakpoint 1 at 0x80483d6: file exemplul-6.c, line 8.
@@ -448,30 +443,23 @@ Run till exit from #0	f (a=1, b=2) at exemplul-6.c:9
 16	*bug=f(1, 2); Value returned is $5 = 3
 (gdb) print bug
 $6 = 0x0
+```
 
-
-Resurse utile
-
+## Resurse utile
 
 1. GNU Make Manual
 2. GDB Documentation
 3. Visual C++ Express
 4. Nmake Tool
-  5. Building and Linking with Libraries
-  6. Dynamic Link Library
-  7. Creating and Using DLLs
-  8. Dynamic Libraries
-
-
+5. Building and Linking with Libraries
+6. Dynamic Link Library
+7. Creating and Using DLLs
+8. Dynamic Libraries
 
 Note
-
 1. ^ info make "Using Variables"
 2. ^ http://www.gnu.org/software/make/manual/make.html#Using-Variables
 3. ^ info make "Implicit Rules"
 4. ^ http://www.gnu.org/software/make/manual/make.html#Implicit-Rules
 5. ^ Nmake Reference
 6. ^ Programul MSDNAA
-
-
-
