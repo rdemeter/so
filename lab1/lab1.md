@@ -34,9 +34,8 @@ Pe durata analizei sintactice, de obicei are loc și o analiză semantică, ceea
 \
 În afară de acțiunile enumerate mai sus, procesul de compilare mai include următoarele: 
 - Gestionarea tabelei de simboluri: tabela de simboluri (TS) este o structură de date destinată păstrării de informații despre simbolurile (numele) care apar în programul sursă; compilatorul face referire la aceasta tabelă aproape în toate fazele compilării. 
-- Tratarea erorilor: un compilator trebuie să fie capabil să recunoască anumite categorii de erori care pot să apară în programul sursă; tratarea unei erori presupune detectarea ei, emiterea unui mesaj corespunzator şi revenirea din eroare, adică, pe cât posibil, continuarea procesului de compilare până la epuizarea textului sursă, astfel încât numarul de compilări necesare eliminării tuturor erorilor dintr-un program să fie cât mai mic. Practic, există erori specifice fiecarei faze de compilare.\
-\
-\
+- Tratarea erorilor: un compilator trebuie să fie capabil să recunoască anumite categorii de erori care pot să apară în programul sursă; tratarea unei erori presupune detectarea ei, emiterea unui mesaj corespunzator şi revenirea din eroare, adică, pe cât posibil, continuarea procesului de compilare până la epuizarea textului sursă, astfel încât numarul de compilări necesare eliminării tuturor erorilor dintr-un program să fie cât mai mic. Practic, există erori specifice fiecarei faze de compilare.\n
+\n
 GCC foloseşte pentru compilarea de programe C/C++ comanda gcc, respectiv g++. O invocare tipică este pentru compilarea unui program dintr-un singur fişier sursă:
 Exemplu hello.c
 ```
