@@ -1,4 +1,4 @@
-# Introducere
+# Introducere în system programming
 
 Laboratoarele de Sisteme de Operare au drept scop aprofundarea interfeţelor de programare oferite de sistemele de operare (system API). Laboratorul este un laborator de system programming. Un laborator va aborda un set de concepte şi va conţine un scurt breviar teoretic, o prezentare a API-ului asociat cu explicaţii şi exemple şi un set de exerciţii pentru acomodarea cu acesta. Pentru a oferi o arie de cuprindere cât mai largă, laboratoarele au ca suport familia de sisteme de operare Unix.
 
@@ -22,18 +22,20 @@ O vedere de ansamblu asupra procesului de compilare este prezentată în imagine
 
 ![](https://github.com/rdemeter/so/blob/master/lab1/fig1.png)
 
-- Analiza lexicală: textul sursă este preluat sub forma unei secvențe de caractere care sunt grupate apoi în entități numite atomi; atomilor li se atribuie coduri lexicale, astfel ca, la ieșirea acestei faze, programul sursa apare ca o secvența de asemenea coduri. Exemple de atomi: cuvinte cheie, identificatori, constante numerice, semne de punctuație etc. 
-- Analiza sintactică: are ca scop gruparea atomilor rezultați în urma analizei lexicale în structuri sintactice. O structură sintactică poate fi vazută ca un arbore ale carui noduri terminale reprezintă atomi, în timp ce nodurile interioare reprezintă șiruri de atomi care formează o entitate logică. Exemple de structuri sintactice: expresii, instrucțiuni, declarații etc. 
-Pe durata analizei sintactice, de obicei are loc și o analiză semantica, ceea ce inseamnă efectuarea unor verificări legate de: 
+- Analiza lexicală: textul sursă este preluat sub forma unei secvențe de caractere care sunt grupate apoi în entități numite atomi; atomilor li se atribuie coduri lexicale, astfel ca, la ieșirea acestei faze, programul sursă apare ca o secvența de asemenea coduri. Exemple de atomi: cuvinte cheie, identificatori, constante numerice, semne de punctuație etc. 
+- Analiza sintactică: are ca scop gruparea atomilor rezultați în urma analizei lexicale în structuri sintactice. O structură sintactică poate fi văzută ca un arbore ale carui noduri terminale reprezintă atomi, în timp ce nodurile interioare reprezintă șiruri de atomi care formează o entitate logică. Exemple de structuri sintactice: expresii, instrucțiuni, declarații etc.\
+Pe durata analizei sintactice, de obicei are loc și o analiză semantică, ceea ce înseamnă efectuarea unor verificări legate de: 
     - compatibilitatea tipurilor datelor cu operațiile în care ele sunt implicate 
     - respectarea regulilor de vizibilitate impuse de limbajul sursă.
-- Generarea de cod intermediar: în această fază are loc transformarea arborelui sintactic într-o secvență de instrucțiuni simple, similare macroinstrucțiunilor unui limbaj de asamblare. Diferența dintre codul intermediar și un limbaj de asamblare este în principal aceea ca, în codul intermediar nu se specifică registrele utilizate în operații. Exemple de reprezentări pentru codul intermediar: notația postfix, instrucțiunile cu trei adrese etc. Codul intermediar prezintă avantajul de a fi mai ușor de optimizat decât codul mașina .
+- Generarea de cod intermediar: în această fază are loc transformarea arborelui sintactic într-o secvență de instrucțiuni simple, similare macroinstrucțiunilor unui limbaj de asamblare.
 - Optimizarea de cod: este o fază opțională, al cărei rol este modificarea unor porțiuni din codul intermediar generat, astfel încât programul rezultat să satisfacă anumite criterii de performanță vizând timpul de execuție și/sau spațiul de memorie ocupat.
 
-- Generarea codului final: presupune transformarea instrucțiunilor codului intermediar (eventual optimizat) în instrucțiuni mașină (sau de asamblare) pentru calculatorul țintă (cel pe care se va executa programul compilat).
+- Generarea codului final: presupune transformarea instrucțiunilor codului intermediar (eventual optimizat) în instrucțiuni mașină (sau de asamblare) pentru calculatorul țintă (cel pe care se va executa programul compilat).\
+\
 În afară de acțiunile enumerate mai sus, procesul de compilare mai include următoarele: 
 - Gestionarea tabelei de simboluri: tabela de simboluri (TS) este o structură de date destinată păstrării de informații despre simbolurile (numele) care apar în programul sursă; compilatorul face referire la aceasta tabelă aproape în toate fazele compilării. 
-- Tratarea erorilor: un compilator trebuie să fie capabil să recunoască anumite categorii de erori care pot să apară în programul sursă; tratarea unei erori presupune detectarea ei, emiterea unui mesaj corespunzator şi revenirea din eroare, adică, pe cât posibil, continuarea procesului de compilare până la epuizarea textului sursă, astfel încât numarul de compilări necesare eliminării tuturor erorilor dintr-un program să fie cât mai mic. Practic, există erori specifice fiecarei faze de compilare.
+- Tratarea erorilor: un compilator trebuie să fie capabil să recunoască anumite categorii de erori care pot să apară în programul sursă; tratarea unei erori presupune detectarea ei, emiterea unui mesaj corespunzator şi revenirea din eroare, adică, pe cât posibil, continuarea procesului de compilare până la epuizarea textului sursă, astfel încât numarul de compilări necesare eliminării tuturor erorilor dintr-un program să fie cât mai mic. Practic, există erori specifice fiecarei faze de compilare.\
+\
 GCC foloseşte pentru compilarea de programe C/C++ comanda gcc, respectiv g++. O invocare tipică este pentru compilarea unui program dintr-un singur fişier sursă:
 Exemplu hello.c
 ```
@@ -48,7 +50,7 @@ $ gcc hello.c
 $ ./a.out
 Hello, world!
 ```
-Comanda gcc hello.c a fost folosită pentru compilarea fişierului sursă hello.c. Rezultatul a fost obţinerea executabilului a.out care a fost rulat.
+Comanda gcc hello.c a fost folosită pentru compilarea fişierului sursă hello.c. Rezultatul a fost obţinerea executabilului a.out care a fost rulat.\
 Executabilul a.out este executabilul implicit obţinut de gcc. Dacă se doreşte obţinerea unui executabil cu alt nume se poate folosi opţiunea -o:
 ```
 $ gcc hello.c -o hello
@@ -98,7 +100,9 @@ $ ./a.out
 1+2 fac -1073743413
 ```
 Programul s-a compilat fără erori, pentru că funcţia suma a fost declarată implicit de compilator (în C, în mod normal, funcţiile trebuie să fie declarate înainte de a fi folosite). O funcţie declarat implicit are prototipul:
+```
 int function(...);
+```
 În prototipul de mai sus se poate recunoaşte operatorul ... (se citeşte elipses) care precizează faptul că funcţia are un număr variabil de parametri. Dacă se compilează acelaşi program folosind optiunea -Wall, programatorul va avea cel puţin ocazia să afle că funcţia a fost declarată implicit (şi, în cazul de faţă, şi faptul că a uitat să întoarcă un rezultat din funcţia main):
 ```
 $ gcc intro-01.c -Wall
@@ -369,7 +373,7 @@ Exemplu 5. intro-05-main.c
 void f(void);
 
 int main (void) {
-f();
+    f();
     return 0;
 }
 ```
