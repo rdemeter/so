@@ -6,14 +6,13 @@ Laboratoarele de Sisteme de Operare au drept scop aprofundarea interfeţelor de 
 
 ## GCC
 
-GCC este suita de compilatoare implicită pe majoritatea distribuţiilor Linux. GCC este unul din primele pachete software dezvoltate de organizaţia "Free Software Fundation" în cadrul proiectului GNU (Gnu's Not Unix). Proiectul GNU a fost iniţiat ca un protest împotriva software-ului proprietar de Richard Stallman la începutul anilor '80.
+GCC este suita de compilatoare implicită pe majoritatea distribuţiilor Linux. GCC este unul din primele pachete software dezvoltate de organizaţia "Free Software Fundation" în cadrul proiectului GNU (Gnu's Not Unix).
 
-La început, GCC se traducea prin "GNU C Compiler", pentru ca iniţial scopul proiectului GCC era dezvoltarea unui compilator C portabil pe platforme UNIX. Ulterior, proiectul a evoluat astăzi fiind un compilator multi-frontend, multi-backend cu suport pentru limbajele C, C++, Objective-C, Fortran, Java, Ada. Drept urmare, acronimul GCC înseamnă, astăzi, "GNU Compiler Collection".
+GCC, acronimul de la "GNU Compiler Collection", este un compilator multi-frontend, multi-backend cu suport pentru limbajele C, C++, Objective-C, Fortran, Java, Ada.
 
 La numărul impresionant de limbaje de mai sus se adaugă şi numărul mare de platforme suportate atât din punctul de vedere al arhitecturii hardware (i386, alpha, vax, m68k, sparc, HPPA, arm, MIPS, PowerPC, etc.) cât şi al sistemelor de operare (GNU/Linux, DOS, Windows 9x/NT/2000, *BSD, Solaris, Tru64, VMS, etc.). La ora actuală, GCC-ul este cel mai portat compilator.
 
-În cadrul laboratoarelor de Sisteme de Operare ne vom concentra asupra facilităţilor oferite de compilator pentru limbajul C/C++. GCC suportă standardele ANSI, ISO C, ISO C99, POSIX dar şi multe extensii folositoare care nu sunt incluse în nici unul din standarde; unele din aceste extensii vor fi prezentate în secţiunile ce urmează.
-
+În cadrul laboratoarelor de Sisteme de Operare ne vom concentra asupra facilităţilor oferite de compilator pentru limbajul C/C++. GCC suportă standardele ANSI, ISO C, ISO C99, ... inclusiv C++23, POSIX dar şi multe extensii folositoare care nu sunt incluse în nici unul din standarde. Vezi standarde C/C++: (https://gcc.gnu.org/projects/cxx-status.html)
 
 ## Utilizare GCC
 
