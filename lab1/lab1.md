@@ -338,30 +338,15 @@ Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcă
 #endif
 ```
 
-În momentul de faţă problema este folosirea mai multor argumente la printf. Acest lucru poate fi rezolvat prin intermediul macrourilor cu număr variabil de parametri, apărute în standardul ISO C99:
-```
-#ifdef DEBUG
-#define Dprintf(msg,...)	printf(msg, __VA_ARGS__)
-#else
-#define Dprintf(msg,...)	/* do nothing */
-#endif
-```
-Singura problemă care mai poate apărea este folosirea Dprintf cu un singur argument. În acest caz macroul se expandează la printf (msg,), expresie invalidă în C. Pentru a elimina acest incovenient se foloseşte operatorul ##. Dacă acesta este folosit peste un argument care nu există, atunci virgula se elimină şi expresia devine corectă. Acest lucru nu se întâmplă în cazul în care argumentul există (altfel spus operatorul ## nu schimbă sensul de până atunci):
-```
-#ifdef DEBUG
-#define Dprintf(msg,...)	printf(msg, ## __VA_ARGS__)
-#else
-#define Dprintf(msg,...)	/* do nothing */
-#endif
-```
+Problema este folosirea mai multor argumente la printf. Acest lucru poate fi rezolvat cu \_\_VA_ARGS\_\_ și operatorul ##.
 
 Exemplu: intro_debug.c, cu afişarea fişierului şi liniei unde s-a apelat macroul
 ```
 #include <stdio.h>
 #ifdef DEBUG
-#define Dprintf(msg,...)	printf("[%s]:%d", msg, __FILE__, __LINE__, ##__VA_ARGS__)
+#define Dprintf(fmt, ...) printf("%s:%d "fmt, __FILE__ , __LINE__ , ## __VA_ARGS__)
 #else
-#define Dprintf(msg,...)	/* do nothing */
+#define Dprintf(fmt, ...)       /* do nothing */
 #endif
 
 int main()
@@ -376,7 +361,8 @@ Compilați intro_debug.c cu și fără -DDEBUG
 ```
 $gcc -Wall -DDEBUG intro_debug.c -o intro_debug
 ./intro_debug
-???
+./intro_debug.c(11) mesaj1
+./intro_debug.c(12) mesaj2
 
 $gcc -Wall intro_debug.c -o intro_debug
 ./intro_debug
