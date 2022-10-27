@@ -1,6 +1,0 @@
-CC = gcc			# compilatorul folosit
-
-CFLAGS = -Wall -g		# optiunile pentru compilare
-
-LDLIBS = -lefence		# optiunile pentru linking
-
