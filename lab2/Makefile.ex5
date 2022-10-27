@@ -1,0 +1,11 @@
+CC = gcc
+CFLAGS = -Wall -g
+
+all: intro-04
+
+intro-04: intro-04.o
+
+.PHONY: clean
+
+clean:
+	rm -f *.o *~ intro-04
