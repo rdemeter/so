@@ -1,0 +1,14 @@
+CC = gcc
+CFLAGS = -Wall -g
+
+all: intro-04
+
+intro-04: intro-04.o
+	$(CC) $^ -o $@
+
+intro-04.o: intro-04.c
+	$(CC) $(CFLAGS) -c $<
+
+.PHONY: clean
+clean:
+	rm -f *.o *~ intro-04
