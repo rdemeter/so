@@ -347,7 +347,7 @@ Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcă
 #define Dprintf(msg,...)	/* do nothing */
 #endif
 ```
-Singura problema care mai poate apărea este folosirea Dprintf cu un singur argument. În acest caz macroul se expandează la printf (msg,), expresie invalidă în C. Pentru a elimina acest incovenient se foloseşte operatorul ##. Dacă acesta este folosit peste un argument care nu există, atunci virgula se elimină şi expresia devine corectă. Acest lucru nu se întâmplă în cazul în care argumentul există (altfel spus operatorul ## nu schimbă sensul de până atunci):
+Singura problemă care mai poate apărea este folosirea Dprintf cu un singur argument. În acest caz macroul se expandează la printf (msg,), expresie invalidă în C. Pentru a elimina acest incovenient se foloseşte operatorul ##. Dacă acesta este folosit peste un argument care nu există, atunci virgula se elimină şi expresia devine corectă. Acest lucru nu se întâmplă în cazul în care argumentul există (altfel spus operatorul ## nu schimbă sensul de până atunci):
 ```
 #ifdef DEBUG
 #define Dprintf(msg,...)	printf(msg, ## __VA_ARGS__)
@@ -363,6 +363,33 @@ Un ultim retuş este afişarea, dacă se doreşte, a fişierului şi liniei unde
 #define Dprintf(msg,...)	/* do nothing */
 #endif
 ```
+
+Exemplu: intro_debug.c
+```
+#include <stdio.h>
+#ifdef DEBUG
+#define Dprintf(msg,...)	printf("[%s]:%d", msg, __FILE__, __LINE__, ##__VA_ARGS__)
+#else
+#define Dprintf(msg,...)	/* do nothing */
+#endif
+
+int main()
+{
+    Dprintf(" mesaj\n");
+    return 0;
+}
+````
+
+Compilați intro_debug.c cu și fără -DDEBUG
+```
+$gcc -Wall -DDEBUG intro_debug.c -o intro_debug
+./intro_debug
+???
+
+$gcc -Wall intro_debug.c -o intro_debug
+./intro_debug
+```
+
 # Linker-ul. Opţiuni de link-editare. Biblioteci
 
 Linker-ul este folosit pentru a "unifica" mai multe module obiect şi biblioteci şi a obţine un executabil sau o bibliotecă. Linker-ul are rolul de a rezolva simbolurile nedefinite dintr-un modul obiect prin inspectarea celor existente într-un altul. Erorile de linker apar ca urmare a lipsei unui simbol, ca în exemplul de mai jos:
