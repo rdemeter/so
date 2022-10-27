@@ -1,0 +1,10 @@
+all: intro-04
+
+intro-04: intro-04.o
+	gcc intro-04.o -o intro-04
+
+intro-04.o: intro-04.c
+	gcc -Wall -c intro-04.c
+
+clean:
+	rm -f *.o *~ intro-04
