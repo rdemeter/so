@@ -361,8 +361,8 @@ Compilați intro_debug.c cu și fără -DDEBUG
 ```
 $gcc -Wall -DDEBUG intro_debug.c -o intro_debug
 ./intro_debug
-./intro_debug.c(11) mesaj1
-./intro_debug.c(12) mesaj2
+./intro_debug.c:11 mesaj1
+./intro_debug.c:12 mesaj2
 
 $gcc -Wall intro_debug.c -o intro_debug
 ./intro_debug
