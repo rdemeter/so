@@ -8,7 +8,7 @@ Laboratoarele de Sisteme de Operare au drept scop aprofundarea interfeţelor de 
 
 GCC este suita de compilatoare implicită pe majoritatea distribuţiilor Linux. GCC este unul din primele pachete software dezvoltate de organizaţia "Free Software Fundation" în cadrul proiectului GNU (Gnu's Not Unix).
 
-GCC, acronimul de la "GNU Compiler Collection", este un compilator multi-frontend, multi-backend cu suport pentru limbajele C, C++, Objective-C, Fortran, Java, Ada.
+GCC, acronimul de la "GNU Compiler Collection", este un compilator multi-frontend, multi-backend cu suport pentru limbajele C, C++, Objective-C, Fortran, Java, Ada, Go și D.
 
 La numărul impresionant de limbaje de mai sus se adaugă şi numărul mare de platforme suportate atât din punctul de vedere al arhitecturii hardware (i386, alpha, vax, m68k, sparc, HPPA, arm, MIPS, PowerPC, etc.) cât şi al sistemelor de operare (GNU/Linux, DOS, Windows 9x/NT/2000, *BSD, Solaris, Tru64, VMS, etc.). La ora actuală, GCC-ul este cel mai portat compilator.
 
