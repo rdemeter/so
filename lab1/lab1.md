@@ -12,7 +12,7 @@ GCC, acronimul de la "GNU Compiler Collection", este un compilator multi-fronten
 
 La numărul impresionant de limbaje de mai sus se adaugă şi numărul mare de platforme suportate atât din punctul de vedere al arhitecturii hardware (i386, alpha, vax, m68k, sparc, HPPA, arm, MIPS, PowerPC, etc.) cât şi al sistemelor de operare (GNU/Linux, DOS, Windows 9x/NT/2000, *BSD, Solaris, Tru64, VMS, etc.). La ora actuală, GCC-ul este cel mai portat compilator.
 
-În cadrul laboratoarelor de Sisteme de Operare ne vom concentra asupra facilităţilor oferite de compilator pentru limbajul C/C++. GCC suportă standardele ANSI, ISO C, ISO C99, ... inclusiv C++23, POSIX dar şi multe extensii folositoare care nu sunt incluse în nici unul din standarde. Vezi standarde C/C++: (https://gcc.gnu.org/projects/cxx-status.html)
+În cadrul laboratoarelor de Sisteme de Operare ne vom concentra asupra facilităţilor oferite de compilator pentru limbajul C/C++. GCC suportă standardele ANSI, ISO C, ISO C99, ... inclusiv C++23, POSIX dar şi multe extensii folositoare care nu sunt incluse în nici unul din standarde. Vezi standarde C/C++: https://gcc.gnu.org/projects/cxx-status.html
 
 ## Utilizare GCC
 
