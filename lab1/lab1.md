@@ -355,16 +355,8 @@ Singura problemă care mai poate apărea este folosirea Dprintf cu un singur arg
 #define Dprintf(msg,...)	/* do nothing */
 #endif
 ```
-Un ultim retuş este afişarea, dacă se doreşte, a fişierului şi liniei unde s-a apelat macroul:
-```
-#ifdef DEBUG
-#define Dprintf(msg,...)	printf("[%s]:%d", msg, __FILE__, __LINE__, ##__VA_ARGS__)
-#else
-#define Dprintf(msg,...)	/* do nothing */
-#endif
-```
 
-Exemplu: intro_debug.c
+Exemplu: intro_debug.c, cu afişarea fişierului şi liniei unde s-a apelat macroul
 ```
 #include <stdio.h>
 #ifdef DEBUG
@@ -375,7 +367,8 @@ Exemplu: intro_debug.c
 
 int main()
 {
-    Dprintf(" mesaj\n");
+    Dprintf(" mesaj1\n");
+    Dprintf(" %s\n", "mesaj2");
     return 0;
 }
 ````
