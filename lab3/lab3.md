@@ -40,8 +40,10 @@ Implementarea system: se creează un nou proces cu fork; procesul copil execută
 ## Crearea unui proces
 
 În UNIX singura modalitate de creare a unui proces este prin apelul de sistem fork:
-
+```
 pid_t fork(void);
+```
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fork_system_call.png)
 
 Efectul este crearea unui nou proces - procesul copil, copie a celui care a apelat fork - procesul părinte. Copilul primeşte un nou PID de la sistemul de operare. Secvența clasică de creare a unui proces este prezentată în continuare:
 
@@ -62,12 +64,12 @@ int main()
     case 0: // child starts executing here
       ...
     default: // parent starts executing here
-      printf("created process with pid=%d, getpid=%d, getppid=%d\n",
-             pid, getpid(), getppid());
+      printf("created process with pid=%d, getpid=%d, getppid=%d\n", pid, getpid(), getppid());
       ...
   }
 }
 ```
+
 După cum se observă din comentariile de mai sus, apelul de sistem fork întoarce PID-ul noului proces în procesul părinte și valoarea 0 în procesul copil.
 
 Pentru aflarea PID-ului procesului curent ori al procesului părinte se va apela una din funcţiile de mai jos:
@@ -299,6 +301,8 @@ Observăm că ultimele două mesaje au fost inversate, față de cazul precedent
 
 Pipe-urile (canalele de comunicaţie) sunt mecanisme primitive de comunicare între procese. Un pipe poate conţine o cantitate limitată de date. Accesul la aceste date este de tip FIFO (datele se scriu la un capăt al pipe-ului şi sunt citite de la celălalt capăt). Sistemul de operare garantează sincronizarea între operaţiile de citire şi scriere la cele două capete.
 
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/pipe.png)
+
 Există două tipuri de pipe-uri:
 
 • pipe-uri anonime - pot fi folosite doar de procese înrudite (un proces părinte şi un copil sau doi copii) deoarece este accesibil doar prin moştenire. Aceste pipe-uri nu mai există după ce procesele şi-au terminat execuţia.
@@ -463,6 +467,8 @@ int main(void)
     return 0;
 }
 ```
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png)
+
 Exercițiu: Folosind pipe se creează o comunicație unidirecțională între procese. Să se implementeze o comunicație bidirecțională între două procese (folosind două pipe-uri).
 
 Exercițiu: forks.c
