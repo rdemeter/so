@@ -75,9 +75,7 @@ intro-04.o: intro-04.c
 clean:
     rm -f *.o *~ intro-04
 ```
-Se observă prezenţa regulii all care va fi executată implicit. all are ca dependinţă intro-04 şi nu execută nicio
-comandă; intro-04 are ca dependinţă intro-04.o şi realizează link-editarea fişierului intro-04.o; intro-04.o are
-ca dependinţă intro-04.c şi realizează compilarea şi asamblarea fişierului intro-04.c. Pentru obţinerea executabilului se foloseşte comanda:
+Se observă prezenţa regulii all care va fi executată implicit. all are ca dependinţă intro-04 şi nu execută nicio comandă; intro-04 are ca dependinţă intro-04.o şi realizează link-editarea fişierului intro-04.o; intro-04.o are ca dependinţă intro-04.c şi realizează compilarea şi asamblarea fişierului intro-04.c. Pentru obţinerea executabilului se foloseşte comanda:
 ```
 $ make -f Makefile.ex2
 gcc -Wall -c intro-04.c
@@ -100,9 +98,7 @@ nu apare la randul lui ca target în Makefile, nu mai trebuie obţinut
 - intro-04 este folosit ca dependinţă pentru all; acesta nu are asociată nicio comandă deci este automat
 obţinut.
 
-De remarcat este faptul că un target nu trebuie să aibă neapărat numele fişierului care se obţine. Se
-recomandă, însă, acest lucru pentru înţelegerea mai uşoară a fişierului Makefile, şi pentru a beneficia de faptul
-că make utilizează timpul de modificare al fişierelor pentru a decide când nu trebuie să facă nimic.
+De remarcat este faptul că un target nu trebuie să aibă neapărat numele fişierului care se obţine. Se recomandă, însă, acest lucru pentru înţelegerea mai uşoară a fişierului Makefile, şi pentru a beneficia de faptul că make utilizează timpul de modificare al fişierelor pentru a decide când nu trebuie să facă nimic.
 
 Acest format al fişierului Makefile are avantajul eficientizării procesului de compilare. Astfel, după ce s-a obţinut executabilul intro-04 conform fişierului Makefile anterior, o nouă rulare a make nu va genera nimic:
 ```
@@ -156,7 +152,7 @@ Nişte variabile predefinite sunt $@, $^ şi $<.
 - $^ se expandează la lista de cerinţe,
 - $< se expandează la prima cerinţă.
 ```
-                                                                                                                               În acest fel, comanda
+În acest fel, comanda
 
 ```
 $(CC) $^ -o $@
@@ -243,8 +239,7 @@ Exemplu 12. Makefile.ex6
 CC = gcc	# compilatorul folosit
 CFLAGS = -Wall -g	# optiunile pentru compilare
 LDLIBS = -lefence	# optiunile pentru linking
-```
-```
+
 # creeaza executabilele client si server
 all: client server
 
@@ -302,7 +297,6 @@ GDB poate fi folosit în două moduri pentru a depana programul:
 
 - rulându-l folosind comanda gdb
 - folosind fisierul core generat în urma unei erori grave (de obicei segmentation fault)
-
 
 Cea de a doua modalitate este utilă în cazul în care bug-ul nu a fost corectat înainte de lansarea programului.
 În acest caz, dacă utilizatorul întâlneşte o eroare gravă, poate trimite programatorului fişierul core cu care acesta poate depana programul şi corecta bug-ul.
