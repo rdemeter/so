@@ -70,12 +70,12 @@ Câteva exemple de alocare a memoriei sunt prezentate în continuare:
 ```
 int n = atoi(argv[1]);
 char *str;
-/* de obicei malloc-ul primeşte argumentul de spaţiu în forma size_elems *
-num_elems */
+/* de obicei malloc-ul primeşte argumentul de spaţiu în forma size_elems * num_elems */
 str = (char *) malloc((n + 1) * sizeof(char));
 if (NULL == str)
-{ perror("malloc");
- exit(EXIT_FAILURE);
+{ 
+  perror("malloc");
+  exit(EXIT_FAILURE);
 }
 [...]
 free(str);
