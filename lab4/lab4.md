@@ -1,11 +1,13 @@
 # GNU Make și GDB
 
-
 ## GNU Make
+
 **Make** este un utilitar care permite automatizarea și eficientizarea sarcinilor. In mod particular este folosit pentru automatizarea compilării programelor. După cum s-a precizat, pentru obținerea unui executabil
 provenind din mai multe surse este ineficientă compilarea de fiecare dată a fiecărui fișier și apoi linkeditarea.
 Se compilează fiecare fișier separat, iar la o modificare se va recompila doar fișierul modificat.
+
 ### Exemplu simplu Makefile
+
 Utilitarul Make foloseşte un fişier de configurare denumit Makefile. Un astfel de fişier conţine reguli şi
 comenzi de automatizare. În continuare este prezentat un exemplu foarte simplu de Makefile cu ajutorul
 căruia se va specifica sintaxa Make.
@@ -44,9 +46,8 @@ rm -f intro-04
 $ make -f Makefile.ex1 all
 gcc -Wall intro-04.c -o intro-04
 ```
-În primă fază se incearcă rularea simplă a comenzii make. Întrucât make nu găseşte niciunul din fişierele
-GNUmakefile, Makefile sau makefile, returnează eroare. Prin precizarea opţiunii -f Makefile.ex1 se
-specifică fişierul Makefile de analizat. De asemenea, se poate preciza şi regula care să fie executată.
+În primă fază se incearcă rularea simplă a comenzii make. Întrucât make nu găseşte niciunul din fişierele GNUmakefile, Makefile sau makefile, returnează eroare. Prin precizarea opţiunii -f Makefile.ex1 se specifică fişierul Makefile de analizat. De asemenea, se poate preciza şi regula care să fie executată.
+
 ## Sintaxa unei reguli
 În continuare este prezentată sintaxa unei reguli dintr-un fişier Makefile:
 ```
@@ -64,10 +65,7 @@ intro-04.o: intro-04.c
 clean:
     rm -f *.o *~ intro-04
 ```
-Se observă prezenţa regulii all care va fi executată implicit. all are ca dependinţă intro-04 şi nu execută nicio
-comandă; intro-04 are ca dependinţă intro-04.o şi realizează link-editarea fişierului intro-04.o; intro-04.o are
-ca dependinţă intro-04.c şi realizează compilarea şi asamblarea fişierului intro-04.c. Pentru obţinerea
-executabilului se foloseşte comanda:
+Se observă prezenţa regulii **all** care va fi executată implicit. all are ca dependinţă intro-04 şi nu execută nicio comandă; intro-04 are ca dependinţă intro-04.o şi realizează link-editarea fişierului intro-04.o; intro-04.o are ca dependinţă intro-04.c şi realizează compilarea şi asamblarea fişierului intro-04.c. Pentru obţinerea executabilului se foloseşte comanda:
 ```
 $ make -f Makefile.ex2
 gcc -Wall -c intro-04.c
@@ -214,7 +212,7 @@ cli_handler.o: cli_handler.c cli_handler.h
 log.o: log.c log.h
 .PHONY: clean
 clean:
- rm -fr *~ *.o server client
+   rm -fr *~ *.o server client
 ```
 Pentru obţinerea executabilelor server şi client se foloseşte:
 ```
@@ -228,9 +226,7 @@ gcc -Wall -g -c -o server.o server.c
 gcc -Wall -g -c -o cli_handler.o cli_handler.c
 gcc server.o cli_handler.o sock.o log.o -lefence -o server
 ```
-Regulile implicite intră în vigoare şi se obţin, pe rând, fişierele obiect şi fişierele executabile. Variabila
-LDLIBS este folosită pentru a preciza bibliotecile cu care se face link-editarea pentru obţinerea
-executabilului.
+Regulile implicite intră în vigoare şi se obţin, pe rând, fişierele obiect şi fişierele executabile. Variabila LDLIBS este folosită pentru a preciza bibliotecile cu care se face link-editarea pentru obţinerea executabilului.
                                
 # Depanarea programelor
 Exist câteva unelte GNU care pot fi folosite atunci când nu reuşim sa facem un program sa ne asculte. gdb, acronimul de la "Gnu DeBugger" este probabil cel mai util dintre ele, dar exist si altele, cum ar fi ElectricFence, gprof sau mtrace. gdb va fi prezentat pe scurt în secţiunile ce urmează.
@@ -243,11 +239,7 @@ GDB poate fi folosit în două moduri pentru a depana programul:
 - rulându-l folosind comanda gdb
 - folosind fisierul core generat în urma unei erori grave (de obicei segmentation fault)
 
-Cea de a doua modalitate este utilă în cazul în care bug-ul nu a fost corectat înainte de lansarea programului.
-În acest caz, dacă utilizatorul întâlneşte o eroare gravă, poate trimite programatorului fişierul core cu care
-acesta poate depana programul şi corecta bug-ul.
-Cea mai simplă formă de depanare cu ajutorul GDB este cea în care dorim să determinăm linia programului la
-care s-a produs eroarea. Pentru exemplificare considerăm următorul program:
+Cea de a doua modalitate este utilă în cazul în care bug-ul nu a fost corectat înainte de lansarea programului. În acest caz, dacă utilizatorul întâlneşte o eroare gravă, poate trimite programatorului fişierul core cu care acesta poate depana programul şi corecta bug-ul. Cea mai simplă formă de depanare cu ajutorul GDB este cea în care dorim să determinăm linia programului la care s-a produs eroarea. Pentru exemplificare considerăm următorul program:
 Exemplu 13. exemplul-6.c
 ```
 #include <stdio.h>
@@ -276,9 +268,7 @@ Program received signal SIGSEGV, Segmentation fault.
 16 *bug=f(1, 2);
 (gdb)
 ```
-Prima comandă folosită este run. Această comandă va porni execuţia programului. Dacă această comandă
-primeşte argumente de la utilizator, acestea vor fi transmise programului. Înainte de a trece la prezentarea
-unor comenzi de bază din gdb, să demonstrăm cum se poate depana un program cu ajutorul fişierului core:
+Prima comandă folosită este **run**. Această comandă va porni execuţia programului. Dacă această comandă primeşte argumente de la utilizator, acestea vor fi transmise programului. Înainte de a trece la prezentarea unor comenzi de bază din gdb, să demonstrăm cum se poate depana un program cu ajutorul fişierului core:
 ```
 # ulimit -c 4
 # ./a.out
@@ -291,12 +281,8 @@ Program terminated with signal 11, Segmentation fault.
 (gdb)
 ```
 ## Comenzi de bază GDB
-Câteva din comenzile de bază în gdb sunt breakpoint, next şi step. Prima dintre ele primeşte ca
-argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50)
-sau o adresă (ex: break *0x80483d3). Comanda next va continua executia programului până ce se va
-ajunge la următoarea linie din codul surs. Dacă linia de executat conţine un apel de funcţie, funcţia se va
-executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească step. Folosirea acestor
-comenzi este exemplificată mai jos:
+Câteva din comenzile de bază în gdb sunt **breakpoint**, **next** şi **step**. Prima dintre ele primeşte ca argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50) sau o adresă (ex: break *0x80483d3). Comanda next va continua executia programului până ce se va
+ajunge la următoarea linie din codul surs. Dacă linia de executat conţine un apel de funcţie, funcţia se va executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească step. Folosirea acestor comenzi este exemplificată mai jos:
 ```
 $ gdb a.out
 (gdb) break main
@@ -332,10 +318,7 @@ Program received signal SIGSEGV, Segmentation fault.
 16 *bug=f(1, 2);
 (gdb)
 ```
-O altă comandă utilă este list. Aceasta va lista fişierul sursă al programului depanat. Comanda primeşte ca
-argument un număr de linie (eventual nume fişier), o funcţie sau o adresă de la care să listeze. Al doilea
-argument este opţional şi precizează câte linii vor fi afişate. În cazul în care comanda nu are niciun parametru,
-ea va lista de unde s-a oprit ultima afişare.
+O altă comandă utilă este **list**. Aceasta va lista fişierul sursă al programului depanat. Comanda primeşte ca argument un număr de linie (eventual nume fişier), o funcţie sau o adresă de la care să listeze. Al doilea argument este opţional şi precizează câte linii vor fi afişate. În cazul în care comanda nu are niciun parametru, ea va lista de unde s-a oprit ultima afişare.
 ```
 $ gdb a.out
 (gdb) list exemplul-6.c:1
@@ -363,11 +346,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0x08048411 in main () at exemplul-6.c:16
 16 *bug=f(1, 2);
 ```
-Comanda continue se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de
-bază este print. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor
-globale. print poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale
-variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, print poate afişa structuri de date
-precum struct şi union.
+Comanda **continue** se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este **print**. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. print poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, print poate afişa structuri de date precum struct şi union.
 ```
 $ gdb a.out
 (gdb) break f
@@ -385,7 +364,6 @@ $3 = 1073792080
 (gdb) next
 9 return c;
 (gdb) print c
--11-
 $4 = 3
 (gdb) finish
 Run till exit from #0 f (a=1, b=2) at exemplul-6.c:9
