@@ -23,9 +23,7 @@ gcc -Wall intro-04.c -o intro-04
 $ ./intro-04
 variabila my_uber_var are valoarea 12345
 ```
-Exemplul prezentat mai sus conţine două reguli: all şi clean. La rularea comenzii make se execută prima regulă
-din Makefile (în cazul de faţă all, nu contează în mod special denumirea). Comanda executată este gcc
--Wall intro-04.c -o intro-04. Se poate preciza explicit ce regulă să se execute prin transmiterea
+Exemplul prezentat mai sus conţine două reguli: all şi clean. La rularea comenzii make se execută prima regulă din Makefile (în cazul de faţă all, nu contează în mod special denumirea). Comanda executată este gcc -Wall intro-04.c -o intro-04. Se poate preciza explicit ce regulă să se execute prin transmiterea
 ca argument comenzii make:
 ```
 $ make clean
@@ -33,12 +31,8 @@ rm -f intro-04
 $ make all
 gcc -Wall intro-04.c -o intro-04
 ```
-În exemplul de mai sus se foloseşte regula clean pentru a şterge executabilul intro-04 şi comanda make all
-pentru a obţine din nou acel executabil.
-Se observă că nu se transmite niciun argument comenzii make pentru a preciza fișierul Makefile care va trebui
-analizat. În mod implicit, GNU Make caută, în ordine, fişierele GNUmakefile, Makefile, makefile şi le
-analizează. Pentru a preciza ce fişier Makefile trebuie analizat, se foloseşte opţiunea -f. Astfel, în exemplul de
-mai jos, folosim fişierul Makefile.ex1:
+În exemplul de mai sus se foloseşte regula clean pentru a şterge executabilul intro-04 şi comanda make all pentru a obţine din nou acel executabil.
+Se observă că nu se transmite niciun argument comenzii make pentru a preciza fișierul Makefile care va trebui analizat. În mod implicit, GNU Make caută, în ordine, fişierele GNUmakefile, Makefile, makefile şi le analizează. Pentru a preciza ce fişier Makefile trebuie analizat, se foloseşte opţiunea -f. Astfel, în exemplul de mai jos, folosim fişierul Makefile.ex1:
 ```
 $ mv Makefile Makefile.ex1
 $ make
@@ -53,18 +47,13 @@ gcc -Wall intro-04.c -o intro-04
 În primă fază se incearcă rularea simplă a comenzii make. Întrucât make nu găseşte niciunul din fişierele
 GNUmakefile, Makefile sau makefile, returnează eroare. Prin precizarea opţiunii -f Makefile.ex1 se
 specifică fişierul Makefile de analizat. De asemenea, se poate preciza şi regula care să fie executată.
-Sintaxa unei reguli
+## Sintaxa unei reguli
 În continuare este prezentată sintaxa unei reguli dintr-un fişier Makefile:
 ```
 target: prerequisites
 <tab> command
 ```
-target este, de obicei, fişierul care se va obţine prin rularea comenzii command. După cum s-a observat şi
-din exemplul anterior, poate să fie o ţintă virtuală care nu are asociat un fişier. prerequisites reprezintă
-dependinţele necesare pentru a urmări regula; de obicei sunt fişiere necesare pentru obţinerea ţintei. <tab>
-reprezintă caracterul tab şi trebuie neaparat folosit înaintea precizării comenzii. command o listă de comenzi
-(niciuna*, una, oricâte) rulate în momentul în care se trece la obţinerea ţintei.
-Un exemplu indicat pentru un fişier Makefile este:
+target este, de obicei, fişierul care se va obţine prin rularea comenzii command. După cum s-a observat şi din exemplul anterior, poate să fie o ţintă virtuală care nu are asociat un fişier. prerequisites reprezintă dependinţele necesare pentru a urmări regula; de obicei sunt fişiere necesare pentru obţinerea ţintei. <tab> reprezintă caracterul tab şi trebuie neaparat folosit înaintea precizării comenzii. command o listă de comenzi (niciuna*, una, oricâte) rulate în momentul în care se trece la obţinerea ţintei. Un exemplu indicat pentru un fişier Makefile este:
 Exemplu 8. Makefile.ex2
 ```
 all: intro-04
@@ -85,82 +74,73 @@ gcc -Wall -c intro-04.c
 gcc intro-04.o -o intro-04
 ```
 ## Funcţionarea unui fişier Makefile
-Pentru explicarea funcţionării unui fişier Makefile, vom folosi exemplul de mai sus. În momentul rulării
-comenzii make se poate preciza target-ul care se doreşte a fi obţinut. Dacă acesta nu este precizat, este
-considerat implicit primul target întâlnit în fişierul Makefile folosit; de obicei, acesta se va numi all.
+Pentru explicarea funcţionării unui fişier Makefile, vom folosi exemplul de mai sus. În momentul rulării comenzii make se poate preciza target-ul care se doreşte a fi obţinut. Dacă acesta nu este precizat, este considerat implicit primul target întâlnit în fişierul Makefile folosit; de obicei, acesta se va numi all.
 Pentru obţinerea unui target trebuie satisfăcute dependinţele (prerequisites) acestuia. Astfel,
-• pentru obţinerea target-ului all trebuie obţinut target-ul intro-04, care este un nume de executabil
-• pentru obţinerea target-ului intro-04 trebuie obţinut target-ul intro-04.o
-• pentru obţinerea target-ului intro-04.o trebuie obţinut intro-04.c; acest fişier există deja, şi cum acesta
-nu apare la randul lui ca target în Makefile, nu mai trebuie obţinut
-• drept urmare se rulează comanda asociată obţinerii intro-04.o; aceasta este gcc -Wall -c
-intro-04.c
-• rularea comenzii duce la obţinerea target-ului intro-04.o, care este folosit ca dependinţă pentru
-intro-04
-• se rulează comanda gcc intro-04.o -o intro-04 pentru obţinerea intro-04
-• intro-04 este folosit ca dependinţă pentru all; acesta nu are asociată nicio comandă deci este automat
+- pentru obţinerea target-ului all trebuie obţinut target-ul intro-04, care este un nume de executabil
+- pentru obţinerea target-ului intro-04 trebuie obţinut target-ul intro-04.o
+- pentru obţinerea target-ului intro-04.o trebuie obţinut intro-04.c; acest fişier există deja, şi cum acesta nu apare la randul lui ca target în Makefile, nu mai trebuie obţinut
+- drept urmare se rulează comanda asociată obţinerii intro-04.o; aceasta este gcc -Wall -c intro-04.c
+- rularea comenzii duce la obţinerea target-ului intro-04.o, care este folosit ca dependinţă pentru intro-04
+- se rulează comanda gcc intro-04.o -o intro-04 pentru obţinerea intro-04
+- intro-04 este folosit ca dependinţă pentru all; acesta nu are asociată nicio comandă deci este automat
 obţinut.
-De remarcat este faptul că un target nu trebuie să aibă neapărat numele fişierului care se obţine. Se
-recomandă, însă, acest lucru pentru înţelegerea mai uşoară a fişierului Makefile, şi pentru a beneficia de faptul
-că make utilizează timpul de modificare al fişierelor pentru a decide când nu trebuie să facă nimic.
-Acest format al fişierului Makefile are avantajul eficientizării procesului de compilare. Astfel, după ce s-a
-obţinut executabilul intro-04 conform fişierului Makefile anterior, o nouă rulare a make nu va genera nimic:
+De remarcat este faptul că un target nu trebuie să aibă neapărat numele fişierului care se obţine. Se recomandă, însă, acest lucru pentru înţelegerea mai uşoară a fişierului Makefile, şi pentru a beneficia de faptul că make utilizează timpul de modificare al fişierelor pentru a decide când nu trebuie să facă nimic.
+Acest format al fişierului Makefile are avantajul eficientizării procesului de compilare. Astfel, după ce s-a obţinut executabilul intro-04 conform fişierului Makefile anterior, o nouă rulare a make nu va genera nimic:
+```
 $ make -f Makefile.ex2
 make: Nothing to be done for `all'.
-Mesajul "Nothing to be done for 'all'" înseamnă că ţinta all are toate dependinţele satisfăcute. Dacă, însă,
-folosim comanda touch pe fişierul obiect, se va considera că a fost modificat şi vor trebui refăcute target-urile
--4-
-care depindeau de el:
+```
+Mesajul "Nothing to be done for 'all'" înseamnă că ţinta all are toate dependinţele satisfăcute. Dacă, însă, folosim comanda touch pe fişierul obiect, se va considera că a fost modificat şi vor trebui refăcute target-urile care depindeau de el:
+```
 $ touch intro-04.o
 $ make -f Makefile.ex2
 gcc intro-04.o -o intro-04
 $ make -f Makefile.ex2
 make: Nothing to be done for `all'.
-La fel, dacă ştergem fişierul obiect, acesta va trebui regenerat, ca şi toate target-urile care depindeau, direct
-sau indirect, de el:
+```
+La fel, dacă ştergem fişierul obiect, acesta va trebui regenerat, ca şi toate target-urile care depindeau, direct sau indirect, de el:
+```
 $ rm intro-04.o
 $ make -f Makefile.ex2
 gcc -Wall -c intro-04.c
 gcc intro-04.o -o intro-04
-Folosirea variabilelor
+```
+## Folosirea variabilelor
 Un fişier Makefile permite folosirea de variabile. Astfel, un exemplu uzual de fişier Makefile este:
 Exemplu 9. Makefile.ex3
+```
 CC = gcc
 CFLAGS = -Wall -g
 all: intro-04
 intro-04: intro-04.o
-$(CC) $^ -o $@
+    $(CC) $^ -o $@
 intro-04.o: intro-04.c
-$(CC) $(CFLAGS) -c $<
+    $(CC) $(CFLAGS) -c $<
 .PHONY: clean
 clean:
-rm -f *.o *~ intro-04
+    rm -f *.o *~ intro-04
+```
 În exemplul de mai sus au fost definite variabilele CC şi CFLAGS. Variabila CC reprezintă compilatorul
 folosit, iar variabila CFLAGS reprezintă opţiunile (flag-urile) de compilare utilizate; în cazul de faţă sunt
 afişarea avertismentelor şi compilarea cu suport de depanare. Referirea unei variabile se realizează prin
 intermediul construcţiei $(VAR_NAME). Astfel, $(CC) se înlocuieşte cu gcc, iar $(CFLAGS) se înlocuieşte
 cu -Wall -g.
-Nişte variabile predefinite sunt $@, $^ şi $<. $@ se expandează la numele target-ului. $^ se expandează la
-lista de cerinţe, iar $< se expandează la prima cerinţă. În acest fel, comanda
-$(CC) $^ -o $@
-se expandează la
-gcc intro-04.o -o intro-04
-iar comanda
--5-
-$(CC) $(CFLAGS) -c $<
-se expandează la
-gcc -Wall -g -c intro-04.c
+```
+Nişte variabile predefinite sunt $@, $^ şi $<. $@ se expandează la numele target-ului. $^ se expandează la lista de cerinţe, iar $< se expandează la prima cerinţă. În acest fel, comanda $(CC) $^ -o $@ se expandează la gcc intro-04.o -o intro-04 iar comanda $(CC) $(CFLAGS) -c $< se expandează la gcc -Wall -g -c intro-04.c
+```
 Pentru mai multe detalii despre variabile consultaţi pagina info sau manualul online.
-.
-Folosirea regulilor implicite
-De foarte multe ori nu este nevoie să se precizeze comanda care trebuie rulată; aceasta poate fi detectată
-implicit.
+
+## Folosirea regulilor implicite
+De foarte multe ori nu este nevoie să se precizeze comanda care trebuie rulată; aceasta poate fi detectată implicit.
 Astfel, în cazul în care se precizează regula:
+```
 main.o: main.c
 se foloseşte implicit comanda
 $(CC) $(CFLAGS) -c -o $@ $<
+```
 Astfel, fişierul Makefile.ex2 de mai sus poate fi simplificat, folosind reguli implicite, ca mai jos:
 Exemplu 10. Makefile.ex4
+```
 CC = gcc
 CFLAGS = -Wall -g
 all: intro-04
@@ -168,37 +148,44 @@ intro-04: intro-04.o
 intro-04.o: intro-04.c
 .PHONY: clean
 clean:
- rm -f *.o *~ intro-04
+   rm -f *.o *~ intro-04
+```
 Pentru rulare, se foloseşte comanda:
+```
 $ make -f Makefile.ex4
 gcc -Wall -g -c -o intro-04.o intro-04.c
 gcc intro-04.o -o intro-04
-Se observă că se folosesc reguli implicite. Makefile-ul poate fi simplificat şi mai mult, ca în exemplul de mai
-jos:
+```
+Se observă că se folosesc reguli implicite. Makefile-ul poate fi simplificat şi mai mult, ca în exemplul de mai jos:
 Exemplul 11. Makefile.ex5
+```
 CC = gcc
 CFLAGS = -Wall -g
--6-
 all: intro-04
 intro-04: intro-04.o
 .PHONY: clean
 clean:
- rm -f *.o *~ intro-04
+   rm -f *.o *~ intro-04
+```
 În exemplul de mai sus s-a eliminat regula intro-04.o: intro-04.c. Make "vede" că nu există fişierul
 intro-04.o şi caută fişierul C din care poate să-l obţină. Pentru aceasta creează o regulă implicită şi compilează
 fişierul intro-04.c:
+```
 $ make -f Makefile.ex5
 gcc -Wall -g -c -o intro-04.o intro-04.c
 gcc intro-04.o -o intro-04
+```
 De remarcat este faptul ca daca avem un singur fisier sursa nici nu trebuie sa existe un fisier Makefile pentru a
 obtine executabilul dorit.
+```
 $ls
 intro-04.c
 $ make intro-04
 cc intro-04.c -o intro-04
+```
 Pentru mai multe detalii despre reguli implicite consultaţi pagina info sau manualul online.
-.
-Exemplu complet de Makefile
+
+## Exemplu complet de Makefile
 Folosind toate facilitaţile de până acum, ne propunem compilarea unui executabil client şi a unui executabil
 server.
 Fişierele folosite sunt:
