@@ -50,6 +50,7 @@ La limbaje precum Java, Lisp, etc. unde nu există "pointer freedom", eliberarea
 ## Alocarea memoriei
 Alocarea memoriei este realizată static de compilator sau dinamic, în timpul execuţiei. Alocarea statică este realizată în segmentele de date pentru variabilele locale sau pentru literali.
 În timpul execuţiei, variabilele se alocă pe stivă sau în heap. Alocarea pe stivă se realizează automat de compilator pentru variabilele locale unei funcții (mai puțin variabilele locale prefixate de identificatorul static).
+
 Alocarea dinamică se realizează în heap. Alocarea dinamică are loc atunci când nu se ştie în momentul compilării câtă memorie va fi necesară pentru o variabilă, o structură, un vector. Dacă se ştie din momentul compilării cât spaţiu va ocupa o varibilă, se recomandă alocarea ei statică, pentru
 a preveni erorile frecvente apărute în contextul alocării dinamice.
 Pentru a fragmenta cât mai puţin spațiul de adrese al procesului, ca urmare a alocărilor şi dezalocărilor unor zone de dimensiuni variate, alocatorul de memorie va organiza segmentul de date alocate dinamic sub formă de heap, de unde şi numele segmentului.
@@ -84,14 +85,14 @@ str = NULL;
 char **argv_no_exec;
 /* se aloca spatiu pentru argumente */
 argv_no_exec = (char **) malloc((argc - 1) * sizeof(char*));
-if (NULL ==
-argv_no_exec)
-{ perror("malloc");
- exit(EXIT_FAILURE);
+if (NULL == argv_no_exec)
+{ 
+  perror("malloc");
+  exit(EXIT_FAILURE);
 }
 /* se creeaza referinte catre argumente */
 for (i = 1; i < argc; i++)
- argv_no_exec[i-1] = argv[i];
+  argv_no_exec[i-1] = argv[i];
 [...]
 
 free(argv_no_exec);
@@ -101,8 +102,9 @@ Apelul realloc este folosit pentru modificarea spatiului de memorie alocat dupa 
 ```
 int *p;
 p = (int *) malloc(n * sizeof(int));
-if (NULL == p) { perror("malloc");
- exit(EXIT_FAILURE);
+if (NULL == p) { 
+  perror("malloc");
+  exit(EXIT_FAILURE);
 }
 [...]
 p = (int *) realloc(p, (n + extra) * sizeof(int));
@@ -110,20 +112,20 @@ p = (int *) realloc(p, (n + extra) * sizeof(int));
 free(p);
 p = NULL;
 ```
-Apelul calloc este folosit pentru alocarea de zone de memorie al căror conţinut este nul (plin de
-valori de zero). Spre deosebire de malloc, apelul va primi două argumente: numărul de elemente şi
-dimensiunea unui element.
+Apelul calloc este folosit pentru alocarea de zone de memorie al căror conţinut este nul (plin de valori de zero). Spre deosebire de malloc, apelul va primi două argumente: numărul de elemente şi dimensiunea unui element.
 ```
 list_t *list_v; /* list_t poate fi orice tip de date din C (mai putin void) */
 list_v = (list_t *) calloc(n, sizeof(list_t));
-if (NULL == list_v) { perror("calloc");
- exit(EXIT_FAILURE);
+if (NULL == list_v) { 
+  perror("calloc");
+  exit(EXIT_FAILURE);
 }
 [...]
 free(p);
 p = NULL;
 ```
 Mai multe informaţii găsiţi în manualul bibliotecii standard C şi în pagina de manual man malloc.
+
 ## Probleme de lucru cu memoria
 Lucrul cu heap-ul este una dintre cauzele principale ale apariţiilor problemelor de programare.
 Lucrul cu pointerii, necesitatea folosirii unor apeluri de sistem/bibliotecă pentru alocare/dezalocare, pot conduce la o serie de probleme care afectează (de multe ori fatal) funcţionarea unui program.
@@ -138,6 +140,7 @@ Leak-urile de memorie sunt situaiile în care se pierde referinţa la o zonă al
 De obicei, accesarea unei zone de memorie invalide rezultă într-o eroare de pagină (page fault) şi terminarea procesului (în Unix înseamnă trimiterea semnalului SIGSEGV - afişarea mesajului 'Segmentation fault'). Totuşi, dacă eroarea apare la o adresă invalidă dar într-o pagină validă, hardwareul şi sistemul de operare nu vor putea sesiza acţiunea ca fiind invalidă. Acest lucru se datorează faptului că alocarea memoriei se face la nivel de
 pagină. Pot exista situaţii în care să fie folosită doar jumătate din pagină. Deşi cealaltă jumătate conţine adrese invalide, sistemul de operare nu va putea detecta accesele invalide la acea zonă.
 Asemenea accese pot duce la coruperea heap-ului şi la pierderea consistenţei memoriei alocate. După cum se va vedea în continuare, există utilitare care ajută la detectarea acestor situaţii.
+
 Un tip special de acces invalid este buffer overflow. Acest tip de atac presupune referirea unor regiuni valide din spaţiul de adresă al unui proces prin intermediul unei variabile care nu ar trebui să poată referenţia aceste adrese. De obicei, un atac de tip buffer overflow rezultă în rularea de cod nesigur. Protecţia la accese de tip buffer overflow se realizează prin verificarea limitelor unui buffer/vector fie la compilare, fie la rulare.
 
 ## GDB - Detectarea zonei de acces invalid de tip page fault
