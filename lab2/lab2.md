@@ -202,7 +202,9 @@ Se observă că se folosesc reguli implicite. Makefile-ul poate fi simplificat �
 Exemplul 11. Makefile.ex5
 ```
 CC = gcc
-CFLAGS = -Wall -g all: intro-04
+CFLAGS = -Wall -g
+
+all: intro-04
 intro-04: intro-04.o
 
 .PHONY: clean
