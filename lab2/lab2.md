@@ -41,7 +41,8 @@ $ make
 make: *** No targets specified and no makefile found.	Stop.
 $ make -f Makefile.ex1
 gcc -Wall intro-04.c -o intro-04
-$ make -f Makefile.ex1 clean rm -f intro-04
+$ make -f Makefile.ex1 clean
+rm -f intro-04
 $ make -f Makefile.ex1 all
 gcc -Wall intro-04.c -o intro-04
 ```
@@ -90,13 +91,11 @@ Pentru obţinerea unui target trebuie satisfăcute dependinţele (prerequisites)
 
 - pentru obţinerea target-ului all trebuie obţinut target-ul intro-04, care este un nume de executabil
 - pentru obţinerea target-ului intro-04 trebuie obţinut target-ul intro-04.o
-- pentru obţinerea target-ului intro-04.o trebuie obţinut intro-04.c; acest fişier există deja, şi cum acesta
-nu apare la randul lui ca target în Makefile, nu mai trebuie obţinut
+- pentru obţinerea target-ului intro-04.o trebuie obţinut intro-04.c; acest fişier există deja, şi cum acesta nu apare la randul lui ca target în Makefile, nu mai trebuie obţinut
 - drept urmare se rulează comanda asociată obţinerii intro-04.o; aceasta este gcc -Wall -c intro-04.c
 - rularea comenzii duce la obţinerea target-ului intro-04.o, care este folosit ca dependinţă pentru intro-04
 - se rulează comanda gcc intro-04.o -o intro-04 pentru obţinerea intro-04
-- intro-04 este folosit ca dependinţă pentru all; acesta nu are asociată nicio comandă deci este automat
-obţinut.
+- intro-04 este folosit ca dependinţă pentru all; acesta nu are asociată nicio comandă deci este automat obţinut.
 
 De remarcat este faptul că un target nu trebuie să aibă neapărat numele fişierului care se obţine. Se recomandă, însă, acest lucru pentru înţelegerea mai uşoară a fişierului Makefile, şi pentru a beneficia de faptul că make utilizează timpul de modificare al fişierelor pentru a decide când nu trebuie să facă nimic.
 
@@ -105,8 +104,7 @@ Acest format al fişierului Makefile are avantajul eficientizării procesului de
 $ make -f Makefile.ex2
 make: Nothing to be done for `all'.
 ```
-Mesajul "Nothing to be done for 'all'" înseamnă că ţinta all are toate dependinţele satisfăcute. Dacă, însă,
-folosim comanda touch pe fişierul obiect, se va considera că a fost modificat şi vor trebui refăcute target-urile care depindeau de el:
+Mesajul "Nothing to be done for 'all'" înseamnă că ţinta all are toate dependinţele satisfăcute. Dacă, însă, folosim comanda touch pe fişierul obiect, se va considera că a fost modificat şi vor trebui refăcute target-urile care depindeau de el:
 ```
 $ touch intro-04.o
 $ make -f Makefile.ex2
@@ -186,7 +184,8 @@ Exemplu 10. Makefile.ex4
 ```
 CC = gcc
 CFLAGS = -Wall -g all: intro-04
-intro-04: intro-04.o intro-04.o: intro-04.c
+intro-04: intro-04.o
+intro-04.o: intro-04.c
 .PHONY: clean
 
 clean:
@@ -195,7 +194,8 @@ clean:
 Pentru rulare, se foloseşte comanda:
 ```
 $ make -f Makefile.ex4
-gcc -Wall -g	-c -o intro-04.o intro-04.c gcc	intro-04.o	-o intro-04
+gcc -Wall -g	-c -o intro-04.o intro-04.c
+gcc	intro-04.o	-o intro-04
 ```
 Se observă că se folosesc reguli implicite. Makefile-ul poate fi simplificat şi mai mult, ca în exemplul de mai jos:
 
@@ -215,7 +215,8 @@ clean:
 În exemplul de mai sus s-a eliminat regula intro-04.o: intro-04.c. Make "vede" că nu există fişierul intro-04.o şi caută fişierul C din care poate să-l obţină. Pentru aceasta creează o regulă implicită şi compilează fişierul intro-04.c:
 ```
 $ make -f Makefile.ex5
-gcc -Wall -g	-c -o intro-04.o intro-04.c gcc intro-04.o	-o intro-04
+gcc -Wall -g	-c -o intro-04.o intro-04.c
+gcc intro-04.o	-o intro-04
 ```
 De remarcat este faptul că dacă avem un singur fișier sursă nici nu trebuie să existe un fișier Makefile pentru a obține executabilul dorit.
 ```
@@ -278,9 +279,12 @@ clean:
 Pentru obţinerea executabilelor server şi client se foloseşte:
 ```
 $ make -f Makefile.ex6
-gcc -Wall -g -c -o client.o client.c gcc -Wall -g -c -o user.o user.c
-gcc -Wall -g -c -o sock.o sock.c gcc -Wall -g -c -o log.o log.c
-gcc client.o user.o sock.o log.o -lefence -o client gcc -Wall -g -c -o server.o server.c
+gcc -Wall -g -c -o client.o client.c
+gcc -Wall -g -c -o user.o user.c
+gcc -Wall -g -c -o sock.o sock.c
+gcc -Wall -g -c -o log.o log.c
+gcc client.o user.o sock.o log.o -lefence -o client
+gcc -Wall -g -c -o server.o server.c
 gcc -Wall -g -c -o cli_handler.o cli_handler.c
 gcc server.o cli_handler.o sock.o log.o -lefence -o server
 ```
