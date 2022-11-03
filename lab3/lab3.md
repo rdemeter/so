@@ -470,6 +470,7 @@ int main(void)
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png)
 
 Exercitiu:
+
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex2_fork_pids.png)
 
 Exercițiu: Folosind pipe se creează o comunicație unidirecțională între procese. Să se implementeze o comunicație bidirecțională între două procese (folosind două pipe-uri).
