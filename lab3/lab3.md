@@ -469,11 +469,11 @@ int main(void)
 ```
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png)
 
-Exercitiu: [](https://www.geeksforgeeks.org/fork-practice-questions/)
+Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex2_fork_pids.png)
 
-Exercitiu: [](https://www.geeksforgeeks.org/fork-practice-questions/)
+Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex3_fork_pids.png)
 
