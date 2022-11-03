@@ -129,7 +129,8 @@ Un fişier Makefile permite folosirea de variabile. Astfel, un exemplu uzual de 
 Exemplu 9. Makefile.ex3
 ```
 CC = gcc
-CFLAGS = -Wall -g all: intro-04
+CFLAGS = -Wall -g
+all: intro-04
 intro-04: intro-04.o
     $(CC) $^ -o $@
 
