@@ -148,6 +148,8 @@ $gcc client_sem.c –o client_sem –lpthread
 ```
 Exercitiu: Să se modifice aplicatia, astfel incat procesele să astepte după resursele partajate, asa cum este ilustrat in figura, producand interblocarea proceselor, deadlock.
 
+[](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
+
 ## Cozi de mesaje
 
 Acestea permit proceselor schimbarea de date între procese sub forma de mesaje.
