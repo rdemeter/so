@@ -109,11 +109,10 @@ int main(void) {
   return 0;
 }
 ```
+```
 $gcc server_sem.c –o server_sem –lpthread
-
-Cele două procese se rulează din console diferite. După rularea primului proces, semaforul va fi creat
-în ”/dev/shm” cu numele “sem.my_semaphore” și procesul va aștepta apăsarea unei taste pentru a debloca
-următorul proces.
+```
+Cele două procese se rulează din console diferite. După rularea primului proces, semaforul va fi creat în ”/dev/shm” cu numele “sem.my_semaphore” și procesul va aștepta apăsarea unei taste pentru a debloca următorul proces.
 ```
 // client_sem.c
 #include <fcntl.h> /* For O_* constants */
@@ -341,10 +340,10 @@ int shm_unlink(const char *name);
 ```
 Semantica este identică cu cea de la funcțiile *_unlink anterioare: ștergerea efectivă este amânată până ce toate procesele implicate închid zona în cauză.
 
-Exemplu: Folosind memoria partajată, realizați un transfer simplu de informație între două procese astfel: server-ul va crea o zona de 4k de memorie și va pune numărul 1337 începând cu primul octet, clientul
-va citi și afișa acest număr.
+Exemplu: Folosind memoria partajată, realizați un transfer simplu de informație între două procese astfel: server-ul va crea o zona de 4k de memorie și va pune numărul 1337 începând cu primul octet, clientul va citi și afișa acest număr.
+
+Client pentru memoria partajată
 ```
-/*Client pentru memoria partajata*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -379,8 +378,8 @@ int main(int argc, char **argv)
   return 0;
 }
 ```
+Server pentru memoria partajata
 ```
-/*Server pentru memoria partajata*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
