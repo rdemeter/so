@@ -10,12 +10,12 @@ secvenţial. Acest fir poate la rândul lui să creeze alte fire de execuţie; a
 ### Diferențe dintre thread-uri şi procese
 - procesele nu partajează resurse între ele (decât dacă programatorul foloseşte un mecanism special pentru asta - vezi IPC), pe când thread-urile partajează în mod implicit majoritatea resurselor unui proces.
 Modificarea unei astfel de resurse dintr-un fir este vizibilă instantaneu şi celorlalte:
- - segmentele de memorie precum .heap, .data şi .bss (deci şi variabilele stocate în ele)
- - descriptorii de fişiere (aşadar, închiderea unui fişier este vizibilă imediat pentru toate threadurile)
- - sockeţii
+  - segmentele de memorie precum .heap, .data şi .bss (deci şi variabilele stocate în ele)
+  - descriptorii de fişiere (aşadar, închiderea unui fişier este vizibilă imediat pentru toate threadurile)
+  - sockeţii
 - fiecare fir are un context de execuţie propriu, format din
- - stivă
- - set de regiştri (deci şi un contor de program - registrul (E)IP)
+  - stivă
+  - set de regiştri (deci şi un contor de program - registrul (E)IP)
 
 Procesele sunt folosite de SO pentru a grupa şi aloca resurse, iar firele de execuţie pentru a planifica execuţia de cod care accesează (în mod partajat) aceste resurse.
 
