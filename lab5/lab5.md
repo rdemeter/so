@@ -205,8 +205,7 @@ mqd_t mq_unlink(const char *name);
 ```
 Semantica este similară cu cea de la semafoare: coada nu va fi ștearsă efectiv decât după ce restul proceselor implicate o închid.
 
-Exemplu: Implementați un protocol simplu de comunicație între un client și un server folosind cozi de mesaje. Clientul se va conecta la server și va trimite acestuia numărul 1337 pe care server-ul îl va afișa. Apoi
-clientul va trimite server-ului un mesaj de închidere.
+Exemplu: Implementați un protocol simplu de comunicație între un client și un server folosind cozi de mesaje. Clientul se va conecta la server și va trimite acestuia numărul 1337 pe care server-ul îl va afișa. Apoi clientul va trimite server-ului un mesaj de închidere.
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -274,15 +273,16 @@ int main(int argc, char **argv)
     exit(-1);
   }
   do {
-  ssize_t bytes_read;
-  if ((bytes_read = mq_receive(q, buf, MAX_SIZE + 1, NULL)) < 0) {
-    perror("mq_receive():");
-    exit(-1);
-  }
-  buf[bytes_read] = 0;
-  if (!strcmp(buf, MSG_END)) done = 1;
-  printf("Am primit de la client: %s (done = %d)\n", buf, done);
+    ssize_t bytes_read;
+    if ((bytes_read = mq_receive(q, buf, MAX_SIZE + 1, NULL)) < 0) {
+      perror("mq_receive():");
+      exit(-1);
+    }
+    buf[bytes_read] = 0;
+    if (!strcmp(buf, MSG_END)) done = 1;
+    printf("Am primit de la client: %s (done = %d)\n", buf, done);
   } while (!done);
+
   if (mq_close(q) < 0) {
     perror("mq_close():");
    exit(-1);
@@ -293,6 +293,9 @@ int main(int argc, char **argv)
   }
   return 0;
 }
+```
+```
+$gcc server_mq.c –o server_mq –lpthread
 ```
 ## Memorie partajată
 
@@ -351,10 +354,13 @@ Client pentru memoria partajată
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <fcntl.h>
+
 /* zona in care va fi mapata memoria */
 void *mem;
+
 /* descriptorul zonei de memorie */
 int shm_fd;
+
 int main(int argc, char **argv)
 {
   shm_fd = shm_open("/MY_SHM2", O_RDWR, 0644);
@@ -379,6 +385,9 @@ int main(int argc, char **argv)
   return 0;
 }
 ```
+```
+$gcc client_mem.c –o client_mem –lpthread
+```
 Server pentru memoria partajata
 ```
 #include <stdio.h>
@@ -387,10 +396,13 @@ Server pentru memoria partajata
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <fcntl.h>
+
 /*zona in care va fi mapata memoria*/
 void *mem;
+
 /*descriptorul zonei de memorie*/
 int shm_fd;
+
 int main(int argc, char **argv)
 {
   shm_fd = shm_open("/MY_SHM2", O_CREAT | O_RDWR, 0644);
@@ -424,6 +436,9 @@ int main(int argc, char **argv)
   }
   return 0;
 }
+```
+```
+$gcc server_mem.c –o server_mem –lpthread
 ```
 ## Resurse utile
 • Fast User-level Locking In Linux
