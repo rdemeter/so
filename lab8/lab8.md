@@ -93,27 +93,31 @@ int pthread_mutex_unlock(pthread_mutex_t *mutex);
 Dacă mutex-ul este liber în momentul apelului, acesta va fi ocupat de firul apelant și funcția va întoarce imediat.
 Dacă mutex-ul este ocupat de un alt fir, apelul va bloca până la eliberarea mutex-ului. Dacă mutexul este deja
 ocupat de firul de execuție curent (lock recursiv), comportamentul funcției este dictat de tipul mutex-ului:
-Tip mutex Lock recursiv Unlock
-PTHREAD_MUTEX_NORMAL deadlock eliberează mutexul
-PTHREAD_MUTEX_ERRORCHECK returnează eroare eliberează mutexul
-PTHREAD_MUTEX_RECURSIVE
-incrementează contorul de ocupări decrementează contorul de ocupări (la zero eliberează mutexul)
-PTHREAD_MUTEX_DEFAULT deadlock eliberează mutexul
+
+|Tip mutex |Lock recursiv |Unlock |
+| --- | --- | --- |
+|PTHREAD_MUTEX_NORMAL |deadlock |eliberează mutexul |
+|PTHREAD_MUTEX_ERRORCHECK |returnează eroare |eliberează mutexul|
+|PTHREAD_MUTEX_RECURSIVE|incrementează contorul de ocupări |decrementează contorul de ocupări (la zero eliberează mutexul)|
+|PTHREAD_MUTEX_DEFAULT |deadlock |eliberează mutexul| 
+
 Nu este garantată o ordine FIFO de ocupare a unui mutex. Oricare din firele aflate în așteptare la deblocarea unui mutex pot să-l acapareze.
 Încercarea neblocantă de ocupare a unui mutex
 Pentru a încerca ocuparea unui mutex fără a aștepta eliberarea acestuia în cazul în care este deja ocupat, se va apela funcția:
+```
 int pthread_mutex_trylock(pthread_mutex_t *mutex);
 int rc = pthread_mutex_trylock(&mutex);
 if (rc == 0) {
-// mutexul era liber si l-am ocupat cu succes.
+  // mutexul era liber si l-am ocupat cu succes.
 } else if (rc == EBUSY) {
-// mutexul este detinut de altcineva si nu l-am putut ocupa
+  // mutexul este detinut de altcineva si nu l-am putut ocupa
 
-// dar în loc să mă blochez ca la un apel pthread_mutex_lock(&mutex)
-// am întors eroarea EBUSY.
+  // dar în loc să mă blochez ca la un apel pthread_mutex_lock(&mutex)
+  // am întors eroarea EBUSY.
 } else {
-// a avut loc o altă eroare
+  // a avut loc o altă eroare
 }
+```
 Exemplu de utilizare a mutex-urilor
 Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă globală global_counter:
 ```
@@ -123,32 +127,33 @@ Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă gl
 // mutex global
 pthread_mutex_t mutex;
 int global_counter = 0;
+
 void *thread_routine(void *arg) {
- // preluam mutexul global
- pthread_mutex_lock(&mutex);
- // afisam si modificam valoarea variabilei globale 'global_counter'
- printf("Thread %d says global_counter=%d\n", (int) arg, global_counter);
- global_counter ++;
- // eliberam mutexul pentru a acorda acces altui fir de executie
- pthread_mutex_unlock(&mutex);
- return NULL;
+  // preluam mutexul global
+  pthread_mutex_lock(&mutex);
+  // afisam si modificam valoarea variabilei globale 'global_counter'
+  printf("Thread %d says global_counter=%d\n", (int) arg, global_counter);
+  global_counter ++;
+  // eliberam mutexul pentru a acorda acces altui fir de executie
+  pthread_mutex_unlock(&mutex);
+  return NULL;
 }
 int main(void) {
- int i;
- pthread_t tids[NUM_THREADS];
- // mutexul este initializat o singura data si folosit de toate firele de executie
- pthread_mutex_init(&mutex, NULL);
- // firele de executie vor executa codul functiei 'thread_routine'
- // in locul unui pointer la date utile, se trimite in ultimul argument
- // un intreg - identificatorul firului de executie
- for (i = 0; i < NUM_THREADS; i++)
-   pthread_create(&tids[i], NULL, thread_routine, (void *) i);
- // asteptam ca toate firele de executie sa se termine
- for (i = 0; i < NUM_THREADS; i++)
-   pthread_join(tids[i], NULL);
- // eliberam resursele mutexului
- pthread_mutex_destroy(&mutex);
- return 0;
+  int i;
+  pthread_t tids[NUM_THREADS];
+  // mutexul este initializat o singura data si folosit de toate firele de executie
+  pthread_mutex_init(&mutex, NULL);
+  // firele de executie vor executa codul functiei 'thread_routine'
+  // in locul unui pointer la date utile, se trimite in ultimul argument
+  // un intreg - identificatorul firului de executie
+  for (i = 0; i < NUM_THREADS; i++)
+    pthread_create(&tids[i], NULL, thread_routine, (void *) i);
+  // asteptam ca toate firele de executie sa se termine
+  for (i = 0; i < NUM_THREADS; i++)
+    pthread_join(tids[i], NULL);
+  // eliberam resursele mutexului
+  pthread_mutex_destroy(&mutex);
+  return 0;
 }
 ```
 ```
@@ -161,22 +166,13 @@ Thread 4 says global_counter=3
 Thread 0 says global_counter=4
 ```
 ## Futexuri
-Mutexurile din firele de execuție POSIX sunt implementate cu ajutorul futexurilor, din considerente de
-performanță. Numele de futex vine de la Fast User-space muTEX. Ideea de la care a plecat implementarea
-futexurilor a fost aceea de a optimiza operația de ocupare a unui mutex în cazul în care acesta nu este deja
-ocupat. Dacă mutexul nu este ocupat, el va fi ocupat fără ca procesul care îl ocupă să se blocheze. În acest caz,
-nefiind necesară blocarea, nu este necesar ca procesul să intre în kernel-mode (pentru a intra într-o stare de
-așteptare). Optimizarea constă în testarea și setarea atomică a valorii mutexului (printr-o instrucțiune de tip
-test-and-set-lock) în user-space, eliminându-se trap-ul în kernel în cazul în care nu este necesară blocarea.
+Mutexurile din firele de execuție POSIX sunt implementate cu ajutorul futexurilor, din considerente de performanță. Numele de futex vine de la Fast User-space muTEX. Ideea de la care a plecat implementarea futexurilor a fost aceea de a optimiza operația de ocupare a unui mutex în cazul în care acesta nu este deja ocupat. Dacă mutexul nu este ocupat, el va fi ocupat fără ca procesul care îl ocupă să se blocheze. În acest caz, nefiind necesară blocarea, nu este necesar ca procesul să intre în kernel-mode (pentru a intra într-o stare de așteptare). Optimizarea constă în testarea și setarea atomică a valorii mutexului (printr-o instrucțiune de tip test-and-set-lock) în user-space, eliminându-se trap-ul în kernel în cazul în care nu este necesară blocarea.
 Futexul poate fi orice variabilă dintr-o zonă de memorie partajată între mai multe fire de executie sau procese.
-Asadar, operatiile efective cu futexurile se fac prin intermediul functiei do_futex, disponibilă prin includerea
-headerului linux/futex.h. Signatura ei arată astfel:
+Asadar, operatiile efective cu futexurile se fac prin intermediul functiei do_futex, disponibilă prin includerea headerului linux/futex.h. Signatura ei arată astfel:
 ```
 long do_futex(unsigned long uaddr, int op, int val, unsigned long timeout, unsigned long uaddr2, int val2);
 ```
-În cazul în care este necesară blocarea, do_futex va face un apel de sistem - sys_futex. Futexurile pot fi utile (și
-poate fi necesară utilizarea lor explicită) în cazul sincronizării proceselor, alocate în variabile din zone de
-memorie partajată între procesele respective.
+În cazul în care este necesară blocarea, do_futex va face un apel de sistem - sys_futex. Futexurile pot fi utile (și poate fi necesară utilizarea lor explicită) în cazul sincronizării proceselor, alocate în variabile din zone de memorie partajată între procesele respective.
 
 ## Semafor
 Semafoarele sunt obiecte de sincronizare ce reprezintă o generalizare a mutexurilor prin aceea că salvează numărul de operații de eliberare (incrementare) efectuate asupra lor. Practic, un semafor reprezintă un întreg
@@ -216,20 +212,12 @@ int sem_getvalue(sem_t *sem, int *pvalue);
 Semafoarele POSIX au fost prezentate în cadrul laboratorului de comunicare inter-proces.
 
 ## Variabila de condiție
-Variabilele condiție pun la dispoziție un sistem de notificare pentru fire de execuție, permițându-i unui fir să se
-blocheze în așteptarea unui semnal din partea unui alt fir. Folosirea corectă a variabilelor condiție presupune un
-protocol cooperativ între firele de execuție.
+Variabilele condiție pun la dispoziție un sistem de notificare pentru fire de execuție, permițându-i unui fir să se blocheze în așteptarea unui semnal din partea unui alt fir. Folosirea corectă a variabilelor condiție presupune un protocol cooperativ între firele de execuție.
 
-Mutexurile (mutual exclusion locks) și semafoarele permit blocarea altor fire de execuție. Variabilele de condiție
-se folosesc pentru a bloca firul curent de execuție până la îndeplinirea unei condiții.
-Variabilele condiție sunt obiecte de sincronizare care-i permit unui fir de executie să-i suspende executia până când o condiție (predicat logic) devine adevărată. Când un fir de execuție determină că predicatul a devenit
-adevărat, va semnala variabila condiție, deblocând astfel unul sau toate firele de execuție blocate la acea variabilă condiție (în funcție de cum se dorește).
+Mutexurile (mutual exclusion locks) și semafoarele permit blocarea altor fire de execuție. Variabilele de condiție se folosesc pentru a bloca firul curent de execuție până la îndeplinirea unei condiții.
+Variabilele condiție sunt obiecte de sincronizare care-i permit unui fir de executie să-i suspende executia până când o condiție (predicat logic) devine adevărată. Când un fir de execuție determină că predicatul a devenit adevărat, va semnala variabila condiție, deblocând astfel unul sau toate firele de execuție blocate la acea variabilă condiție (în funcție de cum se dorește).
 
-O variabilă condiție trebuie întotdeauna folosită împreună cu un mutex pentru evitarea race-ului care se produce când un fir se pregătește să aștepte la variabila condiție în urma evaluării predicatului logic, iar alt fir
-semnalizează variabila condiție chiar înainte ca primul fir să se blocheze, pierzându-se astfel semnalul. Așadar, operațiile de semnalizare, testare a condiției logice și blocare la variabila condiție trebuie efectuate având
-ocupat mutex-ul asociat variabilei condiție. Condiția logică este testată sub protecția mutex-ului, iar dacă nu este îndeplinită, firul apelant se blochează la variabila condiție, eliberând atomic mutex-ul. În momentul
-deblocării, un fir de execuție va încerca să ocupe mutex-ul asociat variabilei condiție. De asemenea, testarea predicatului logic trebuie făcută într-o buclă, pentru că dacă sunt eliberate mai multe fire deodată, doar unul va
-reuși să ocupe mutex-ul asociat condiției. Restul vor aștepta ca acesta să-l elibereze, însă este posibil ca firul care a ocupat mutexul să schimbe valoarea predicatului logic pe durata deținerii mutex-ului. Din acest motiv
+O variabilă condiție trebuie întotdeauna folosită împreună cu un mutex pentru evitarea race-ului care se produce când un fir se pregătește să aștepte la variabila condiție în urma evaluării predicatului logic, iar alt fir semnalizează variabila condiție chiar înainte ca primul fir să se blocheze, pierzându-se astfel semnalul. Așadar, operațiile de semnalizare, testare a condiției logice și blocare la variabila condiție trebuie efectuate având ocupat mutex-ul asociat variabilei condiție. Condiția logică este testată sub protecția mutex-ului, iar dacă nu este îndeplinită, firul apelant se blochează la variabila condiție, eliberând atomic mutex-ul. În momentul deblocării, un fir de execuție va încerca să ocupe mutex-ul asociat variabilei condiție. De asemenea, testarea predicatului logic trebuie făcută într-o buclă, pentru că dacă sunt eliberate mai multe fire deodată, doar unul va reuși să ocupe mutex-ul asociat condiției. Restul vor aștepta ca acesta să-l elibereze, însă este posibil ca firul care a ocupat mutexul să schimbe valoarea predicatului logic pe durata deținerii mutex-ului. Din acest motiv
 celelalte fire trebuie să testeze din nou predicatul pentru că altfel i-ar începe execuția presupunând predicatul adevărat, când el este, de fapt, fals.
 
 Exemplu: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
@@ -241,37 +229,37 @@ Exemplu: Detectarea race-urilor la modificarea variabilelor partajate de mai mul
 int a = 0, b = 0;
 void* single_increment(void* arg)
 {
- int i;
- for(i = 0; i < INC_LIMIT; i++)
-   a++;
- return NULL;
+  int i;
+  for(i = 0; i < INC_LIMIT; i++)
+    a++;
+  return NULL;
 }
 void* double_increment(void* arg)
 {
- int i;
- for(i = 0; i < INC_LIMIT; i++) {
-   b++;
-   b++;
- }
- return NULL;
+  int i;
+  for(i = 0; i < INC_LIMIT; i++) {
+    b++;
+    b++;
+  }
+  return NULL;
 }
 
 int main()
 {
- int i;
- pthread_t sinc_threads[THREADS_NO];
- pthread_t dinc_threads[THREADS_NO];
- for(i = 0; i < THREADS_NO; i++) {
-   pthread_create(&sinc_threads[i], NULL, single_increment, NULL);
-   pthread_create(&dinc_threads[i], NULL, double_increment, NULL);
- }
- for(i = 0; i < THREADS_NO; i++) {
-   pthread_join(sinc_threads[i], NULL);
-   pthread_join(dinc_threads[i], NULL);
- }
- printf("Single Incremented variable: got %d expected %d\n", a, INC_LIMIT*THREADS_NO);
- printf("Double incremented variable: got %d expected %d\n", b, 2 * INC_LIMIT*THREADS_NO);
- return 0;
+  int i;
+  pthread_t sinc_threads[THREADS_NO];
+  pthread_t dinc_threads[THREADS_NO];
+  for(i = 0; i < THREADS_NO; i++) {
+    pthread_create(&sinc_threads[i], NULL, single_increment, NULL);
+    pthread_create(&dinc_threads[i], NULL, double_increment, NULL);
+  }
+  for(i = 0; i < THREADS_NO; i++) {
+    pthread_join(sinc_threads[i], NULL);
+    pthread_join(dinc_threads[i], NULL);
+  }
+  printf("Single Incremented variable: got %d expected %d\n", a, INC_LIMIT*THREADS_NO);
+  printf("Double incremented variable: got %d expected %d\n", b, 2 * INC_LIMIT*THREADS_NO);
+  return 0;
 }
 ```
 ```
@@ -283,7 +271,7 @@ Double Increment variable: got 9479559 expected 10000000
 Să se rezolve această problemă folosind două mutex-uri.
 
 ## Inițializarea/distrugerea unei variabile de condiție
-
+```
 // initializare statica a unei variabile de conditie cu atribute implicite
 // NB: variabila de conditie nu este eliberata,
 // durata de viata a variabilei de condiie este durata de viata a programului.
@@ -291,27 +279,22 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 // semnaturile functiilor de initializare si eliberare de variabile de condiie:
 int pthread_cond_init(pthread_cond_t *cond, pthread_condattr_t *attr);
 int pthread_cond_destroy(pthread_cond_t *cond);
-
+```
 Ca și la mutex-uri:
 - dacă parametrul attr este nul se folosesc atribute implicite
 - trebuie să nu existe nici un fir de execuție în așteptare pe variabila de condiție atunci când aceasta este distrusă, altfel se întoarce EBUSY.
 
 ## Blocarea la o variabilă condiție
 Pentru a-i suspenda execuția și a aștepta la o variabilă condiție, un fir de execuție va apela:
+```
 int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
-Firul de execuție apelant trebuie să fi ocupat deja mutexul asociat, în momentul apelului. Funcția
-pthread_cond_wait va elibera mutexul și se va bloca, așteptând ca variabila condiție să fie semnalizată de un alt
-fir de execuție. Cele două operații sunt efectuate atomic. În momentul în care variabila condiție este semnalizată,
-se va încerca ocuparea mutex-ului asociat, și după ocuparea acestuia, apelul funcției va întoarce. Observați că
-firul de execuție apelant poate fi suspendat, după deblocare, în așteptarea ocupării mutex-ului asociat, timp în
-care predicatul logic, adevărat în momentul deblocării firului, poate fi modificat de alte fire.
-De aceea, apelul pthread_cond_wait trebuie efectuat într-o buclă în care se testează valoarea de adevăr a
-predicatului logic asociat variabilei condiție, pentru a asigura o serializare corectă a firelor de execuție. Un alt
-argument pentru testarea în buclă a predicatului logic este acela că un apel pthread_cond_wait poate fi întrerupt
-de un semnal asincron (vezi laboratorul de semnale), înainte ca predicatul logic să devină adevărat. Dacă firele
-de execuție care așteptau la variabila condiție nu ar testa din nou predicatul logic, i-ar continua execuția
-presupunând greșit că acesta e adevărat.
+```
+Firul de execuție apelant trebuie să fi ocupat deja mutexul asociat, în momentul apelului. Funcția pthread_cond_wait va elibera mutexul și se va bloca, așteptând ca variabila condiție să fie semnalizată de un alt fir de execuție. Cele două operații sunt efectuate atomic. În momentul în care variabila condiție este semnalizată,
+se va încerca ocuparea mutex-ului asociat, și după ocuparea acestuia, apelul funcției va întoarce. Observați că firul de execuție apelant poate fi suspendat, după deblocare, în așteptarea ocupării mutex-ului asociat, timp în care predicatul logic, adevărat în momentul deblocării firului, poate fi modificat de alte fire.
+De aceea, apelul pthread_cond_wait trebuie efectuat într-o buclă în care se testează valoarea de adevăr a predicatului logic asociat variabilei condiție, pentru a asigura o serializare corectă a firelor de execuție. Un alt argument pentru testarea în buclă a predicatului logic este acela că un apel pthread_cond_wait poate fi întrerupt de un semnal asincron (vezi laboratorul de semnale), înainte ca predicatul logic să devină adevărat. Dacă firele de execuție care așteptau la variabila condiție nu ar testa din nou predicatul logic, i-ar continua execuția presupunând greșit că acesta e adevărat.
+
 ### Blocarea la o variabilă condiție cu timeout
+
 Pentru a-i suspenda execuția și a aștepta la o variabilă condiție, nu mai târziu de un moment specificat de timp, un
 fir de execuție va apela:
 ```
@@ -342,28 +325,28 @@ pthread_mutex_t count_lock;
 pthread_cond_t count_nonzero;
 unsigned count;
 void *decrement_count() {
- while(1)
- {
- pthread_mutex_lock(&count_lock);
- if (count == 0)
- pthread_cond_wait(&count_nonzero, &count_lock);
- count = count - 1;
- printf("dec count=%d\n", count);
- pthread_mutex_unlock(&count_lock);
- }
+  while(1)
+  {
+    pthread_mutex_lock(&count_lock);
+    if (count == 0)
+      pthread_cond_wait(&count_nonzero, &count_lock);
+    count = count - 1;
+    printf("dec count=%d\n", count);
+    pthread_mutex_unlock(&count_lock);
+  }
 }
 void *increment_count() {
- while(1)
- {
- pthread_mutex_lock(&count_lock);
- count = count + 1;
- printf("inc count=%d\n", count);
- if (count > 2) {
- printf("signal ...\n");
- pthread_cond_signal(&count_nonzero);
- }
- pthread_mutex_unlock(&count_lock);
- }
+  while(1)
+  {
+    pthread_mutex_lock(&count_lock);
+    count = count + 1;
+    printf("inc count=%d\n", count);
+    if (count > 2) {
+      printf("signal ...\n");
+      pthread_cond_signal(&count_nonzero);
+    }
+    pthread_mutex_unlock(&count_lock);
+  }
 }
 int main() {
  pthread_t dec, inc;
@@ -486,8 +469,7 @@ Din execuția programului se observă:
 - ordinea în care sunt trezite firele de execuție ce așteaptă la o variabilă de condiție nu este identică cu ordinea în care acestea au intrat în așteptare.
 
 # Bariera
-Standardul POSIX definește și un set de funcții și structuri de date de lucru cu bariere. Aceste funcții
-sunt disponibile dacă se definește macro-ul _XOPEN_SOURCE la o valoare >= 600.
+Standardul POSIX definește și un set de funcții și structuri de date de lucru cu bariere. Aceste funcții sunt disponibile dacă se definește macro-ul _XOPEN_SOURCE la o valoare >= 600.
 Cu bariere POSIX, programul de mai sus poate fi simplificat:
 ```
 #define _XOPEN_SOURCE 600
@@ -497,37 +479,37 @@ pthread_barrier_t barrier;
 #define NUM_THREADS 5
 void *thread_routine(void *arg)
 {
-int thd_id = (int) arg;
-int rc;
-printf("thd %d: before teh barrier\n", thd_id);
-// toate firele de executie asteapta la bariera.
-rc = pthread_barrier_wait(&barrier);
-if (rc == PTHREAD_BARRIER_SERIAL_THREAD) {
-// un singur fir de execuie (posibil ultimul) va intoarce PTHREAD_BARRIER_SERIAL_THREAD
-// restul firelor de execuie întorc 0 în caz de succes.
-printf("thd %d let the flood in\n", thd_id);
-}
-printf("thd %d: after the barrier\n", thd_id);
-return NULL;
+  int thd_id = (int) arg;
+  int rc;
+  printf("thd %d: before teh barrier\n", thd_id);
+  // toate firele de executie asteapta la bariera.
+  rc = pthread_barrier_wait(&barrier);
+  if (rc == PTHREAD_BARRIER_SERIAL_THREAD) {
+    // un singur fir de execuie (posibil ultimul) va intoarce PTHREAD_BARRIER_SERIAL_THREAD
+    // restul firelor de execuie întorc 0 în caz de succes.
+    printf("thd %d let the flood in\n", thd_id);
+  }
+  printf("thd %d: after the barrier\n", thd_id);
+  return NULL;
 }
 
 int main()
 {
-int i;
-pthread_t tids[NUM_THREADS];
-// bariera este initializata o singura data si folosita de toate firele de executie
-pthread_barrier_init(&barrier, NULL, NUM_THREADS);
-// firele de executie vor executa codul functiei 'thread_routine'
-// in locul unui pointer la date utile, se trimite in ultimul argument
-// un intreg - identificatorul firului de executie
-for (i = 0; i < NUM_THREADS; i++)
-pthread_create(&tids[i], NULL, thread_routine, (void *) i);
-// asteptam ca toate firele de executie sa se termine
-for (i = 0; i < NUM_THREADS; i++)
-pthread_join(tids[i], NULL);
-// eliberam resursele barierei
-pthread_barrier_destroy(&barrier);
-return 0;
+  int i;
+  pthread_t tids[NUM_THREADS];
+  // bariera este initializata o singura data si folosita de toate firele de executie
+  pthread_barrier_init(&barrier, NULL, NUM_THREADS);
+  // firele de executie vor executa codul functiei 'thread_routine'
+  // in locul unui pointer la date utile, se trimite in ultimul argument
+  // un intreg - identificatorul firului de executie
+  for (i = 0; i < NUM_THREADS; i++)
+    pthread_create(&tids[i], NULL, thread_routine, (void *) i);
+  // asteptam ca toate firele de executie sa se termine
+  for (i = 0; i < NUM_THREADS; i++)
+    pthread_join(tids[i], NULL);
+  // eliberam resursele barierei
+  pthread_barrier_destroy(&barrier);
+  return 0;
 }
 ```
 ```
@@ -547,7 +529,7 @@ thd 1: after the barrier
 ```
 
 ## Inițializarea/distrugearea unei bariere
-
+```
 // pentru a folosi functiile de lucru cu bariere e nevoie să se definească
 // _XOPEN_SOURCE la o valoare >= 600. Pentru detalii consultati feature_test_macros(7).
 #define _XOPEN_SOURCE 600
@@ -555,49 +537,49 @@ thd 1: after the barrier
 // attr -> un set de atribute, poate fi NULL (se folosesc atribute implicite)
 // count -> numărul de fire de executie care trebuie să ajungă
 // la barieră pentru ca aceasta să fie eliberată
-int pthread_barrier_init(pthread_barrier_t * barrier,
-const pthread_barrierattr_t * attr,
-unsigned count);
+int pthread_barrier_init(pthread_barrier_t * barrier, const pthread_barrierattr_t * attr, unsigned count);
 // trebuie să nu existe fire de executie în ateptare la barieră
 // înainte de a apela functia _destroy,
 // altfel, se întoarce EBUSY i nu se distruge bariera.
 int pthread_barrier_destroy(pthread_barrier_t *barrier);
-
+```
 ## Așteptarea la o barieră
+```
 #define _XOPEN_SOURCE 600
 #include <pthread.h>
 int pthread_barrier_wait(pthread_barrier_t *barrier);
-
-Dacă bariera a fost creată cu count=N, primele N-1 fire de execuție care apelează pthread_barrier_wait se blochează. Când sosește ultimul (al N-lea), va debloca toate cele N-1 fire de
-execuție. Funcția pthread_barrier_wait întoarce trei valori:
+```
+Dacă bariera a fost creată cu count=N, primele N-1 fire de execuție care apelează pthread_barrier_wait se blochează. Când sosește ultimul (al N-lea), va debloca toate cele N-1 fire de execuție. Funcția pthread_barrier_wait întoarce trei valori:
 - EINVAL în cazul în care bariera nu este inițializată (singura eroare definită)
-- PTHREAD_BARRIER_SERIAL_THREAD în caz de succes, un singur fir de execuție va întoarce
-valoarea aceasta nu e specificat care este acel fir de execuție (nu e obligatoriu să fie ultimul ajuns la barieră)
+- PTHREAD_BARRIER_SERIAL_THREAD în caz de succes, un singur fir de execuție va întoarce valoarea aceasta nu e specificat care este acel fir de execuție (nu e obligatoriu să fie ultimul ajuns la barieră)
 - 0 valoare întoarsă în caz de succes de celelalte N-1 fire de execuție.
 
 Exercițiu: Să se creeze un mutex normal, un thread în care se cheamă funcția pthread_mutex_lock() de două ori. Se va bloca programul, deadlock. Pentru rezolvarea problemei se va crea mutex-ul recursiv.
 ```
 void *thread_routine( )
 {
-pthread_mutex_lock(&lock);
-pthread_mutex_lock(&lock);
-printf("am ajuns in zona protejata de mutex\n");
-pthread_mutex_unlock(&lock);
-pthread_mutex_unlock(&lock);
+  pthread_mutex_lock(&lock);
+  pthread_mutex_lock(&lock);
+  
+  printf("am ajuns in zona protejata de mutex\n");
+  
+  pthread_mutex_unlock(&lock);
+  pthread_mutex_unlock(&lock);
 }
 ```
 Exercițiu: Să se implementeze un deadlock intre două thread-uri folosind doi mutex. Să se rezolve deadlockul folosind blocare conditionată pthread_mutex_trylock.
-THREAD1
+
 ```
+THREAD1
 pthread_mutex_lock(&m1);
 /* use resource 1 */
 pthread_mutex_lock(&m2);
 /* use resources 1 and 2 */
 pthread_mutex_unlock(&m2);
 pthread_mutex_unlock(&m1);
+```
+```
 THREAD2
-```
-```
 pthread_mutex_lock(&m2);
 /* use resource 2 */
 pthread_mutex_lock(&m1);
@@ -611,8 +593,8 @@ for (; ;)
 {
  pthread_mutex_lock(&m2);
  if(pthread_mutex_trylock(&m1)==0)
- /* got it */
- break;
+   /* got it */
+   break;
  /* didn't get it */
  pthread_mutex_unlock(&m2);
 }
