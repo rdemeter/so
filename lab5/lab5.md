@@ -148,7 +148,7 @@ $gcc client_sem.c –o client_sem –lpthread
 ```
 Exercitiu: Să se modifice aplicatia, astfel incat procesele să astepte după resursele partajate, asa cum este ilustrat in figura, producand interblocarea proceselor, deadlock.
 
-[](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
+![](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
 
 ## Cozi de mesaje
 
@@ -192,8 +192,7 @@ ssize_t mq_receive(mqd_t mqdes, char *buffer, size_t length, unsigned *priority)
 Dacă priority este non-NULL, zona de memorie către care face referire va reține prioritatea mesajului extras.
 În cazul în care coada este vidă, apelul blochează. Daca este o coadă non-blocantă (O_NONBLOCK), comportamentul este similar cu cel al mq_send.
 
-ATENTIE!!! La primirea unui mesaj, lungimea buffer-ului trebuie să fie cel puțin egală cu dimensiunea maximă a mesajelor pentru coada respectivă, iar la trimitere cel mult egală. Dimensiunea maximă implicită se
-poate afla pe Linux din /proc/sys/kernel/msgmax.
+ATENTIE!!! La primirea unui mesaj, lungimea buffer-ului trebuie să fie cel puțin egală cu dimensiunea maximă a mesajelor pentru coada respectivă, iar la trimitere cel mult egală. Dimensiunea maximă implicită se poate afla pe Linux din /proc/sys/kernel/msgmax.
 
 ### Inchiderea și ștergerea
 Închiderea (eliberarea "referinței") unei cozi este posibilă prin apelul mq_close:
