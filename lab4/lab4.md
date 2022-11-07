@@ -213,7 +213,9 @@ Program received signal SIGSEGV, Segmentation fault.
 #299522 0x0804849d in fibonacci (no=0) at fibonacci_test.c:9
 #299523 0x0804851c in main () at fibonacci_test.c:20
 #299524 0x4003e280 in libc_start_main () from /lib/libc.so.6
+```
 Din analiza de mai sus se observă că funcţia fibonacci a fost apelată cu valoarea 0. Cum funcţia nu testează ca parametrul să fie valid, se va apela recursiv de un număr suficient de ori pentru a cauza umplerea stivei programului. Se pune problema cum s-a apelat funcţia cu valoarea 0, când trebuia apelată cu valoarea 10.
+```
 $ gdb a.out
 (gdb) run
 Starting program: /home/a.out
