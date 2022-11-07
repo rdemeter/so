@@ -1,6 +1,5 @@
 # Sincronizare thread-uri
 
-# Mecanisme de sincronizare
 Pentru sincronizarea firelor de execuție avem la dispoziție următoarele mecanisme:
 - mutex
 - semafoare
@@ -8,33 +7,36 @@ Pentru sincronizarea firelor de execuție avem la dispoziție următoarele mecan
 - bariere.
 
 ## Mutex
-Mutex-urile sunt obiecte de sincronizare utilizate pentru a asigura accesul exclusiv la o secțiune de
-cod în care se accesează date partajate între două sau mai multe fire de execuție. Un mutex are două
-stări posibile: ocupat și liber. Un mutex poate fi ocupat de un singur fir de execuție la un moment dat.
-Atunci când un mutex este ocupat de un fir de execuție, el nu mai poate fi ocupat de niciun altul. În
-acest caz, o cerere de ocupare venită din partea unui alt fir, în general va bloca firul până în momentul
-în care mutex-ul devine liber.
+Mutex-urile sunt obiecte de sincronizare utilizate pentru a asigura accesul exclusiv la o secțiune de cod în care se accesează date partajate între două sau mai multe fire de execuție. Un mutex are două stări posibile: ocupat și liber. Un mutex poate fi ocupat de un singur fir de execuție la un moment dat.
+Atunci când un mutex este ocupat de un fir de execuție, el nu mai poate fi ocupat de niciun altul. În acest caz, o cerere de ocupare venită din partea unui alt fir, în general va bloca firul până în momentul în care mutex-ul devine liber.
+
 ### Inițializarea/distrugerea unui mutex
+
 Un mutex poate fi inițializat/distrus în mai multe moduri:
 - folosind o macrodefiniție
+```
 // initializare statica a unui mutex cu atribute implicite
 // NB: mutexul nu este eliberat, durata de viata a mutexului
 // este durata de viata a programului.
 pthread_mutex_t mutex_static = PTHREAD_MUTEX_INITIALIZER;
+```
 - inițializat cu atribute implicite
+```
 // semnaturile functiilor de initializare si distrugere de mutex:
 int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
 int pthread_mutex_destroy(pthread_mutex_t *mutex);
 void initializare_mutex_cu_atribute_implicite()
 {
-pthread_mutex_t mutex_implicit;
-pthread_mutex_init(&mutex_implicit, NULL); // atrr=NULL -> atribute implicite
-// ... folosirea mutexului ...
-// ???
-// eliberare mutex
-pthread_mutex_destroy(&mutex_implicit);
+  pthread_mutex_t mutex_implicit;
+  pthread_mutex_init(&mutex_implicit, NULL); // atrr=NULL -> atribute implicite
+  // ... folosirea mutexului ...
+  // ???
+  // eliberare mutex
+  pthread_mutex_destroy(&mutex_implicit);
 }
+```
 - inițializare cu atribute explicite
+```
 // NB: functia pthread_mutexattr_settype si macro-ul PTHREAD_MUTEX_RECURSIVE
 // sunt disponibile doar daca se defineste _XOPEN_SOURCE la o valoare >= 500 *INAINTE*
 // de a include <pthread.h>. Pentru mai multe detalii consultai feature_test_macros(7).
@@ -42,49 +44,52 @@ pthread_mutex_destroy(&mutex_implicit);
 #include <pthread.h>
 void initializare_mutex_recursiv()
 {
-// definim atribute, le initializam si marcam tipul ca fiind recursiv.
-pthread_mutexattr_t attr;
-pthread_mutexattr_init(&attr);
-pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-// definim un mutex recursiv, il initializam cu atributele definite anterior
-pthread_mutex_t mutex_recursiv;
-pthread_mutex_init(&mutex_recursiv, &attr);
-// eliberam resursele atributului dupa crearea mutexului
-pthread_mutexattr_destroy(&attr);
-// ... folosirea mutexului ...
-// ???
-// eliberare mutex
-pthread_mutex_destroy(&mutex_recursiv);
+  // definim atribute, le initializam si marcam tipul ca fiind recursiv.
+  pthread_mutexattr_t attr;
+  pthread_mutexattr_init(&attr);
+  pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+  // definim un mutex recursiv, il initializam cu atributele definite anterior
+  pthread_mutex_t mutex_recursiv;
+  pthread_mutex_init(&mutex_recursiv, &attr);
+  // eliberam resursele atributului dupa crearea mutexului
+  pthread_mutexattr_destroy(&attr);
+  // ... folosirea mutexului ...
+  // ???
+  // eliberare mutex
+  pthread_mutex_destroy(&mutex_recursiv);
 }
-NB: Mutex-ul trebuie să fie liber pentru a putea fi distrus. În caz contrar funcția va întoarce codul de eroare
-EBUSY. Întoarcerea valorii 0 semnifică succesul apelului.
+```
+NB: Mutex-ul trebuie să fie liber pentru a putea fi distrus. În caz contrar funcția va întoarce codul de eroare EBUSY. Întoarcerea valorii 0 semnifică succesul apelului.
+
 ### Tipuri de mutex-uri
 Folosind atributele de initializare se pot crea mutex-uri cu proprietăti speciale:
-• activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority
+- activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority
 invesion). Există trei protocoale de moștenire a prioritătii:
- PTHREAD_PRIO_NONE nu se moștenește prioritatea când deținem mutex-ul creat cu acest atribut
- PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție
-blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
- PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va
+ - PTHREAD_PRIO_NONE nu se moștenește prioritatea când deținem mutex-ul creat cu acest atribut
+ - PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
+ - PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va
 executa la maximul priorităților specificată pentru toți mutecșii deținuți.
 
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 int pthread_mutexattr_getprotocol(const pthread_mutexattr_t * attr, int * protocol);
 int pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol);
-• modul de comportare la preluări recursive ale mutex-ului
- PTHREAD_MUTEX_NORMAL nu se fac verificări, preluarea recursivă duce la deadlock
- PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
- PTHREAD_MUTEX_RECURSIVE mutex-urile pot fi preluate recursiv din același thread, și trebuie
-eliberate de același număr de ori.
+- modul de comportare la preluări recursive ale mutex-ului
+ - PTHREAD_MUTEX_NORMAL nu se fac verificări, preluarea recursivă duce la deadlock
+ - PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
+ - PTHREAD_MUTEX_RECURSIVE mutex-urile pot fi preluate recursiv din același thread, și trebuie eliberate de același număr de ori.
+
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 pthread_mutexattr_gettype(const pthread_mutexattr_t * attr, int * protocol);
 pthread_mutexattr_settype(pthread_mutexattr_t * attr, int protocol);
-Ocuparea/eliberearea unui mutex
+
+## Ocuparea/eliberearea unui mutex
 Funcțiile de ocupare blocantă/eliberare a unui mutex:
+```
 int pthread_mutex_lock(pthread_mutex_t *mutex);
 int pthread_mutex_unlock(pthread_mutex_t *mutex);
+```
 Dacă mutex-ul este liber în momentul apelului, acesta va fi ocupat de firul apelant și funcția va întoarce imediat.
 Dacă mutex-ul este ocupat de un alt fir, apelul va bloca până la eliberarea mutex-ului. Dacă mutexul este deja
 ocupat de firul de execuție curent (lock recursiv), comportamentul funcției este dictat de tipul mutex-ului:
@@ -94,11 +99,9 @@ PTHREAD_MUTEX_ERRORCHECK returnează eroare eliberează mutexul
 PTHREAD_MUTEX_RECURSIVE
 incrementează contorul de ocupări decrementează contorul de ocupări (la zero eliberează mutexul)
 PTHREAD_MUTEX_DEFAULT deadlock eliberează mutexul
-Nu este garantată o ordine FIFO de ocupare a unui mutex. Oricare din firele aflate în așteptare la deblocarea
-unui mutex pot să-l acapareze.
+Nu este garantată o ordine FIFO de ocupare a unui mutex. Oricare din firele aflate în așteptare la deblocarea unui mutex pot să-l acapareze.
 Încercarea neblocantă de ocupare a unui mutex
-Pentru a încerca ocuparea unui mutex fără a aștepta eliberarea acestuia în cazul în care este deja ocupat, se va
-apela funcția:
+Pentru a încerca ocuparea unui mutex fără a aștepta eliberarea acestuia în cazul în care este deja ocupat, se va apela funcția:
 int pthread_mutex_trylock(pthread_mutex_t *mutex);
 int rc = pthread_mutex_trylock(&mutex);
 if (rc == 0) {
