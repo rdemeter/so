@@ -1,21 +1,15 @@
 
 # IPC
 
-Linux pune la dispoziție 2 seturi de API-uri mecanisme de comunicare inter-proces, ce țin de standarde diferite:
-- System V Inter-Process Communication, derivat din distribuția de Unix System V release 4 AT&T
-- POSIX (Portable Operating System Interface for Unix)
-
-Ambele standarde specifică 3 mecanisme:
--  semafoare (semaphores) - realizează sincronizarea execuțiilor unor procese
-- cozi de mesaje (messages) - realizează schimbul de mesaje cu orice proces sau server
+Linux pune la dispoziție urmatoarele mecanisme de comunicare intre procese:
+- fisiere
+- pipe-uri (anonime si cu nume, studiate in lucrarea anterioara)
+- semafoare (semaphores) - realizează sincronizarea execuțiilor unor procese
+- cozi de mesaje (message queues) - realizează schimbul de mesaje cu orice proces sau server
 - memorie partajată (shared memory) - realizează partajarea memoriei între procese
+- socket (care se vor studia la materia Retele de Calculatoare)
 
-API-ul studiat în acest laborator este cel POSIX.
-
-Obiectele de tip IPC pe care se concentrează laboratorul de față sunt gestionate global de sistem și rămân în viață chiar dacă procesul creator moare. Faptul că aceste resurse sunt globale în sistem are implicații
-contradictorii. Pe de o parte, dacă un proces se termină, datele plasate în obiecte IPC pot fi accesate ulterior de alte procese; pe de altă parte, procesul proprietar trebuie să se ocupe și de dealocarea resurselor, altfel ele
-rămân în sistem până la ștergerea lor manuală sau până la un reboot. Faptul că obiectele IPC sunt globale în sistem poate duce la apariția unor probleme: cum numărul de mesaje care se află în cozile de mesaje din
-sistem e limitat global, un proces care trimite multe asemenea mesaje poate bloca toate celelalte procese.
+Obiectele de tip IPC pe care se concentrează laboratorul de față sunt gestionate global de sistem și rămân în viață chiar dacă procesul creator moare. Faptul că aceste resurse sunt globale în sistem are implicații contradictorii. Pe de o parte, dacă un proces se termină, datele plasate în obiecte IPC pot fi accesate ulterior de alte procese; pe de altă parte, procesul proprietar trebuie să se ocupe și de dealocarea resurselor, altfel ele rămân în sistem până la ștergerea lor manuală sau până la un reboot. Faptul că obiectele IPC sunt globale în sistem poate duce la apariția unor probleme: cum numărul de mesaje care se află în cozile de mesaje din sistem e limitat global, un proces care trimite multe asemenea mesaje poate bloca toate celelalte procese.
 
 ATENTIE!!! Pentru folosirea API-ului trebuie să includeți la linking biblioteca 'rt' (-lrt).
 
