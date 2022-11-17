@@ -104,7 +104,7 @@ int main(void) {
 }
 ```
 ```
-$gcc server_sem.c –o server_sem –lpthread
+$gcc server_sem.c -o server_sem -lpthread
 ```
 Cele două procese se rulează din console diferite. După rularea primului proces, semaforul va fi creat în ”/dev/shm” cu numele “sem.my_semaphore” și procesul va aștepta apăsarea unei taste pentru a debloca următorul proces.
 ```
@@ -138,7 +138,7 @@ int main(void)
 }
 ```
 ```
-$gcc client_sem.c –o client_sem –lpthread
+$gcc client_sem.c -o client_sem -lpthread
 ```
 Exercitiu: Să se modifice aplicatia, astfel incat procesele să astepte după resursele partajate, asa cum este ilustrat in figura, producand interblocarea proceselor, deadlock.
 
@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
 }
 ```
 ```
-$gcc –Wall client_mq.c –o client_mq -lrt
+$gcc –Wall client_mq.c -o client_mq -lrt
 ```
 ```
 #include <stdio.h>
@@ -289,7 +289,7 @@ int main(int argc, char **argv)
 }
 ```
 ```
-$gcc server_mq.c –o server_mq –lpthread
+$gcc server_mq.c -o server_mq -lpthread
 ```
 ## Memorie partajată
 
@@ -380,7 +380,7 @@ int main(int argc, char **argv)
 }
 ```
 ```
-$gcc client_mem.c –o client_mem –lpthread
+$gcc client_mem.c -o client_mem -lrt
 ```
 Server pentru memoria partajata
 ```
@@ -432,7 +432,7 @@ int main(int argc, char **argv)
 }
 ```
 ```
-$gcc server_mem.c –o server_mem –lpthread
+$gcc server_mem.c -o server_mem -lrt
 ```
 ## Resurse utile
 • Fast User-level Locking In Linux
