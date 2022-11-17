@@ -289,7 +289,7 @@ int main(int argc, char **argv)
 }
 ```
 ```
-$gcc server_mq.c -o server_mq -lpthread
+$gcc server_mq.c -o server_mq -lrt
 ```
 ## Memorie partajată
 
