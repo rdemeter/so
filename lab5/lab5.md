@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
 }
 ```
 ```
-$gcc –Wall client_mq.c -o client_mq -lrt
+$gcc -Wall client_mq.c -o client_mq -lrt
 ```
 ```
 #include <stdio.h>
