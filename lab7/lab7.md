@@ -297,9 +297,10 @@ Comanda utilizată pentru a compila acest exemplu va fi:
 ```
 $gcc -o exemplu exemplu.c –lpthread
 ```
-Exerciţii
+## Exerciţii
 Pentru că nu aţi parcurs încă noţiunile necesare pentru a sincroniza thread-urile între ele, în cadrul acestui
 laborator vom folosi apeluri sleep() acolo unde e nevoie de sincronizare.
+
 Realizaţi un program care creează 2 thread-uri. Thread-urile create vor partaja un descriptor de fisiere, modificat
 de către fiecare din ele, la momente diferite. Thread-urile să afișeze mesaje specifice la ieșirea standard. Explicați
 succesiunea mesajelor. Programul principal va aștepta încheierea execuției celor două thread-uri.
