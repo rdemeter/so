@@ -862,7 +862,7 @@ drwxr-xr-x solab
 drwxr-xr-x tema1
 ```
 
-Comenzi din aceeasi categorie sunt paste si join.
+Comenzi din aceeasi categorie sunt **paste** si **join**.
 
 ## dd
 
@@ -881,7 +881,7 @@ if: utilizat pentru specificarea unui fișier de intrare
 source-disc: este discul sursă de unde vor fi clonate fișierele
 of: folosit pentru specificarea unui fișier de ieșire
 destination-disk: Este discul de destinație pe care doriți să plasați fișierele copiate
-opțiune: Pot fi utilizate diferite opțiuni cu comanda dd, cum ar fi progresul, viteza de transfer al fișierului, formatul fișierului etc.
+option: progresul, viteza de transfer al fișierului, formatul fișierului etc.
 ```
 Mai întâi, se execută comanda **lsblk** pentru a vizualiza toate discurile disponibile pe sistem, sau **fdisk -l**.
 
@@ -892,6 +892,10 @@ $ sudo dd if=/dev/sdb of=/dev/sdc status=progress
 De exemplu, pentru a clona o partiție /dev/sdb2 în /dev/sdc2, comanda ar fi:
 ```
 $ sudo dd if=/dev/sdb2 of=/dev/sdc2 status=progress
+```
+Următoarea comandă dd elimină datele din /dev/hdX:
+```
+$ dd if=/dev/zero of=/dev/hdX bs=512 count=1
 ```
 
 # Exemple
