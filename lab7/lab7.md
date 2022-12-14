@@ -293,14 +293,12 @@ int main()
   return 0;
 }
 ```
-Comanda utilizată pentru a compila acest exemplu va fi:
+Compilați, rulați aplicația și interpretați rezultatele. Comanda utilizată pentru a compila acest exemplu va fi:
 ```
-$gcc -o exemplu exemplu.c –lpthread
+$gcc -o exemplu exemplu.c -lpthread
+$./exemplu
 ```
 ## Exerciţii
-Pentru că nu aţi parcurs încă noţiunile necesare pentru a sincroniza thread-urile între ele, în cadrul acestui
-laborator vom folosi apeluri sleep() acolo unde e nevoie de sincronizare.
+Pentru că nu aţi parcurs încă noţiunile necesare pentru a sincroniza thread-urile între ele, în cadrul acestui laborator vom folosi apeluri sleep() acolo unde e nevoie de sincronizare.
 
-Realizaţi un program care creează 2 thread-uri. Thread-urile create vor partaja un descriptor de fisiere, modificat
-de către fiecare din ele, la momente diferite. Thread-urile să afișeze mesaje specifice la ieșirea standard. Explicați
-succesiunea mesajelor. Programul principal va aștepta încheierea execuției celor două thread-uri.
+Realizaţi un program care creează 2 thread-uri. Thread-urile create vor partaja un descriptor de fisiere, modificat de către fiecare din ele, la momente diferite. Thread-urile să afișeze mesaje specifice la ieșirea standard. Explicați succesiunea mesajelor. Programul principal va aștepta încheierea execuției celor două thread-uri.
