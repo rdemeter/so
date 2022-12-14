@@ -85,7 +85,9 @@ Done 26!
 Fie un buffer la care în permanenţă au acces 2 entităţi: un producător, care adaugă elemente ori de câte ori bufferul permite acest lucru (nu se depăşeşte capacitatea), şi un consumator care extrage elemente ori de câte ori este posibil (până când va fi gol).
 
 a.  Să se rezolve această problemă folosind semafoare.
+
 b.  Să se creeze încă un producător sau încă un consumator.
+
 c.  Să se rezolve această problemă folosind variabile de condiţie.
 
 ```
