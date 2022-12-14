@@ -84,11 +84,9 @@ Done 26!
 ## 2. Problema producător-consumator
 Fie un buffer la care în permanenţă au acces 2 entităţi: un producător, care adaugă elemente ori de câte ori bufferul permite acest lucru (nu se depăşeşte capacitatea), şi un consumator care extrage elemente ori de câte ori este posibil (până când va fi gol).
 
-a.  Să se rezolve această problemă folosind semafoare.
-
-b.  Să se creeze încă un producător sau încă un consumator.
-
-c.  Să se rezolve această problemă folosind variabile de condiţie.
+- Să se rezolve această problemă folosind semafoare.
+- Să se creeze încă un producător sau încă un consumator.
+- Să se rezolve această problemă folosind variabile de condiţie.
 
 ```
 #include <stdio.h>
@@ -181,7 +179,9 @@ producer: buffer[4]=L
 done!
 ```
 Aşa cum se observă din mesajele afişate, producătorul suprascrie date, consumatorul citeşte aceleaşi date de mai multe ori.
-Rezolvare:
+
+Rezolvare1:
+
 Se folosesc 3 semafoare. Un semafor pe post de mutex pentru secţiunea critică (semafor binar, cu valoarea iniţială 1), semaforul EntriesFree, cu valoarea iniţială egală cu numărul de locaţii libere şi un semafor EntriesUsed, cu valoarea iniţială egală cu 0.
 
 ## 3. Problema grădinii ornamentale
