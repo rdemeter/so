@@ -10,9 +10,11 @@ Se consideră 5 terminale de vânzare a 25 de bilete pentru un anumit scop (spec
 #include <time.h>
 #include <pthread.h>
 #include <semaphore.h>
+
 #define NUM_SELLERS 5 //50
 #define NUM_TICKETS 25 //250000
 static int numTickets = NUM_TICKETS;
+
 void *sellerThread(void* arg)
 {
   int total = 0;
@@ -27,6 +29,7 @@ void *sellerThread(void* arg)
   printf("Seller %ld finished! (I sold %d tickets)\n", threadid, total);
   pthread_exit((void*) total);
 }
+
 int main(void)
 {
   long i;
@@ -95,9 +98,11 @@ Fie un buffer la care în permanenţă au acces 2 entităţi: un producător, ca
 #include <time.h>
 #include <pthread.h>
 #include <semaphore.h>
+
 #define NUM_TOTAL_BUFFERS 5
 #define DATA_LENGTH 20
 char buffers[NUM_TOTAL_BUFFERS];
+
 void *producer(void* x)
 {
   int i, writePt = 0;
@@ -110,6 +115,7 @@ void *producer(void* x)
     writePt = (writePt + 1) % NUM_TOTAL_BUFFERS;
   }
 }
+
 void* consumer(void* y)
 {
   int i, readPt = 0;
@@ -121,6 +127,7 @@ void* consumer(void* y)
     readPt = (readPt + 1) % NUM_TOTAL_BUFFERS;
   }
 }
+
 int main(void)
 {
   pthread_t prod, cons;
