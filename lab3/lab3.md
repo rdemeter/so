@@ -374,7 +374,7 @@ int main(void)
 }
 ```
 ```
-$gcc pipe.c –o pipe
+$gcc pipe.c -o pipe
 ```
 ## FIFO (Pipe-uri cu nume)
 
@@ -431,7 +431,7 @@ int main(void) {
 }
 ```
 ```
-$gcc fifoserver.c –o fifoserver
+$gcc fifoserver.c -o fifoserver
 ```
 Exemplu 8. fifoclient.c
 ```
@@ -457,7 +457,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 ```
-$gcc fifoclient.c –o fifoclient
+$gcc fifoclient.c -o fifoclient
 ```
 
 Exercițiu: test.c
