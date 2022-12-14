@@ -301,7 +301,7 @@ Mai jos programul este compilat şi rulat. Mai întâi este rulat fără opţiun
 simplă nu rezultă în afişarea nici unei erori.
 Totuşi, dacă definim variabila de mediu MALLOC_CHECK_, se detectează cele două erori. De observat că o eroare este detectată doar în momentul unui nou apel de memorie interceptat de mcheck.
 ```
-$ gcc -Wall –g mcheck_test.c -o mcheck_test
+$ gcc -Wall -g mcheck_test.c -o mcheck_test
 $ ./mcheck_test
 $ MALLOC_CHECK_=1 ./mcheck_test malloc: using debugging hooks
 *** glibc detected *** ./mcheck_test: free(): invalid pointer: 0x0000000000601010 ***
