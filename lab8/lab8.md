@@ -450,7 +450,7 @@ int main(void) {
 }
 ```
 ```
-$ gcc -Wall cond_var.c –o cond_var -pthread
+$ gcc -Wall cond_var.c –o cond_var -lpthread
 $ ./cond_var
 thd 0: before the barrier
 thd 2: before the barrier
