@@ -1,4 +1,4 @@
-# L9. Probleme
+# Probleme
 
 ## 1. Problema rezervării biletelor
 
@@ -160,26 +160,26 @@ producer: buffer[3]=J
 producer: buffer[4]=N
 producer: buffer[0]=B
 producer: buffer[1]=P
-consumer: buffer[0]=
-consumer: buffer[1]=P
-consumer: buffer[2]=B
-consumer: buffer[3]=J
-consumer: buffer[4]=N
-consumer: buffer[0]=B
-consumer: buffer[1]=P
-consumer: buffer[2]=B
-consumer: buffer[3]=J
-consumer: buffer[4]=N
-consumer: buffer[0]=B
-consumer: buffer[1]=P
-consumer: buffer[2]=B
-consumer: buffer[3]=J
-consumer: buffer[4]=N
-consumer: buffer[0]=B
-consumer: buffer[1]=P
-consumer: buffer[2]=B
-consumer: buffer[3]=J
-consumer: buffer[4]=N
+    consumer: buffer[0]=
+    consumer: buffer[1]=P
+    consumer: buffer[2]=B
+    consumer: buffer[3]=J
+    consumer: buffer[4]=N
+    consumer: buffer[0]=B
+    consumer: buffer[1]=P
+    consumer: buffer[2]=B
+    consumer: buffer[3]=J
+    consumer: buffer[4]=N
+    consumer: buffer[0]=B
+    consumer: buffer[1]=P
+    consumer: buffer[2]=B
+    consumer: buffer[3]=J
+    consumer: buffer[4]=N
+    consumer: buffer[0]=B
+    consumer: buffer[1]=P
+    consumer: buffer[2]=B
+    consumer: buffer[3]=J
+    consumer: buffer[4]=N
 producer: buffer[2]=B
 producer: buffer[3]=W
 producer: buffer[4]=L
@@ -190,6 +190,8 @@ Aşa cum se observă din mesajele afişate, producătorul suprascrie date, consu
 Rezolvare1:
 
 Se folosesc 3 semafoare. Un semafor pe post de mutex pentru secţiunea critică (semafor binar, cu valoarea iniţială 1), semaforul EntriesFree, cu valoarea iniţială egală cu numărul de locaţii libere şi un semafor EntriesUsed, cu valoarea iniţială egală cu 0.
+
+![alt text]([http://url/to/img.png](https://github.com/rdemeter/so/blob/master/lab9/figs/prodcons.png))
 
 ## 3. Problema grădinii ornamentale
 
