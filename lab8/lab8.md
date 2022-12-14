@@ -358,7 +358,7 @@ int main() {
 }
 ```
 ```
-$gcc mutex-test.c –o mutex-test -lpthread
+$gcc mutex-test.c -o mutex-test -lpthread
 $./mutex-test
 inc count=1
 inc count=2
@@ -450,7 +450,7 @@ int main(void) {
 }
 ```
 ```
-$ gcc -Wall cond_var.c –o cond_var -lpthread
+$ gcc -Wall cond_var.c -o cond_var -lpthread
 $ ./cond_var
 thd 0: before the barrier
 thd 2: before the barrier
@@ -513,7 +513,7 @@ int main()
 }
 ```
 ```
-$ gcc -Wall barrier.c –o barrier -lpthread
+$ gcc -Wall barrier.c -o barrier -lpthread
 $ ./barrier
 thd 0: before the barrier
 thd 2: before the barrier
