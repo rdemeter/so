@@ -82,9 +82,10 @@ int pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol);
 ```
 
 - modul de comportare la preluări recursive ale mutex-ului
- - PTHREAD_MUTEX_NORMAL nu se fac verificări, preluarea recursivă duce la deadlock
- - PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
- - PTHREAD_MUTEX_RECURSIVE mutex-urile pot fi preluate recursiv din același thread, și trebuie eliberate de același număr de ori.
+  - PTHREAD_MUTEX_NORMAL nu se fac verificări, preluarea recursivă duce la deadlock
+  - PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
+  - PTHREAD_MUTEX_RECURSIVE mutex-urile pot fi preluate recursiv din același thread, și trebuie eliberate de același număr de ori.
+
 ```
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
