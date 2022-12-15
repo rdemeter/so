@@ -69,28 +69,28 @@ NB: Mutex-ul trebuie să fie liber pentru a putea fi distrus. În caz contrar fu
 ### Tipuri de mutex-uri
 
 Folosind atributele de initializare se pot crea mutex-uri cu proprietăti speciale:
-- activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority invesion).
- 
-Există trei protocoale de moștenire a prioritătii:
-- PTHREAD_PRIO_NONE nu se moștenește prioritatea când deținem mutex-ul creat cu acest atribut
-- PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
-- PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va
-executa la maximul priorităților specificată pentru toți mutecșii deținuți.
+- activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority invesion). Există trei protocoale de moștenire a prioritătii:
+  - PTHREAD_PRIO_NONE nu se moștenește prioritatea când deținem mutex-ul creat cu acest atribut
+  - PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
+  - PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va executa la maximul priorităților specificată pentru toți mutecșii deținuți.
 
+```
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 int pthread_mutexattr_getprotocol(const pthread_mutexattr_t * attr, int * protocol);
 int pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol);
+```
 
 - modul de comportare la preluări recursive ale mutex-ului
  - PTHREAD_MUTEX_NORMAL nu se fac verificări, preluarea recursivă duce la deadlock
  - PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
  - PTHREAD_MUTEX_RECURSIVE mutex-urile pot fi preluate recursiv din același thread, și trebuie eliberate de același număr de ori.
-
+```
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 pthread_mutexattr_gettype(const pthread_mutexattr_t * attr, int * protocol);
 pthread_mutexattr_settype(pthread_mutexattr_t * attr, int protocol);
+```
 
 ## Ocuparea/eliberearea unui mutex
 Funcțiile de ocupare blocantă/eliberare a unui mutex:
@@ -136,16 +136,20 @@ Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă gl
 #include <stdio.h>
 #include <pthread.h>
 #define NUM_THREADS 5
+
 // mutex global
 pthread_mutex_t mutex;
+
 int global_counter = 0;
 
 void *thread_routine(void *arg) {
   // preluam mutexul global
   pthread_mutex_lock(&mutex);
+  
   // afisam si modificam valoarea variabilei globale 'global_counter'
   printf("Thread %d says global_counter=%d\n", (int) arg, global_counter);
   global_counter ++;
+  
   // eliberam mutexul pentru a acorda acces altui fir de executie
   pthread_mutex_unlock(&mutex);
   return NULL;
@@ -153,16 +157,20 @@ void *thread_routine(void *arg) {
 int main(void) {
   int i;
   pthread_t tids[NUM_THREADS];
+  
   // mutexul este initializat o singura data si folosit de toate firele de executie
   pthread_mutex_init(&mutex, NULL);
+  
   // firele de executie vor executa codul functiei 'thread_routine'
   // in locul unui pointer la date utile, se trimite in ultimul argument
   // un intreg - identificatorul firului de executie
   for (i = 0; i < NUM_THREADS; i++)
     pthread_create(&tids[i], NULL, thread_routine, (void *) i);
+  
   // asteptam ca toate firele de executie sa se termine
   for (i = 0; i < NUM_THREADS; i++)
     pthread_join(tids[i], NULL);
+
   // eliberam resursele mutexului
   pthread_mutex_destroy(&mutex);
   return 0;
