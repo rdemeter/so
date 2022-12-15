@@ -102,7 +102,9 @@ ocupat de firul de execuție curent (lock recursiv), comportamentul funcției es
 |PTHREAD_MUTEX_DEFAULT |deadlock |eliberează mutexul| 
 
 Nu este garantată o ordine FIFO de ocupare a unui mutex. Oricare din firele aflate în așteptare la deblocarea unui mutex pot să-l acapareze.
-Încercarea neblocantă de ocupare a unui mutex
+
+### Încercarea neblocantă de ocupare a unui mutex
+
 Pentru a încerca ocuparea unui mutex fără a aștepta eliberarea acestuia în cazul în care este deja ocupat, se va apela funcția:
 ```
 int pthread_mutex_trylock(pthread_mutex_t *mutex);
@@ -118,7 +120,7 @@ if (rc == 0) {
   // a avut loc o altă eroare
 }
 ```
-Exemplu de utilizare a mutex-urilor
+###Exemplu de utilizare a mutex-urilor
 Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă globală global_counter:
 ```
 #include <stdio.h>
