@@ -42,19 +42,24 @@ void initializare_mutex_cu_atribute_implicite()
 // de a include <pthread.h>. Pentru mai multe detalii consultai feature_test_macros(7).
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
+
 void initializare_mutex_recursiv()
 {
   // definim atribute, le initializam si marcam tipul ca fiind recursiv.
   pthread_mutexattr_t attr;
   pthread_mutexattr_init(&attr);
   pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+  
   // definim un mutex recursiv, il initializam cu atributele definite anterior
   pthread_mutex_t mutex_recursiv;
   pthread_mutex_init(&mutex_recursiv, &attr);
+  
   // eliberam resursele atributului dupa crearea mutexului
   pthread_mutexattr_destroy(&attr);
+  
   // ... folosirea mutexului ...
   // ???
+  
   // eliberare mutex
   pthread_mutex_destroy(&mutex_recursiv);
 }
@@ -62,18 +67,21 @@ void initializare_mutex_recursiv()
 NB: Mutex-ul trebuie să fie liber pentru a putea fi distrus. În caz contrar funcția va întoarce codul de eroare EBUSY. Întoarcerea valorii 0 semnifică succesul apelului.
 
 ### Tipuri de mutex-uri
+
 Folosind atributele de initializare se pot crea mutex-uri cu proprietăti speciale:
-- activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority
-invesion). Există trei protocoale de moștenire a prioritătii:
- - PTHREAD_PRIO_NONE nu se moștenește prioritatea când deținem mutex-ul creat cu acest atribut
- - PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
- - PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va
+- activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority invesion).
+ 
+Există trei protocoale de moștenire a prioritătii:
+- PTHREAD_PRIO_NONE nu se moștenește prioritatea când deținem mutex-ul creat cu acest atribut
+- PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
+- PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va
 executa la maximul priorităților specificată pentru toți mutecșii deținuți.
 
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 int pthread_mutexattr_getprotocol(const pthread_mutexattr_t * attr, int * protocol);
 int pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol);
+
 - modul de comportare la preluări recursive ale mutex-ului
  - PTHREAD_MUTEX_NORMAL nu se fac verificări, preluarea recursivă duce la deadlock
  - PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
@@ -120,7 +128,9 @@ if (rc == 0) {
   // a avut loc o altă eroare
 }
 ```
-###Exemplu de utilizare a mutex-urilor
+
+### Exemplu de utilizare a mutex-urilor
+
 Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă globală global_counter:
 ```
 #include <stdio.h>
@@ -180,40 +190,50 @@ long do_futex(unsigned long uaddr, int op, int val, unsigned long timeout, unsig
 Semafoarele sunt obiecte de sincronizare ce reprezintă o generalizare a mutexurilor prin aceea că salvează numărul de operații de eliberare (incrementare) efectuate asupra lor. Practic, un semafor reprezintă un întreg
 care se incrementează/decrementează atomic. Valoarea unui semafor nu poate scădea sub 0. Dacă semaforul are valoarea 0, operația de decrementare se va bloca până când valoarea semaforului devine strict pozitivă. Mutexurile pot fi privite, așadar, ca niște semafoare binare.
 Operațiile care pot fi efectuate asupra semafoarelor POSIX sunt:
+
 ```
-/* SEMAFOARE CU NUME */
-// deschiderea unui semafor identificat prin nume.
-// folosit pentru a sincroniza procese diferite
+- deschiderea unui semafor identificat prin nume, folosit pentru a sincroniza procese diferite
 sem_t* sem_open(const char *name, int oflag);
 sem_t* sem_open(const char, *name, int oflag, mode_t mode, unsigned int value);
-// închiderea unui semafor cu nume
+
+- închiderea unui semafor cu nume
 int sem_close(sem_t *sem);
-// stergerea din sistem a unui semafor cu nume
+
+- stergerea din sistem a unui semafor cu nume
 int sem_unlink(const char *name);
-/* SEMAFOARE FARA NUME */
-/**
-* initializarea unui semafor fara nume
+
+- initializarea unui semafor fara nume
 * sem - semaforul nou creat
 * pshared - 0 daca semaforul nu este partajat decat de firele de executie ale procesului curent
-- non zero: semafor partajat cu alte procese in acest caz 'sem' trebuie alocat intr-o zona de memorie partajata
+          - non zero: semafor partajat cu alte procese in acest caz 'sem' trebuie alocat intr-o zona de memorie partajata
 * value - valoarea initiala a semaforului
-*/
+
 int sem_init(sem_t *sem, int pshared, unsigned int value);
-// distrugerea unui semafor fara nume
+
+- distrugerea unui semafor fara nume
 int sem_destroy(sem_t *sem);
-/* OPERATII PE SEMAFOARE */
+```
+
+### Operații pe semafoare
+
+```
 // incrementarea (V)
 int sem_post(sem_t *sem);
+
 // decrementarea blocantă (P)
 int sem_wait(sem_t *sem);
+
 // decrementarea neblocantă
 int sem_trywait(sem_t *sem);
+
 // citirea valorii
 int sem_getvalue(sem_t *sem, int *pvalue);
 ```
+
 Semafoarele POSIX au fost prezentate în cadrul laboratorului de comunicare inter-proces.
 
 ## Variabila de condiție
+
 Variabilele condiție pun la dispoziție un sistem de notificare pentru fire de execuție, permițându-i unui fir să se blocheze în așteptarea unui semnal din partea unui alt fir. Folosirea corectă a variabilelor condiție presupune un protocol cooperativ între firele de execuție.
 
 Mutexurile (mutual exclusion locks) și semafoarele permit blocarea altor fire de execuție. Variabilele de condiție se folosesc pentru a bloca firul curent de execuție până la îndeplinirea unei condiții.
@@ -271,6 +291,13 @@ Single Increment variable: got 4860254 expected 5000000
 Double Increment variable: got 9479559 expected 10000000
 ```
 Să se rezolve această problemă folosind două mutex-uri.
+
+```
+$ gcc race.c -o race -lpthread
+$ ./race
+Single Increment variable: got 5000000 expected 5000000
+Double Increment variable: got 10000000 expected 10000000
+```
 
 ## Inițializarea/distrugerea unei variabile de condiție
 ```
