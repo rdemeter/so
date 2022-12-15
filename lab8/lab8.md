@@ -186,6 +186,68 @@ Thread 3 says global_counter=2
 Thread 4 says global_counter=3
 Thread 0 says global_counter=4
 ```
+
+Exemplu: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
+```
+#include <pthread.h>
+#include <stdio.h>
+
+#define INC_LIMIT 50000
+#define THREADS_NO 100
+
+int a = 0, b = 0;
+
+void* single_increment(void* arg)
+{
+  int i;
+  for(i = 0; i < INC_LIMIT; i++)
+    a++;
+  return NULL;
+}
+
+void* double_increment(void* arg)
+{
+  int i;
+  for(i = 0; i < INC_LIMIT; i++) {
+    b++;
+    b++;
+  }
+  return NULL;
+}
+
+int main()
+{
+  int i;
+  pthread_t sinc_threads[THREADS_NO];
+  pthread_t dinc_threads[THREADS_NO];
+  for(i = 0; i < THREADS_NO; i++) {
+    pthread_create(&sinc_threads[i], NULL, single_increment, NULL);
+    pthread_create(&dinc_threads[i], NULL, double_increment, NULL);
+  }
+  for(i = 0; i < THREADS_NO; i++) {
+    pthread_join(sinc_threads[i], NULL);
+    pthread_join(dinc_threads[i], NULL);
+  }
+  printf("Single Incremented variable: got %d expected %d\n", a, INC_LIMIT*THREADS_NO);
+  printf("Double incremented variable: got %d expected %d\n", b, 2 * INC_LIMIT*THREADS_NO);
+  return 0;
+}
+```
+```
+$ gcc race.c -o race -lpthread
+$ ./race
+Single Increment variable: got 4860254 expected 5000000
+Double Increment variable: got 9479559 expected 10000000
+```
+Să se rezolve această problemă folosind două mutex-uri, astfel ca rezultatul obținut să fi cel așteptat.
+
+```
+$ gcc race.c -o race -lpthread
+$ ./race
+Single Increment variable: got 5000000 expected 5000000
+Double Increment variable: got 10000000 expected 10000000
+```
+
 ## Futexuri
 Mutexurile din firele de execuție POSIX sunt implementate cu ajutorul futexurilor, din considerente de performanță. Numele de futex vine de la Fast User-space muTEX. Ideea de la care a plecat implementarea futexurilor a fost aceea de a optimiza operația de ocupare a unui mutex în cazul în care acesta nu este deja ocupat. Dacă mutexul nu este ocupat, el va fi ocupat fără ca procesul care îl ocupă să se blocheze. În acest caz, nefiind necesară blocarea, nu este necesar ca procesul să intre în kernel-mode (pentru a intra într-o stare de așteptare). Optimizarea constă în testarea și setarea atomică a valorii mutexului (printr-o instrucțiune de tip test-and-set-lock) în user-space, eliminându-se trap-ul în kernel în cazul în care nu este necesară blocarea.
 Futexul poate fi orice variabilă dintr-o zonă de memorie partajată între mai multe fire de executie sau procese.
@@ -250,63 +312,6 @@ Variabilele condiție sunt obiecte de sincronizare care-i permit unui fir de exe
 
 O variabilă condiție trebuie întotdeauna folosită împreună cu un mutex pentru evitarea race-ului care se produce când un fir se pregătește să aștepte la variabila condiție în urma evaluării predicatului logic, iar alt fir semnalizează variabila condiție chiar înainte ca primul fir să se blocheze, pierzându-se astfel semnalul. Așadar, operațiile de semnalizare, testare a condiției logice și blocare la variabila condiție trebuie efectuate având ocupat mutex-ul asociat variabilei condiție. Condiția logică este testată sub protecția mutex-ului, iar dacă nu este îndeplinită, firul apelant se blochează la variabila condiție, eliberând atomic mutex-ul. În momentul deblocării, un fir de execuție va încerca să ocupe mutex-ul asociat variabilei condiție. De asemenea, testarea predicatului logic trebuie făcută într-o buclă, pentru că dacă sunt eliberate mai multe fire deodată, doar unul va reuși să ocupe mutex-ul asociat condiției. Restul vor aștepta ca acesta să-l elibereze, însă este posibil ca firul care a ocupat mutexul să schimbe valoarea predicatului logic pe durata deținerii mutex-ului. Din acest motiv
 celelalte fire trebuie să testeze din nou predicatul pentru că altfel i-ar începe execuția presupunând predicatul adevărat, când el este, de fapt, fals.
-
-Exemplu: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
-```
-#include <pthread.h>
-#include <stdio.h>
-#define INC_LIMIT 50000
-#define THREADS_NO 100
-int a = 0, b = 0;
-void* single_increment(void* arg)
-{
-  int i;
-  for(i = 0; i < INC_LIMIT; i++)
-    a++;
-  return NULL;
-}
-void* double_increment(void* arg)
-{
-  int i;
-  for(i = 0; i < INC_LIMIT; i++) {
-    b++;
-    b++;
-  }
-  return NULL;
-}
-
-int main()
-{
-  int i;
-  pthread_t sinc_threads[THREADS_NO];
-  pthread_t dinc_threads[THREADS_NO];
-  for(i = 0; i < THREADS_NO; i++) {
-    pthread_create(&sinc_threads[i], NULL, single_increment, NULL);
-    pthread_create(&dinc_threads[i], NULL, double_increment, NULL);
-  }
-  for(i = 0; i < THREADS_NO; i++) {
-    pthread_join(sinc_threads[i], NULL);
-    pthread_join(dinc_threads[i], NULL);
-  }
-  printf("Single Incremented variable: got %d expected %d\n", a, INC_LIMIT*THREADS_NO);
-  printf("Double incremented variable: got %d expected %d\n", b, 2 * INC_LIMIT*THREADS_NO);
-  return 0;
-}
-```
-```
-$ gcc race.c -o race -lpthread
-$ ./race
-Single Increment variable: got 4860254 expected 5000000
-Double Increment variable: got 9479559 expected 10000000
-```
-Să se rezolve această problemă folosind două mutex-uri.
-
-```
-$ gcc race.c -o race -lpthread
-$ ./race
-Single Increment variable: got 5000000 expected 5000000
-Double Increment variable: got 10000000 expected 10000000
-```
 
 ## Inițializarea/distrugerea unei variabile de condiție
 ```
