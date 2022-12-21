@@ -4,7 +4,7 @@
 - [Mutex](#mutex)
   * [Inițializarea/distrugerea unui mutex](#inițializarea-distrugerea-unui-mutex)
   * [Tipuri de mutex-uri](#tipuri-de-mutex-uri)
-- [Ocuparea/eliberearea unui mutex](#ocuparea-eliberearea-unui-mutex)
+  * [Ocuparea/eliberearea unui mutex](#ocuparea-eliberearea-unui-mutex)
   * [Încercarea neblocantă de ocupare a unui mutex](#Încercarea-neblocantă-de-ocupare-a-unui-mutex)
   * [Exemplu de utilizare a mutex-urilor](#exemplu-de-utilizare-a-mutex-urilor)
 - [Futexuri](#futexuri)
