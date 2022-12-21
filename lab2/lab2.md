@@ -4,14 +4,14 @@
   * [GNU Make](#gnu-make)
   * [Exemplu simplu Makefile](#exemplu-simplu-makefile)
   * [Sintaxa unei reguli](#sintaxa-unei-reguli)
-  * [Funcţionarea unui fişier Makefile](#func-ionarea-unui-fi-ier-makefile)
+  * [Funcţionarea unui fişier Makefile](#Funcţionarea-unui-fişier-Makefile)
   * [Folosirea variabilelor](#folosirea-variabilelor)
   * [Folosirea regulilor implicite](#folosirea-regulilor-implicite)
   * [Exemplu complet de Makefile](#exemplu-complet-de-makefile)
 - [Depanarea programelor](#depanarea-programelor)
   * [GDB](#gdb)
   * [Rularea GDB](#rularea-gdb)
-  * [Comenzi de bază GDB](#comenzi-de-baz--gdb)
+  * [Comenzi de bază GDB](#Comenzi-de-bază-GDB)
   * [Resurse utile](#resurse-utile)
 
 ## GNU Make
