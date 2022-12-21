@@ -6,7 +6,7 @@
   * [Opţiuni](#opțiuni)
   * [Activarea avertismentelor](#activarea-avertismentelor)
   * [Alte opţiuni](#alte-opțiuni)
-- [Compilarea din mai multe fişiere](#compilarea-din-mai-multe-fișiere)
+- [Compilarea din mai multe fişiere](#Compilarea-din-mai-multe-fişiere)
 - [Preprocesorul. Opţiuni de preprocesare](#preprocesorul-optiuni-de-preprocesare)
 - [Opţiuni pentru preprocesor la apelul gcc](#optiuni-pentru-preprocesor-la-apelul-gcc)
 - [Debugging folosind directive de preprocesare](#debugging-folosind-directive-de-preprocesare)
