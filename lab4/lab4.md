@@ -9,17 +9,17 @@
   * [.rodata](#rodata)
   * [Stiva](#stiva)
   * [Heap-ul](#heap-ul)
-  * [Alocarea memoriei](#alocarea-memoriei)
+- [Alocarea memoriei](#alocarea-memoriei)
   * [Alocarea memoriei în Linux](#alocarea-memoriei--n-linux)
-  * [Probleme de lucru cu memoria](#probleme-de-lucru-cu-memoria)
+- [Probleme de lucru cu memoria](#probleme-de-lucru-cu-memoria)
   * [Acces invalid](#acces-invalid)
   * [GDB - Detectarea zonei de acces invalid de tip page fault](#gdb---detectarea-zonei-de-acces-invalid-de-tip-page-fault)
   * [Leak-uri de memorie](#leak-uri-de-memorie)
   * [mtrace](#mtrace)
   * [Dublă dezalocare](#dublă-dezalocare)
   * [Valgrind](#valgrind)
-  * [Alte utilitare pentru depanarea problemelor de lucru cu memoria](#alte-utilitare-pentru-depanarea-problemelor-de-lucru-cu-memoria)
-  * [Resurse utile](#resurse-utile)
+- [Alte utilitare pentru depanarea problemelor de lucru cu memoria](#alte-utilitare-pentru-depanarea-problemelor-de-lucru-cu-memoria)
+- [Resurse utile](#resurse-utile)
 
 Subsistemul de gestiune a memoriei din cadrul unui sistem de operare este folosit de toate celelalte subsisteme: scheduling, I/O, filesystem, gestiunea proceselor, networking. Memoria este o resursă importantă și sunt necesari algoritmi eficienți de utilizare și gestiune a acesteia.
 Rolul subsistemului de gestiune a memoriei este de a ține evidența zonelor de memorie fizică ocupate sau libere, de a oferi proceselor sau celorlalte subsisteme acces la memorie și de a mapa paginile de memorie virtuală ale unui proces (pages) peste paginile fizice (frames).
