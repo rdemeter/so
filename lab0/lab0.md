@@ -7,7 +7,7 @@
   * [Înlănțuirea comenzilor](#-nl-n-uirea-comenzilor)
   * [Redirectări](#redirect-ri)
 - [Variabile](#variabile)
-- [Argumente în linia de comandă](#argumente--n-linia-de-comand-)
+- [Argumente în linia de comandă](#Argumente-în-linia-de-comandă)
 - [Caractere speciale](#caractere-speciale)
   * [spațiu](#spa-iu)
   * [backslash](#backslash)
@@ -39,7 +39,7 @@
   * [wc](#wc)
   * [cut](#cut)
 - [Exemple](#exemple)
-- [Exerciţii](#exerci-ii)
+- [Exerciţii](#Exerciţii)
 - [Link-uri utile](#link-uri-utile)
 
 Shell-ul este principala interfață de comunicare între utilizator și sistemul de operare. Deși, în mod intuitiv, shell-ul este identificat cu o interfață în linia de comandă, poate fi și o interfaţă grafică. Exemplu este File Explorer-ul sistemului de operare Microsoft Windows.
