@@ -2,14 +2,14 @@
 # Procese
 
 - [Procese](#procese)
-  * [Procese în Linux](#procese--n-linux)
+  * [Procese în Linux](#Procese-în-Linux)
   * [Crearea unui proces](#crearea-unui-proces)
   * [Aşteptarea terminării unui proces](#Aşteptarea-terminării-unui-proces)
   * [Terminarea unui proces](#terminarea-unui-proces)
 - [Depanarea unui proces](#depanarea-unui-proces)
 - [Pipe-uri](#pipe-uri)
   * [Pipe-uri anonime](#pipe-uri-anonime)
-  * [FIFO (Pipe-uri cu nume)](#fifo--pipe-uri-cu-nume-)
+  * [Pipe-uri cu nume)](#Pipe-uri-cu-nume)
 
 Un concept cheie în orice sistem de operare este procesul. Un proces este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
 
@@ -386,13 +386,13 @@ int main(void)
 ```
 $gcc pipe.c -o pipe
 ```
-## FIFO (Pipe-uri cu nume)
+## Pipe-uri cu nume
 
-Elimină necesitatea ca procesele care comunică să fie înrudite deoarece acestea nu trebuie să îşi transmită descriptorii. Astfel, fiecare proces îşi poate deschide pentru citire sau scriere fişierul pipe cu nume (FIFO) care este un tip de fişier special care păstrează caracteristicile unui pipe. Comunicaţia se face într-un sens sau în ambele sensuri. Fişierele de tip FIFO pot fi localizate ca având litera p  în primul câmp al drepturilor de acces (ls -l) .
+**FIFO** numite şi pipe-uri cu nume, elimină necesitatea ca procesele care comunică să fie înrudite deoarece acestea nu trebuie să îşi transmită descriptorii. Astfel, fiecare proces îşi poate deschide pentru citire sau scriere fişierul pipe cu nume (FIFO) care este un tip de fişier special care păstrează caracteristicile unui pipe. Comunicaţia se face într-un sens sau în ambele sensuri. Fişierele de tip FIFO pot fi localizate ca având litera p în primul câmp al drepturilor de acces (ls -l) .
 Apelul de sistem pentru crearea FIFO este:
-
+```
 int mkfifo(const char *pathname, mode_t mode);
-
+```
 Parametrii sunt:
 - pathname - reprezintă numele de cale al fişierului FIFO.
 - mode - reprezintă un întreg ce indică drepturile de acces ale fişierului FIFO.
