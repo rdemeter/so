@@ -1,5 +1,22 @@
 # Introducere în system programming
 
+- [Introducere în system programming](#introducere--n-system-programming)
+  * [GCC](#gcc)
+  * [Utilizare GCC](#utilizare-gcc)
+  * [Opţiuni](#op-iuni)
+  * [Activarea avertismentelor (warnings)](#activarea-avertismentelor--warnings-)
+  * [Alte opţiuni](#alte-op-iuni)
+- [Compilarea din mai multe fişiere](#compilarea-din-mai-multe-fi-iere)
+- [Preprocesorul. Opţiuni de preprocesare](#preprocesorul-op-iuni-de-preprocesare)
+- [Opţiuni pentru preprocesor la apelul gcc](#op-iuni-pentru-preprocesor-la-apelul-gcc)
+- [Debugging folosind directive de preprocesare](#debugging-folosind-directive-de-preprocesare)
+- [Linker-ul. Opţiuni de link-editare. Biblioteci](#linker-ul-op-iuni-de-link-editare-biblioteci)
+- [Biblioteci](#biblioteci)
+  * [Crearea de biblioteci](#crearea-de-biblioteci)
+  * [Crearea unei biblioteci statice](#crearea-unei-biblioteci-statice)
+  * [Crearea unei biblioteci partajate](#crearea-unei-biblioteci-partajate)
+- [Resurse utile](#resurse-utile)
+
 Laboratoarele de Sisteme de Operare au drept scop aprofundarea interfeţelor de programare oferite de sistemele de operare (system API). Laboratorul este un laborator de system programming. Un laborator va aborda un set de concepte şi va conţine un scurt breviar teoretic, o prezentare a API-ului asociat cu explicaţii şi exemple şi un set de exerciţii pentru acomodarea cu acesta. Pentru a oferi o arie de cuprindere cât mai largă, laboratoarele au ca suport familia de sisteme de operare Unix.
 
 În cadrul acestui laborator (laboratorul de introducere), va fi prezentat mediului de lucru care va fi folosit în cadrul laboratorului de Sisteme de Operare. Laboratorul foloseşte ca suport de programare limbajul C/C++. Pentru GNU/Linux se va folosi suita de compilatoare GCC. De asemenea, pentru compilarea incrementală a surselor se va folosi GNU make (Linux). Exceptând apelurile de bibliotecă standard, API-ul folosit va fi POSIX.
