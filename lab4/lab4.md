@@ -74,7 +74,7 @@ Heap-ul este zona de memorie dedicată alocării dinamice a memoriei. Heap-ul es
 La fel ca şi stiva, heap-ul este o regiune dinamică şi care îi modifică dimensiunea. Spre deosebire de stivă, însă, heap-ul nu este gestionat de compilator. Este de datoria programatorului să ştie câtă memorie trebuie să aloce şi să reţină cât a alocat şi când trebuie să dezaloce. Problemele frecvente în majoritatea programelor țin de pierderea referinţelor la zonele alocate (memory leaks) sau referirea de zone nealocate sau insuficient alocate (accese invalide).
 La limbaje precum Java, Lisp, etc. unde nu există "pointer freedom", eliberarea spaţiului alocat se face automat prin intermediul unui garbage collector (link). Pe aceste sisteme se previne problema pierderii referinţelor, dar încă rămâne activă problema referirii zonelor nealocate.
 
-## Alocarea memoriei
+# Alocarea memoriei
 Alocarea memoriei este realizată static de compilator sau dinamic, în timpul execuţiei. Alocarea statică este realizată în segmentele de date pentru variabilele locale sau pentru literali.
 În timpul execuţiei, variabilele se alocă pe stivă sau în heap. Alocarea pe stivă se realizează automat de compilator pentru variabilele locale unei funcții (mai puțin variabilele locale prefixate de identificatorul static).
 
@@ -153,7 +153,7 @@ p = NULL;
 ```
 Mai multe informaţii găsiţi în manualul bibliotecii standard C şi în pagina de manual man malloc.
 
-## Probleme de lucru cu memoria
+# Probleme de lucru cu memoria
 Lucrul cu heap-ul este una dintre cauzele principale ale apariţiilor problemelor de programare.
 Lucrul cu pointerii, necesitatea folosirii unor apeluri de sistem/bibliotecă pentru alocare/dezalocare, pot conduce la o serie de probleme care afectează (de multe ori fatal) funcţionarea unui program.
 Problemele cele mai des întâlnite în lucrul cu memoria sunt:
@@ -338,6 +338,7 @@ Un leak de memorie apare în două situaţii:
 
 Memory leak-urile au ca efect reducerea cantităţii de memorie existentă în sistem. Se poate ajunge, în situaţiile extreme, la consumarea întregii memorii a sistemului şi la imposibilitatea de funcţionare a diverselor aplicaţii ale acestuia.
 Ca şi în cazul problemei accesului invalid la memorie, utilitarul Valgrind este foarte util în detectarea leak-urilor de memorie ale unui program.
+
 ## mtrace
 Un utilitar care poate fi folosit la depanarea erorilor de lucru cu memoria este mtrace. Acest utilitar ajută la identificarea leak-urilor de memorie ale unui program.
 Utilitarul mtrace se folosete cu apelurile mtrace şi muntrace implementate în biblioteca standard C:
@@ -567,7 +568,7 @@ Valgrind apar erori în 3 contexte:
 Valgrind este un utilitar de bază în depanarea programelor. Este facil de folosit (nu este intrusiv, nu necesită modificarea surselor) şi permite detectarea unui număr important de erori de programare apărute ca urmare a gestiunii defectuoase a memoriei.
 Informaţii complete despre modul de utilizare a Valgrind şi a utilitarelor asociate se găsesc în paginile de documentaţie Valgrind: http://valgrind.org/docs/manual/index.html
 
-## Alte utilitare pentru depanarea problemelor de lucru cu memoria
+# Alte utilitare pentru depanarea problemelor de lucru cu memoria
 Utilitarele prezentate mai sus nu sunt singurele folosite pentru detectarea problemelor apărute în lucrul cu memoria. Alte utilitare sunt:
 - http://en.wikipedia.org/wiki/Category:Memory_management_software
 - dmalloc
@@ -575,7 +576,7 @@ Utilitarele prezentate mai sus nu sunt singurele folosite pentru detectarea prob
 - DUMA
 - Electric Fence
 
-## Resurse utile
+# Resurse utile
 • Linux System Programming - Chapter 8 - Memory Management
 • Windows System Programming - Chapter 5 - Memory Management (Win32 and Win64
 Memory Management Architecture, Heaps, Managing Heap Memory
