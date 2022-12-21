@@ -16,7 +16,7 @@
   * [dollar - expansion](#dollar---expansion)
     + [expandarea unui parametru](#expandarea-unui-parametru)
     + [substitutia unei comenzi](#substitutia-unei-comenzi)
-    + [expansiune aritmetică](#expansiune-aritmetic-)
+    + [expansiune aritmetică](#expansiune-aritmetică)
 - [Structuri de control](#structuri-de-control)
   * [if](#if)
   * [case](#case)
