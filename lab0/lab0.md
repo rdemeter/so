@@ -29,6 +29,7 @@
   * [cat, tac, head, tail](#cat--tac--head--tail)
   * [read](#read)
   * [find](#find)
+  * [dd](#dd)
 - [Filtre de text](#filtre-de-text)
   * [head, tail](#head--tail)
   * [grep](#grep)
@@ -37,7 +38,6 @@
   * [uniq](#uniq)
   * [wc](#wc)
   * [cut](#cut)
-  * [dd](#dd)
 - [Exemple](#exemple)
 - [Exerciţii](#exerci-ii)
 - [Link-uri utile](#link-uri-utile)
@@ -630,6 +630,39 @@ $ find /usr/include/ -name '*lock*' -exec grep -H mutex {} \;
 ```
 Opţiunea exec este folosită pentru a rula o comandă pentru fișierele găsite. Șirul {} este special și se înlocuiește cu numele fișierului găsit de find. Caracterul ; (citat cu ajutorul backslash) indică încheierea comenzii de executat.
 
+## dd
+
+Utilitarul **dd** din Linux poate fi folosit pentru a:
+- Clona un disc
+- Clona o partiție
+- Face a backup și a restaura întregul hard disk sau partiție
+- Șterge conținutul hard diskului
+
+syntaxa:
+```
+$ sudo dd if=source-disk of=destination-disk [option]
+
+Unde
+if: utilizat pentru specificarea unui fișier de intrare
+source-disc: este discul sursă de unde vor fi clonate fișierele
+of: folosit pentru specificarea unui fișier de ieșire
+destination-disk: Este discul de destinație pe care doriți să plasați fișierele copiate
+option: progresul, viteza de transfer al fișierului, formatul fișierului etc.
+```
+Mai întâi, se execută comanda **lsblk** pentru a vizualiza toate discurile disponibile pe sistem, sau **fdisk -l**.
+
+Pentru a clona un întreg disc /dev/sdb în /dev/sdc, vom folosi următoarea comandă:
+```
+$ sudo dd if=/dev/sdb of=/dev/sdc status=progress
+```
+De exemplu, pentru a clona o partiție /dev/sdb2 în /dev/sdc2, comanda ar fi:
+```
+$ sudo dd if=/dev/sdb2 of=/dev/sdc2 status=progress
+```
+Următoarea comandă dd elimină datele din /dev/hdX:
+```
+$ dd if=/dev/zero of=/dev/hdX bs=512 count=1
+```
 
 # Filtre de text
 
@@ -905,40 +938,6 @@ drwxr-xr-x tema1
 ```
 
 Comenzi din aceeasi categorie sunt **paste** si **join**.
-
-## dd
-
-Utilitarul **dd** din Linux poate fi folosit pentru a:
-- Clona un disc
-- Clona o partiție
-- Face a backup și a restaura întregul hard disk sau partiție
-- Șterge conținutul hard diskului
-
-syntaxa:
-```
-$ sudo dd if=source-disk of=destination-disk [option]
-
-Unde
-if: utilizat pentru specificarea unui fișier de intrare
-source-disc: este discul sursă de unde vor fi clonate fișierele
-of: folosit pentru specificarea unui fișier de ieșire
-destination-disk: Este discul de destinație pe care doriți să plasați fișierele copiate
-option: progresul, viteza de transfer al fișierului, formatul fișierului etc.
-```
-Mai întâi, se execută comanda **lsblk** pentru a vizualiza toate discurile disponibile pe sistem, sau **fdisk -l**.
-
-Pentru a clona un întreg disc /dev/sdb în /dev/sdc, vom folosi următoarea comandă:
-```
-$ sudo dd if=/dev/sdb of=/dev/sdc status=progress
-```
-De exemplu, pentru a clona o partiție /dev/sdb2 în /dev/sdc2, comanda ar fi:
-```
-$ sudo dd if=/dev/sdb2 of=/dev/sdc2 status=progress
-```
-Următoarea comandă dd elimină datele din /dev/hdX:
-```
-$ dd if=/dev/zero of=/dev/hdX bs=512 count=1
-```
 
 # Exemple
 
