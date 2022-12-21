@@ -19,9 +19,9 @@
     + [expansiune aritmetică](#expansiune-aritmetic-)
 - [Structuri de control](#structuri-de-control)
   * [if](#if)
-- [case](#case)
-- [for](#for)
-- [while](#while)
+  * [case](#case)
+  * [for](#for)
+  * [while](#while)
 - [Functii shell](#functii-shell)
 - [Pattern matching](#pattern-matching)
 - [Comenzi utile](#comenzi-utile)
@@ -387,7 +387,7 @@ else
 fi
 ```
 
-# case
+## case
 
 Sintaxa pentru **case** este următoarea:
 ```
@@ -414,7 +414,7 @@ esac
 echo " legs."
 ```
 
-# for
+## for
 
 Sintaxa pentru **for** este următoarea:
 ```
@@ -454,7 +454,7 @@ done
 echo "suma numerelor pare pana la 100 este $sum"
 ```
 
-# while
+## while
 
 Sintaxa pentru **while** este următoarea:
 ```
