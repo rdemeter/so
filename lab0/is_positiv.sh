@@ -4,7 +4,7 @@
 #
 if [ $# -eq 0 ]; then
     echo "$0 : Trebuie sa introduceti un intreg"
-exit 1
+    exit 1
 fi
 
 if test $1 -ge 0; then
