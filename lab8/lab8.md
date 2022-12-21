@@ -1,5 +1,24 @@
 # Sincronizare thread-uri
 
+- [Sincronizare thread-uri](#sincronizare-thread-uri)
+  * [Mutex](#mutex)
+    + [Inițializarea/distrugerea unui mutex](#inițializarea-distrugerea-unui-mutex)
+    + [Tipuri de mutex-uri](#tipuri-de-mutex-uri)
+  * [Ocuparea/eliberearea unui mutex](#ocuparea-eliberearea-unui-mutex)
+    + [Încercarea neblocantă de ocupare a unui mutex](#Încercarea-neblocantă-de-ocupare-a-unui-mutex)
+    + [Exemplu de utilizare a mutex-urilor](#exemplu-de-utilizare-a-mutex-urilor)
+  * [Futexuri](#futexuri)
+  * [Semafor](#semafor)
+    + [Operații pe semafoare](#operații-pe-semafoare)
+  * [Variabila de condiție](#variabila-de-condiție)
+  * [Inițializarea/distrugerea unei variabile de condiție](#inițializarea-distrugerea-unei-variabile-de-condiție)
+  * [Blocarea la o variabilă condiție](#blocarea-la-o-variabilă-condiție)
+    + [Blocarea la o variabilă condiție cu timeout](#blocarea-la-o-variabilă-condiție-cu-timeout)
+    + [Exemplu de utilizare a variabilelor de condiție](#exemplu-de-utilizare-a-variabilelor-de-condiție)
+- [Bariera](#bariera)
+  * [Inițializarea/distrugearea unei bariere](#inițializarea-distrugearea-unei-bariere)
+  * [Așteptarea la o barieră](#așteptarea-la-o-barieră)
+
 Pentru sincronizarea firelor de execuție avem la dispoziție următoarele mecanisme:
 - mutex
 - semafoare
