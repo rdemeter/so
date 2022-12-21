@@ -3,14 +3,14 @@
 - [Introducere în system programming](#introducere--n-system-programming)
   * [GCC](#gcc)
   * [Utilizare GCC](#utilizare-gcc)
-  * [Opţiuni](#op-iuni)
-  * [Activarea avertismentelor (warnings)](#activarea-avertismentelor--warnings-)
-  * [Alte opţiuni](#alte-op-iuni)
-- [Compilarea din mai multe fişiere](#compilarea-din-mai-multe-fi-iere)
-- [Preprocesorul. Opţiuni de preprocesare](#preprocesorul-op-iuni-de-preprocesare)
-- [Opţiuni pentru preprocesor la apelul gcc](#op-iuni-pentru-preprocesor-la-apelul-gcc)
+  * [Opţiuni](#opțiuni)
+  * [Activarea avertismentelor](#activarea-avertismentelor)
+  * [Alte opţiuni](#alte-opțiuni)
+- [Compilarea din mai multe fişiere](#compilarea-din-mai-multe-fișiere)
+- [Preprocesorul. Opţiuni de preprocesare](#preprocesorul-opțiuni-de-preprocesare)
+- [Opţiuni pentru preprocesor la apelul gcc](#opțiuni-pentru-preprocesor-la-apelul-gcc)
 - [Debugging folosind directive de preprocesare](#debugging-folosind-directive-de-preprocesare)
-- [Linker-ul. Opţiuni de link-editare. Biblioteci](#linker-ul-op-iuni-de-link-editare-biblioteci)
+- [Linker-ul. Opţiuni de link-editare. Biblioteci](#linker-ul-opțiuni-de-link-editare-biblioteci)
 - [Biblioteci](#biblioteci)
   * [Crearea de biblioteci](#crearea-de-biblioteci)
   * [Crearea unei biblioteci statice](#crearea-unei-biblioteci-statice)
@@ -93,7 +93,7 @@ La opţiunile de mai sus se poate folosi opţiunea -o pentru specificarea fişie
 ```
 $ gcc -c hello.c -o my_obj_hello.o
 ```
-## Activarea avertismentelor (warnings)
+## Activarea avertismentelor
 În mod implicit, o rulare a gcc oferă puţine avertismente utilizatorului. Pentru a activa afişarea de avertismente se foloseşte opţiunea -W cu sintaxa -Woptiune-warning. optiune-warning poate lua mai multe valori posibile printre care return-type, switch, unused-variable, uninitialized, implicit, all. Folosirea opţiunii -Wall înseamnă afişarea tuturor avertismentelor care pot cauza inconsistenţe la rulare.
 Considerăm ca fiind indispensabilă folosirea opţiunii -Wall pentru a putea detecta încă din momentul compilării posibilele erori. O cauză importantă a apariţiilor acestor erori o constituie sintaxa foarte permisivă a limbajului C. Sperăm ca exemplul de mai jos să justifice utilitatea folosirii opţiunii -Wall:
 
