@@ -1,5 +1,16 @@
 # Shell scripting
 
+# Table of Contents
+1. [Shell scripting](#Shell scripting)
+2. [Operatori shell](#Operatori shell)
+3. [Third Variabile](#Variabile)
+4. [Argumente în linia de comandă](#Argumente în linia de comandă)
+5. [Caractere speciale](#Caractere speciale)
+6. [Structuri de control](#Structuri de control)
+7. [Functii shell](#Functii shell)
+8. [Comenzi utile](#Comenzi utile)
+9. [Exercitii](#Exercitii)
+
 Shell-ul este principala interfață de comunicare între utilizator și sistemul de operare. Deși, în mod intuitiv, shell-ul este identificat cu o interfață în linia de comandă, poate fi și o interfaţă grafică. Exemplu este File Explorer-ul sistemului de operare Microsoft Windows.
 
 În cele ce urmează vom studia interfaţa de tip CLI (Command Line Interface) oferită de sistemele de operare Unix. Deși cu o curbă de învăţare mai mare decât o interfaţă grafică, CLI permite un control mult mai bun al sistemului. Mai mult, shell-ul dispune de un limbaj de programare. Un program shell, denumit script shell, este folosit pentru a îmbina mai multe comenzi și diverse structuri de control pentru a obţine o nouă funcţionalitate sau pentru automatizarea sarcinilor. În acest fel un script shell este un instrument esenţial pentru sarcinile administrative și alte rutine repetitive care nu necesită funcţionalităţi ale unor limbaje de programare avansate.
