@@ -5,7 +5,7 @@
   * [Utilizare GCC](#utilizare-gcc)
   * [Opţiuni](#Opțiuni)
   * [Activarea avertismentelor](#Activarea-avertismentelor)
-  * [Alte opţiuni](#Alte-opțiuni)
+  * [Alte opţiuni](#Alte-opţiuni)
 - [Compilarea din mai multe fişiere](#Compilarea-din-mai-multe-fişiere)
 - [Preprocesorul. Opţiuni de preprocesare](#Preprocesorul-optiuni-de-preprocesare)
 - [Opţiuni pentru preprocesor la apelul gcc](#Optiuni-pentru-preprocesor-la-apelul-gcc)
