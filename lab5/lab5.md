@@ -1,6 +1,22 @@
 
 # IPC
 
+- [IPC](#ipc)
+  * [Semafoare](#semafoare)
+    + [Crearea și deschiderea](#crearea-și-deschiderea)
+    + [Decrementare, incrementare și aflarea valorii](#decrementare--incrementare-și-aflarea-valorii)
+    + [Inchiderea și distrugerea](#inchiderea-și-distrugerea)
+  * [Cozi de mesaje](#cozi-de-mesaje)
+    + [Crearea și deschiderea](#crearea-și-deschiderea-1)
+    + [Trimiterea și recepționarea de mesaje](#trimiterea-și-recepționarea-de-mesaje)
+    + [Inchiderea și ștergerea](#inchiderea-și--tergerea)
+  * [Memorie partajată](#memorie-partajată)
+    + [Crearea și deschiderea](#crearea-și-deschiderea-2)
+    + [Redimensionarea](#redimensionarea)
+    + [Maparea și eliberarea](#maparea-și-eliberarea)
+    + [Inchiderea și ștergerea](#inchiderea-și-ștergerea-1)
+  * [Resurse utile](#resurse-utile)
+
 Linux pune la dispoziție urmatoarele mecanisme de comunicare intre procese:
 - fisiere
 - pipe-uri (anonime si cu nume, studiate in lucrarea anterioara)
