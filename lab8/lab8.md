@@ -1,20 +1,20 @@
 # Sincronizare thread-uri
 
 - [Sincronizare thread-uri](#sincronizare-thread-uri)
-  * [Mutex](#mutex)
-    + [Inițializarea/distrugerea unui mutex](#inițializarea-distrugerea-unui-mutex)
-    + [Tipuri de mutex-uri](#tipuri-de-mutex-uri)
-  * [Ocuparea/eliberearea unui mutex](#ocuparea-eliberearea-unui-mutex)
-    + [Încercarea neblocantă de ocupare a unui mutex](#Încercarea-neblocantă-de-ocupare-a-unui-mutex)
-    + [Exemplu de utilizare a mutex-urilor](#exemplu-de-utilizare-a-mutex-urilor)
-  * [Futexuri](#futexuri)
-  * [Semafor](#semafor)
-    + [Operații pe semafoare](#operații-pe-semafoare)
-  * [Variabila de condiție](#variabila-de-condiție)
+- [Mutex](#mutex)
+  * [Inițializarea/distrugerea unui mutex](#inițializarea-distrugerea-unui-mutex)
+  * [Tipuri de mutex-uri](#tipuri-de-mutex-uri)
+- [Ocuparea/eliberearea unui mutex](#ocuparea-eliberearea-unui-mutex)
+  * [Încercarea neblocantă de ocupare a unui mutex](#Încercarea-neblocantă-de-ocupare-a-unui-mutex)
+  * [Exemplu de utilizare a mutex-urilor](#exemplu-de-utilizare-a-mutex-urilor)
+- [Futexuri](#futexuri)
+- [Semafor](#semafor)
+  * [Operații pe semafoare](#operații-pe-semafoare)
+- [Variabila de condiție](#variabila-de-condiție)
   * [Inițializarea/distrugerea unei variabile de condiție](#inițializarea-distrugerea-unei-variabile-de-condiție)
   * [Blocarea la o variabilă condiție](#blocarea-la-o-variabilă-condiție)
-    + [Blocarea la o variabilă condiție cu timeout](#blocarea-la-o-variabilă-condiție-cu-timeout)
-    + [Exemplu de utilizare a variabilelor de condiție](#exemplu-de-utilizare-a-variabilelor-de-condiție)
+  * [Blocarea la o variabilă condiție cu timeout](#blocarea-la-o-variabilă-condiție-cu-timeout)
+  * [Exemplu de utilizare a variabilelor de condiție](#exemplu-de-utilizare-a-variabilelor-de-condiție)
 - [Bariera](#bariera)
   * [Inițializarea/distrugearea unei bariere](#inițializarea-distrugearea-unei-bariere)
   * [Așteptarea la o barieră](#așteptarea-la-o-barieră)
@@ -25,11 +25,11 @@ Pentru sincronizarea firelor de execuție avem la dispoziție următoarele mecan
 - variabile de condiție
 - bariere.
 
-## Mutex
+# Mutex
 Mutex-urile sunt obiecte de sincronizare utilizate pentru a asigura accesul exclusiv la o secțiune de cod în care se accesează date partajate între două sau mai multe fire de execuție. Un mutex are două stări posibile: ocupat și liber. Un mutex poate fi ocupat de un singur fir de execuție la un moment dat.
 Atunci când un mutex este ocupat de un fir de execuție, el nu mai poate fi ocupat de niciun altul. În acest caz, o cerere de ocupare venită din partea unui alt fir, în general va bloca firul până în momentul în care mutex-ul devine liber.
 
-### Inițializarea/distrugerea unui mutex
+## Inițializarea/distrugerea unui mutex
 
 Un mutex poate fi inițializat/distrus în mai multe moduri:
 - folosind o macrodefiniție
@@ -85,7 +85,7 @@ void initializare_mutex_recursiv()
 ```
 NB: Mutex-ul trebuie să fie liber pentru a putea fi distrus. În caz contrar funcția va întoarce codul de eroare EBUSY. Întoarcerea valorii 0 semnifică succesul apelului.
 
-### Tipuri de mutex-uri
+## Tipuri de mutex-uri
 
 Folosind atributele de initializare se pot crea mutex-uri cu proprietăti speciale:
 - activarea moștenirii de prioritate (priority inharitance) pentru a preveni inversiunea de prioritate (priority invesion). Există trei protocoale de moștenire a prioritătii:
@@ -131,7 +131,7 @@ ocupat de firul de execuție curent (lock recursiv), comportamentul funcției es
 
 Nu este garantată o ordine FIFO de ocupare a unui mutex. Oricare din firele aflate în așteptare la deblocarea unui mutex pot să-l acapareze.
 
-### Încercarea neblocantă de ocupare a unui mutex
+## Încercarea neblocantă de ocupare a unui mutex
 
 Pentru a încerca ocuparea unui mutex fără a aștepta eliberarea acestuia în cazul în care este deja ocupat, se va apela funcția:
 ```
@@ -149,7 +149,7 @@ if (rc == 0) {
 }
 ```
 
-### Exemplu de utilizare a mutex-urilor
+## Exemplu de utilizare a mutex-urilor
 
 Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă globală global_counter:
 ```
@@ -267,7 +267,7 @@ Single Increment variable: got 5000000 expected 5000000
 Double Increment variable: got 10000000 expected 10000000
 ```
 
-## Futexuri
+# Futexuri
 Mutexurile din firele de execuție POSIX sunt implementate cu ajutorul futexurilor, din considerente de performanță. Numele de futex vine de la Fast User-space muTEX. Ideea de la care a plecat implementarea futexurilor a fost aceea de a optimiza operația de ocupare a unui mutex în cazul în care acesta nu este deja ocupat. Dacă mutexul nu este ocupat, el va fi ocupat fără ca procesul care îl ocupă să se blocheze. În acest caz, nefiind necesară blocarea, nu este necesar ca procesul să intre în kernel-mode (pentru a intra într-o stare de așteptare). Optimizarea constă în testarea și setarea atomică a valorii mutexului (printr-o instrucțiune de tip test-and-set-lock) în user-space, eliminându-se trap-ul în kernel în cazul în care nu este necesară blocarea.
 Futexul poate fi orice variabilă dintr-o zonă de memorie partajată între mai multe fire de executie sau procese.
 Asadar, operatiile efective cu futexurile se fac prin intermediul functiei do_futex, disponibilă prin includerea headerului linux/futex.h. Signatura ei arată astfel:
@@ -276,7 +276,7 @@ long do_futex(unsigned long uaddr, int op, int val, unsigned long timeout, unsig
 ```
 În cazul în care este necesară blocarea, do_futex va face un apel de sistem - sys_futex. Futexurile pot fi utile (și poate fi necesară utilizarea lor explicită) în cazul sincronizării proceselor, alocate în variabile din zone de memorie partajată între procesele respective.
 
-## Semafor
+# Semafor
 Semafoarele sunt obiecte de sincronizare ce reprezintă o generalizare a mutexurilor prin aceea că salvează numărul de operații de eliberare (incrementare) efectuate asupra lor. Practic, un semafor reprezintă un întreg
 care se incrementează/decrementează atomic. Valoarea unui semafor nu poate scădea sub 0. Dacă semaforul are valoarea 0, operația de decrementare se va bloca până când valoarea semaforului devine strict pozitivă. Mutexurile pot fi privite, așadar, ca niște semafoare binare.
 Operațiile care pot fi efectuate asupra semafoarelor POSIX sunt:
@@ -304,7 +304,7 @@ int sem_init(sem_t *sem, int pshared, unsigned int value);
 int sem_destroy(sem_t *sem);
 ```
 
-### Operații pe semafoare
+## Operații pe semafoare
 
 ```
 // incrementarea (V)
@@ -322,7 +322,7 @@ int sem_getvalue(sem_t *sem, int *pvalue);
 
 Semafoarele POSIX au fost prezentate în cadrul laboratorului de comunicare inter-proces.
 
-## Variabila de condiție
+# Variabila de condiție
 
 Variabilele condiție pun la dispoziție un sistem de notificare pentru fire de execuție, permițându-i unui fir să se blocheze în așteptarea unui semnal din partea unui alt fir. Folosirea corectă a variabilelor condiție presupune un protocol cooperativ între firele de execuție.
 
@@ -355,7 +355,7 @@ Firul de execuție apelant trebuie să fi ocupat deja mutexul asociat, în momen
 se va încerca ocuparea mutex-ului asociat, și după ocuparea acestuia, apelul funcției va întoarce. Observați că firul de execuție apelant poate fi suspendat, după deblocare, în așteptarea ocupării mutex-ului asociat, timp în care predicatul logic, adevărat în momentul deblocării firului, poate fi modificat de alte fire.
 De aceea, apelul pthread_cond_wait trebuie efectuat într-o buclă în care se testează valoarea de adevăr a predicatului logic asociat variabilei condiție, pentru a asigura o serializare corectă a firelor de execuție. Un alt argument pentru testarea în buclă a predicatului logic este acela că un apel pthread_cond_wait poate fi întrerupt de un semnal asincron (vezi laboratorul de semnale), înainte ca predicatul logic să devină adevărat. Dacă firele de execuție care așteptau la variabila condiție nu ar testa din nou predicatul logic, i-ar continua execuția presupunând greșit că acesta e adevărat.
 
-### Blocarea la o variabilă condiție cu timeout
+## Blocarea la o variabilă condiție cu timeout
 
 Pentru a-i suspenda execuția și a aștepta la o variabilă condiție, nu mai târziu de un moment specificat de timp, un
 fir de execuție va apela:
@@ -444,7 +444,7 @@ int pthread_cond_broadcast(pthread_cond_t *cond);
 Dacă la variabila condiție nu așteaptă niciun fir de execuție, apelul funcției nu are efect și semnalizarea se va pierde. Dacă la variabila condiție așteaptă fire de executie, toate acestea vor fi deblocate, dar vor concura pentru
 ocuparea mutex-ului asociat variabilei condiție. Firul de execuție apelant trebuie să dețină mutex-ul asociat variabilei condiție în momentul apelului acestei funcții.
 
-### Exemplu de utilizare a variabilelor de condiție
+## Exemplu de utilizare a variabilelor de condiție
 În următorul program se utilizează o barieră pentru a sincroniza firele de execuție ale programului.
 Bariera este implementată cu ajutorului unei variabile de condiție.
 ```
