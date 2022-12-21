@@ -1,6 +1,16 @@
 
 # Procese
 
+- [Procese](#procese)
+  * [Procese în Linux](#procese--n-linux)
+  * [Crearea unui proces](#crearea-unui-proces)
+  * [Aşteptarea terminării unui proces](#Aşteptarea-terminării-unui-proces)
+  * [Terminarea unui proces](#terminarea-unui-proces)
+- [Depanarea unui proces](#depanarea-unui-proces)
+- [Pipe-uri](#pipe-uri)
+  * [Pipe-uri anonime](#pipe-uri-anonime)
+  * [FIFO (Pipe-uri cu nume)](#fifo--pipe-uri-cu-nume-)
+
 Un concept cheie în orice sistem de operare este procesul. Un proces este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
 
 Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator stivă), tabelele de fisiere deschise, lista de semnale (blocate, ignorate sau care asteaptă să fie trimise procesului), handler-ele pentru semnale, informatiile referitoare la sistemele de fișiere (directorul rădăcină, directorul curent), toate acestea NU sunt partajate, ci aparțin fiecărui proces în parte. Aceste informații necesare pentru rularea programului sunt ținute de sistemul de operare într-o structură numită Process Control Block, câte una pentru fiecare proces existent în sistem.
