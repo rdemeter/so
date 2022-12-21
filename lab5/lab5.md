@@ -17,7 +17,7 @@
     + [Inchiderea și ștergerea](#inchiderea-și-ștergerea-1)
   * [Resurse utile](#resurse-utile)
 
-Linux pune la dispoziție urmatoarele mecanisme de comunicare intre procese:
+Linux pune la dispoziție urmatoarele mecanisme de comunicare intre procese (IPC - Inter Process Communication):
 - fisiere
 - pipe-uri (anonime si cu nume, studiate in lucrarea anterioara)
 - semafoare (semaphores) - realizează sincronizarea execuțiilor unor procese
