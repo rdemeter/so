@@ -1,5 +1,23 @@
 # Thread-uri
 
+- [Thread-uri](#thread-uri)
+  * [Introducere](#introducere)
+    + [Diferențe dintre thread-uri şi procese](#diferențe-dintre-thread-uri-şi-procese)
+    + [Avantajele thread-urilor](#avantajele-thread-urilor)
+  * [Tipuri de thread-uri](#tipuri-de-thread-uri)
+  * [Crearea firelor de execuţie](#crearea-firelor-de-execuţie)
+  * [Așteptarea firelor de execuţie](#așteptarea-firelor-de-execuţie)
+  * [Terminarea firelor de execuţie](#terminarea-firelor-de-execuţie)
+  * [Thread Specific Data](#thread-specific-data)
+  * [Crearea şi ştergerea unei variabile](#crearea-şi-ştergerea-unei-variabile)
+  * [Modificarea şi citirea unei variabile](#modificarea-şi-citirea-unei-variabile)
+  * [Funcţii pentru cleanup](#funcţii-pentru-cleanup)
+  * [Atributele unui thread](#atributele-unui-thread)
+  * [Cedarea procesorului](#cedarea-procesorului)
+  * [Alte operaţii](#alte-operaţii)
+  * [Compilare](#compilare)
+  * [Exerciţii](#exerciţii)
+
 ## Introducere
 În laboratoarele anterioare a fost prezentat conceptul de proces, acesta fiind unitatea elementară de alocare a resurselor utilizatorilor. În acest laborator este prezentat conceptul de fir de execuţie (sau thread), acesta fiind
 unitatea elementară de planificare într-un sistem. Ca și procesele, thread-urile reprezintă un mecanism prin care un calculator poate să ruleze mai multe lucruri simultan.
