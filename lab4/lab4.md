@@ -577,17 +577,16 @@ Utilitarele prezentate mai sus nu sunt singurele folosite pentru detectarea prob
 - Electric Fence
 
 # Resurse utile
-• Linux System Programming - Chapter 8 - Memory Management
-• Windows System Programming - Chapter 5 - Memory Management (Win32 and Win64
-Memory Management Architecture, Heaps, Managing Heap Memory
-• Linux Application Programming - Chapter 7 - Memory Debugging Tools
-• Windows Memory Management
-• Virtual Memory Allocation and Paging
-• GDB manual
-• Valgrind Home
-• Using Valgrind to Find Memory Leaks
-• The Memory Management Reference
-• IBM trial download: Rational Purify 7.0
-• Using Purify
-• Memory Management Software
-• Smashing the Stack for Fun and Profit
+- Linux System Programming - Chapter 8 - Memory Management
+- Windows System Programming - Chapter 5 - Memory Management (Win32 and Win64 Memory Management Architecture, Heaps, Managing Heap Memory
+- Linux Application Programming - Chapter 7 - Memory Debugging Tools
+- Windows Memory Management
+- Virtual Memory Allocation and Paging
+- GDB manual
+- Valgrind Home
+- Using Valgrind to Find Memory Leaks
+- The Memory Management Reference
+- IBM trial download: Rational Purify 7.0
+- Using Purify
+- Memory Management Software
+- Smashing the Stack for Fun and Profit
