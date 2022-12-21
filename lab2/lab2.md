@@ -1,5 +1,19 @@
 # GNU Make și GDB
- 
+
+- [GNU Make și GDB](#gnu-make--i-gdb)
+  * [GNU Make](#gnu-make)
+  * [Exemplu simplu Makefile](#exemplu-simplu-makefile)
+  * [Sintaxa unei reguli](#sintaxa-unei-reguli)
+  * [Funcţionarea unui fişier Makefile](#func-ionarea-unui-fi-ier-makefile)
+  * [Folosirea variabilelor](#folosirea-variabilelor)
+  * [Folosirea regulilor implicite](#folosirea-regulilor-implicite)
+  * [Exemplu complet de Makefile](#exemplu-complet-de-makefile)
+- [Depanarea programelor](#depanarea-programelor)
+  * [GDB](#gdb)
+  * [Rularea GDB](#rularea-gdb)
+  * [Comenzi de bază GDB](#comenzi-de-baz--gdb)
+  * [Resurse utile](#resurse-utile)
+
 ## GNU Make
 
 **Make** este un utilitar care permite automatizarea și eficientizarea sarcinilor. In mod particular este folosit pentru automatizarea compilării programelor. După cum s-a precizat, pentru obținerea unui executabil provenind din mai multe surse este ineficientă compilarea de fiecare dată a fiecărui fișier și apoi link-editarea.
