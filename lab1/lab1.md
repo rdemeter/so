@@ -39,7 +39,7 @@ GCC foloseşte pentru compilarea de programe C/C++ comanda gcc, respectiv g++. O
 Exemplu hello.c
 ```
 #include <stdio.h>
-int main()
+int main() {
     printf("Hello, world!\n);
     return 0;
 }
@@ -309,7 +309,7 @@ $ gcc -Iincludes [...]
 ```
 Opţiunea -D este utilă pentru a defini macrouri în linia de comandă:
 ```
-$ gcc -D   DEBUG   [...]
+$ gcc -D DEBUG   [...]
 $ gcc -D SIMPLE_MACRO=10 [...]	; echivalent cu #define SIMPLE_MACRO	10
 ```
 Opţiunea -U este utilă pentru a anula definirea unui macro.
