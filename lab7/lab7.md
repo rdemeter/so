@@ -4,19 +4,19 @@
   * [Introducere](#introducere)
     + [Diferențe dintre thread-uri şi procese](#diferențe-dintre-thread-uri-şi-procese)
     + [Avantajele thread-urilor](#avantajele-thread-urilor)
-  * [Tipuri de thread-uri](#tipuri-de-thread-uri)
+- [Tipuri de thread-uri](#tipuri-de-thread-uri)
   * [Crearea firelor de execuţie](#crearea-firelor-de-execuţie)
   * [Așteptarea firelor de execuţie](#așteptarea-firelor-de-execuţie)
   * [Terminarea firelor de execuţie](#terminarea-firelor-de-execuţie)
-  * [Thread Specific Data](#thread-specific-data)
+- [Thread Specific Data](#thread-specific-data)
   * [Crearea şi ştergerea unei variabile](#crearea-şi-ştergerea-unei-variabile)
   * [Modificarea şi citirea unei variabile](#modificarea-şi-citirea-unei-variabile)
   * [Funcţii pentru cleanup](#funcţii-pentru-cleanup)
   * [Atributele unui thread](#atributele-unui-thread)
-  * [Cedarea procesorului](#cedarea-procesorului)
-  * [Alte operaţii](#alte-operaţii)
-  * [Compilare](#compilare)
-  * [Exerciţii](#exerciţii)
+- [Cedarea procesorului](#cedarea-procesorului)
+- [Alte operaţii](#alte-operaţii)
+- [Compilare](#compilare)
+- [Exerciţii](#exerciţii)
 
 ## Introducere
 În laboratoarele anterioare a fost prezentat conceptul de proces, acesta fiind unitatea elementară de alocare a resurselor utilizatorilor. În acest laborator este prezentat conceptul de fir de execuţie (sau thread), acesta fiind
@@ -48,7 +48,7 @@ Firele de execuţie se pot dovedi utile în multe situaţii, de exemplu, pentru 
 
 De asemenea, ele simplifică structura unui program și conduc la utilizarea unui număr mai mic de resurse (pentru că nu mai este nevoie de diversele forme de IPC pentru a comunica).
 
-## Tipuri de thread-uri
+# Tipuri de thread-uri
 Există 3 categorii de thread-uri :
 - Kernel Level Threads (KLT)
 - User Level Threads (ULT)
@@ -143,7 +143,7 @@ int main(){
 ```
 Exemplul de mai sus creează un fir de execuție și returnează un pointer cu pthread_exit(). În timp ce rulează thread-ul creat, thread-ul principal poate executa alte sarcini. Când se dorește utilizarea datelor generate de thread se apelează funcția pthread_join().
 
-## Thread Specific Data
+# Thread Specific Data
 Uneori este util ca o variabilă să fie specifică unui thread (invizibilă pentru celelalte thread-uri). Linux permite memorarea de perechi (cheie, valoare) într-o zonă special desemnată din stiva fiecărui thread al procesului curent.
 Cheia are acelaşi rol pe care o are numele unei variabile: desemnează locaţia de memorie la care se află valoarea.
 Fiecare thread va avea propria copie a unei "variabile" corespunzătoare unei chei k, pe care o poate modifica, fără ca acest lucru să fie observat de celelalte thread-uri, sau să necesite sincronizare. De aceea, TSD este folosită uneori pentru a optimiza operaţiile care necesită multă sincronizare între thread-uri: fiecare thread calculează informaţia specifică, şi există un singur pas de sincronizare la sfârşit, necesar pentru reunirea rezultatelor tuturor
@@ -237,7 +237,7 @@ int sched_yield(void);
 ```
 Dacă există alte procese interesate de procesor acesta li se oferă, iar dacă nu există nici un alt proces în așteptare pentru procesor, firul curent îi continuă execuţia.
 
-## Alte operaţii
+# Alte operaţii
 Dacă dorim să fim siguri că un cod de iniţializare se execută o singură dată putem folosi funcţia :
 ```
 pthread_once_t once_control = PTHREAD_ONCE_INIT;
@@ -259,7 +259,7 @@ Pentru aflarea/modificarea priorităţilor sunt disponibile următoarele apeluri
 int pthread_setschedparam(pthread_t target_thread, int policy, const struct sched_param *param);
 int pthread_getschedparam(pthread_t target_thread, int *policy, struct sched_param *param);
 ```
-## Compilare
+# Compilare
 La compilare trebuie specificată și biblioteca libpthread (deci se va folosi argumentul -lpthread).
 Atentie! Nu link-aţi un program single-threaded cu această bibliotecă. Dacă faceţi așa ceva se vor stabili niște mecanisme multithreading care vor fi iniţializate la execuţie. Atunci programul va fi mult mai lent, va ocupa mult mai multe resurse și va fi mult mai dificil de depanat.
 
@@ -316,7 +316,7 @@ Compilați, rulați aplicația și interpretați rezultatele. Comanda utilizată
 $gcc -o exemplu exemplu.c -lpthread
 $./exemplu
 ```
-## Exerciţii
+# Exerciţii
 Pentru că nu aţi parcurs încă noţiunile necesare pentru a sincroniza thread-urile între ele, în cadrul acestui laborator vom folosi apeluri sleep() acolo unde e nevoie de sincronizare.
 
 Realizaţi un program care creează 2 thread-uri. Thread-urile create vor partaja un descriptor de fisiere, modificat de către fiecare din ele, la momente diferite. Thread-urile să afișeze mesaje specifice la ieșirea standard. Explicați succesiunea mesajelor. Programul principal va aștepta încheierea execuției celor două thread-uri.
