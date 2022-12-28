@@ -36,7 +36,7 @@ egala cu 0) sau de test and set. Un semafor poate fi privit ca un contor ce poat
 
 Semafoarele POSIX sunt de 2 tipuri:
 - cu nume, folosite în general pentru sincronizare între procese distincte;
-- bazate pe memorie (fără nume), ce pot fi folosite doar pentru sincronizarea între firele de execuție ale unui proces.
+- fără nume, ce pot fi folosite doar pentru sincronizarea între firele de execuție ale unui proces sau între procese înrudite.
 
 In contiunare vor fi luate în discuție semafoarele cu nume. Diferențele față de cele bazate pe memorie constau în funcțiile de creare și distrugere, celelalte funcții fiind identice.
 - ambele tipuri de semafoare sunt reprezentate în cod prin tipul sem_t.
