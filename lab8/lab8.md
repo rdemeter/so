@@ -322,8 +322,11 @@ int sem_getvalue(sem_t *sem, int *pvalue);
 
 Semafoarele POSIX au fost prezentate în cadrul laboratorului de comunicare inter-proces.
 
-Un exemplu de utilizare semafoare in limbajul Java este prezentat in video-ul urmator:
+Un exemplu de utilizare semafoare în limbajul Java este prezentat in video-ul următor:
 [Coordinating Threads via Java Semaphore](https://www.youtube.com/watch?v=T3BDJS4JSr8)
+
+În aplicație se creeaza două semafoare și două thread-uri care se vor executa în ordine ping-pong, ping-pong, ...
+
 ![Image](figs/ping-pong.png)
 
 # Variabila de condiție
