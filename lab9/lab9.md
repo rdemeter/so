@@ -1,5 +1,10 @@
 # Probleme
 
+- [Probleme](#probleme)
+  * [1. Problema rezervării biletelor](#1-problema-rezervării-biletelor)
+  * [2. Problema producător-consumator](#2-problema-producător-consumator)
+  * [3. Problema grădinii ornamentale](#3-problema-grădinii-ornamentale)
+
 ## 1. Problema rezervării biletelor
 
 Se consideră 5 terminale de vânzare a 25 de bilete pentru un anumit scop (spectacol, călătorie). Se cere să se găsească o modalitate de a evita vânzarea mai multor bilete pentru acelaşi loc.
