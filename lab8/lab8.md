@@ -322,6 +322,10 @@ int sem_getvalue(sem_t *sem, int *pvalue);
 
 Semafoarele POSIX au fost prezentate în cadrul laboratorului de comunicare inter-proces.
 
+Un exemplu de utilizare semafoare in limbajul Java este prezentat in video-ul urmator:
+[Coordinating Threads via Java Semaphore](https://www.youtube.com/watch?v=T3BDJS4JSr8)
+![Image](figs/ping-pong.png)
+
 # Variabila de condiție
 
 Variabilele condiție pun la dispoziție un sistem de notificare pentru fire de execuție, permițându-i unui fir să se blocheze în așteptarea unui semnal din partea unui alt fir. Folosirea corectă a variabilelor condiție presupune un protocol cooperativ între firele de execuție.
