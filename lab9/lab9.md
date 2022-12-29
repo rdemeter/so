@@ -4,6 +4,8 @@
   * [1. Problema rezervării biletelor](#1-problema-rezervării-biletelor)
   * [2. Problema producător-consumator](#2-problema-producător-consumator)
   * [3. Problema grădinii ornamentale](#3-problema-grădinii-ornamentale)
+  * [4. Problema scriitor-cititor](#4-problema-scriitor-cititor)
+  * [5. Problema H2O](#5-problema-H2O)
 
 ## 1. Problema rezervării biletelor
 
@@ -196,9 +198,81 @@ Rezolvare1:
 
 Se folosesc 3 semafoare. Un semafor pe post de mutex pentru secţiunea critică (semafor binar, cu valoarea iniţială 1), semaforul EntriesFree, cu valoarea iniţială egală cu numărul de locaţii libere şi un semafor EntriesUsed, cu valoarea iniţială egală cu 0.
 
-![alt text](https://github.com/rdemeter/so/blob/master/lab9/figs/prodcons.png)
+![alt text](figs/prodcons.png)
 
 
 ## 3. Problema grădinii ornamentale
 
 Intrarea in grădinile ornamentale ale unui oraş oriental se face prin N porţi. Să se ţină evidenţa persoanelor care au intrat în grădină.
+
+## 4. Problema scriitor cititor
+
+Considerăm o bază de date (un buffer) și multe procese care vor să acceseze această bază de date pentru scriere sau citire. Se permite ca mai multe procese să citească simultan dar, dacă unul din procese vrea să scrie (să modifice) baza de date, niciunul din celelalte procese nu au voie să acceseze baza de date (nici pentru scriere, nici pentru citire).
+Se consideră următoarea secvență de program nesincronizat. Să se adauge elementele de sincronizare.
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <pthread.h>
+#include <semaphore.h>
+
+#define DATA_LENGTH 20
+#define NR_WRITER 5
+#define NR_READER 10
+
+char buffers[DATA_LENGTH];
+void *writer(void* arg)
+{
+  int i, writePt = 0;
+  char data;
+  for(i=0; i < DATA_LENGTH; i++)
+  {
+    printf("writing#%ld\n", (long) arg);
+    data = 'A' + rand() % 25;
+    buffers[writePt] = data;
+    sleep(rand() % 5);
+    printf("write#%ld: buffer[%d]=%c\n", (long) arg, writePt, data);
+    writePt = (writePt + 1);
+  }
+}
+void* reader(void* arg)
+{
+  int i, readPt = 0;
+  char data;
+  for(i=0; i < DATA_LENGTH; i++)
+  {
+    printf("\t\treading#%ld\n", (long) arg);
+    sleep(rand()%3);
+    data = buffers[readPt];
+    printf("\t\tread#%ld: buffer[%d]=%c\n", (long) arg, readPt, data);
+    readPt = (readPt + 1);
+  }
+}
+
+int main(void)
+{
+  long i;
+  pthread_t wrt[NR_WRITER], rd[NR_READER];
+  for(i = 0; i < NR_WRITER; i++)
+    pthread_create(&wrt[i], NULL, writer, (void*) i);
+  for(i = 0; i < NR_READER; i++)
+    pthread_create(&rd[i], NULL, reader, (void*) i);
+
+  for(i = 0; i < NR_WRITER; i++)
+    pthread_join(wrt[i], NULL);
+  for(i = 0; i < NR_READER; i++)
+    pthread_join(rd[i], NULL);
+  printf("done!\n");
+  return 0;
+}
+```
+
+## 5. Problema H2O
+
+Thread-urile reprezintă atomi de hidrogen sau oxigen. O moleculă de apă se formează din doi atomi de hidrogen și unul de oxigen
+- Dacă există doi atomi de hidrogen, vor trebui să aștepte un atom de oxigen
+- Dacă există un atom de oxigen, va trebui să aștepte doi atomi de hidrogen
+
+
