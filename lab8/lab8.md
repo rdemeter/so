@@ -8,14 +8,14 @@
   * [Încercarea neblocantă de ocupare a unui mutex](#Încercarea-neblocantă-de-ocupare-a-unui-mutex)
   * [Exemplu de utilizare a mutex-urilor](#exemplu-de-utilizare-a-mutex-urilor)
 - [Futexuri](#futexuri)
-- [Semafor](#semafor)
+- [Semafoare](#semafoare)
   * [Operații pe semafoare](#operații-pe-semafoare)
-- [Variabila de condiție](#variabila-de-condiție)
+- [Variabile de condiție](#variabile-de-condiție)
   * [Inițializarea/distrugerea unei variabile de condiție](#inițializarea-distrugerea-unei-variabile-de-condiție)
   * [Blocarea la o variabilă condiție](#blocarea-la-o-variabilă-condiție)
   * [Blocarea la o variabilă condiție cu timeout](#blocarea-la-o-variabilă-condiție-cu-timeout)
   * [Exemplu de utilizare a variabilelor de condiție](#exemplu-de-utilizare-a-variabilelor-de-condiție)
-- [Bariera](#bariera)
+- [Bariere](#bariere)
   * [Inițializarea/distrugearea unei bariere](#inițializarea-distrugearea-unei-bariere)
   * [Așteptarea la o barieră](#așteptarea-la-o-barieră)
 
@@ -276,7 +276,7 @@ long do_futex(unsigned long uaddr, int op, int val, unsigned long timeout, unsig
 ```
 În cazul în care este necesară blocarea, do_futex va face un apel de sistem - sys_futex. Futexurile pot fi utile (și poate fi necesară utilizarea lor explicită) în cazul sincronizării proceselor, alocate în variabile din zone de memorie partajată între procesele respective.
 
-# Semafor
+# Semafoare
 Semafoarele sunt obiecte de sincronizare ce reprezintă o generalizare a mutexurilor prin aceea că salvează numărul de operații de eliberare (incrementare) efectuate asupra lor. Practic, un semafor reprezintă un întreg
 care se incrementează/decrementează atomic. Valoarea unui semafor nu poate scădea sub 0. Dacă semaforul are valoarea 0, operația de decrementare se va bloca până când valoarea semaforului devine strict pozitivă. Mutexurile pot fi privite, așadar, ca niște semafoare binare.
 Operațiile care pot fi efectuate asupra semafoarelor POSIX sunt:
@@ -327,9 +327,9 @@ Un exemplu de utilizare semafoare în limbajul Java este prezentat in video-ul u
 
 În aplicație se creeaza două semafoare și două thread-uri care se vor executa în ordine ping-pong, ping-pong, ...
 
-![Image](figs/ping-pong.png)
+![Image]([figs/ping-pong.png](https://github.com/rdemeter/so/blob/5753ce3de97ff696da71f788379a0dec973d1bb8/lab8/figs/ping-pong.png?raw=true))
 
-# Variabila de condiție
+# Variabile de condiție
 
 Variabilele condiție pun la dispoziție un sistem de notificare pentru fire de execuție, permițându-i unui fir să se blocheze în așteptarea unui semnal din partea unui alt fir. Folosirea corectă a variabilelor condiție presupune un protocol cooperativ între firele de execuție.
 
@@ -537,7 +537,7 @@ Din execuția programului se observă:
 - ordinea în care sunt planificate firele de execuție nu este identică cu cea a creării lor
 - ordinea în care sunt trezite firele de execuție ce așteaptă la o variabilă de condiție nu este identică cu ordinea în care acestea au intrat în așteptare.
 
-# Bariera
+# Bariere
 Standardul POSIX definește și un set de funcții și structuri de date de lucru cu bariere. Aceste funcții sunt disponibile dacă se definește macro-ul _XOPEN_SOURCE la o valoare >= 600.
 Cu bariere POSIX, programul de mai sus poate fi simplificat:
 ```
