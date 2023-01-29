@@ -34,7 +34,7 @@ int system(const char* command);
 Apelul acestei funcţii are ca efect execuţia ca o comandă shell a comenzii reprezentate prin șirul de caractere command. Să luăm ca exemplu următorul program C:
 
 Exemplu 1. sys1.c
-```
+```c
 #include <stdlib.h>
 int main(int argc, char **argv)
 {
@@ -53,12 +53,12 @@ Implementarea system: se creează un nou proces cu fork; procesul copil execută
 ```
 pid_t fork(void);
 ```
-![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fork_system_call.png)
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fork_system_call.png?raw=true)
 
 Efectul este crearea unui nou proces - procesul copil, copie a celui care a apelat fork - procesul părinte. Copilul primeşte un nou PID de la sistemul de operare. Secvența clasică de creare a unui proces este prezentată în continuare:
 
 Exemplu 3. ex1_fork.c
-```
+```c
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -87,7 +87,7 @@ Pentru aflarea PID-ului procesului curent ori al procesului părinte se va apela
 - funcția **getppid** întoarce PID-ul părinte al procesului apelant:  pid_t getppid(void);
 
 Exemplu 4. ex2_fork.cpp
-```
+```c
 #include <iostream>
 #include <string>
 #include <sys/types.h>
@@ -311,7 +311,7 @@ Observăm că ultimele două mesaje au fost inversate, față de cazul precedent
 
 Pipe-urile (canalele de comunicaţie) sunt mecanisme primitive de comunicare între procese. Un pipe poate conţine o cantitate limitată de date. Accesul la aceste date este de tip FIFO (datele se scriu la un capăt al pipe-ului şi sunt citite de la celălalt capăt). Sistemul de operare garantează sincronizarea între operaţiile de citire şi scriere la cele două capete.
 
-![image](https://github.com/rdemeter/so/blob/master/lab3/figs/pipe.png)
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/pipe.png?raw=true)
 
 Există două tipuri de pipe-uri:
 
@@ -344,7 +344,7 @@ Cea mai frecventă greşeală relativ la lucrul cu pipe-urile constă în faptul
 Alte funcţii utile: **popen**, **pclose**.
 
 Exemplu 6. pipe.c
-```
+```c
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -407,7 +407,7 @@ Modul de comportare al unui FIFO este afectat de flagul O_NONBLOCK astfel:
 Atunci când ultimul proces care scrie într-un FIFO îl închide, se va genera un "sfârşit de fişier" pentru procesul care citeşte din FIFO.
 
 Exemplu 7. fifoserver.c
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -444,7 +444,7 @@ int main(void) {
 $gcc fifoserver.c -o fifoserver
 ```
 Exemplu 8. fifoclient.c
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -472,7 +472,7 @@ $gcc fifoclient.c -o fifoclient
 
 Exercițiu: test.c
 Scrieți secvența afișată după rularea următorului program:
-```
+```c
 #include <stdio.h>
 #include <unistd.h>
 int main(void)
@@ -487,15 +487,15 @@ int main(void)
     return 0;
 }
 ```
-![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png)
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png?raw=true)
 
 Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
-![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex2_fork_pids.png)
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex2_fork_pids.png?raw=true)
 
 Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
-![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex3_fork_pids.png)
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex3_fork_pids.png?raw=true)
 
 
 Exercițiu: Folosind pipe se creează o comunicație unidirecțională între procese. Să se implementeze o comunicație bidirecțională între două procese (folosind două pipe-uri).
