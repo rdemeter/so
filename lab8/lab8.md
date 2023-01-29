@@ -33,14 +33,14 @@ Atunci când un mutex este ocupat de un fir de execuție, el nu mai poate fi ocu
 
 Un mutex poate fi inițializat/distrus în mai multe moduri:
 - folosind o macrodefiniție
-```
+```c
 // initializare statica a unui mutex cu atribute implicite
 // NB: mutexul nu este eliberat, durata de viata a mutexului
 // este durata de viata a programului.
 pthread_mutex_t mutex_static = PTHREAD_MUTEX_INITIALIZER;
 ```
 - inițializat cu atribute implicite
-```
+```c
 // semnaturile functiilor de initializare si distrugere de mutex:
 int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
 int pthread_mutex_destroy(pthread_mutex_t *mutex);
@@ -55,7 +55,7 @@ void initializare_mutex_cu_atribute_implicite()
 }
 ```
 - inițializare cu atribute explicite
-```
+```c
 // NB: functia pthread_mutexattr_settype si macro-ul PTHREAD_MUTEX_RECURSIVE
 // sunt disponibile doar daca se defineste _XOPEN_SOURCE la o valoare >= 500 *INAINTE*
 // de a include <pthread.h>. Pentru mai multe detalii consultai feature_test_macros(7).
