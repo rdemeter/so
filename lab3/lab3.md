@@ -10,6 +10,7 @@
 - [Pipe-uri](#pipe-uri)
   * [Pipe-uri anonime](#pipe-uri-anonime)
   * [Pipe-uri cu nume](#Pipe-uri-cu-nume)
+- [Exerciții](#exerciții)
 
 Un concept cheie în orice sistem de operare este procesul. Un proces este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
 
@@ -469,6 +470,7 @@ int main(int argc, char* argv[]) {
 ```
 $gcc fifoclient.c -o fifoclient
 ```
+## Exerciții
 
 Exercițiu: test.c
 Scrieți secvența afișată după rularea următorului program:
