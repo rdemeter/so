@@ -473,7 +473,8 @@ $gcc fifoclient.c -o fifoclient
 ## Exerciții
 
 Exercițiu: test.c
-Scrieți secvența afișată după rularea următorului program:
+
+Scrieți secvența afișată după rularea următorului program și desenați arborele de procese:
 ```c
 #include <stdio.h>
 #include <unistd.h>
