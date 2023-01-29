@@ -93,7 +93,7 @@ Folosind atributele de initializare se pot crea mutex-uri cu proprietăti specia
   - PTHREAD_PRIO_INHERIT dacă deținem un mutex creat cu acest atribut și dacă există fire de execuție blocate pe acel mutex se moștenește prioritatea firului de execuție cu cea mai mare prioritate
   - PTHREAD_PRIO_PROTECT dacă firul de execuție curent deține unul sau mai multe mutex-uri, acesta va executa la maximul priorităților specificată pentru toți mutecșii deținuți.
 
-```
+```c
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 int pthread_mutexattr_getprotocol(const pthread_mutexattr_t * attr, int * protocol);
@@ -105,7 +105,7 @@ int pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol);
   - PTHREAD_MUTEX_ERRORCHECK se fac verificări, preluarea recursivă duce la întoarcerea unei erori
   - PTHREAD_MUTEX_RECURSIVE mutex-urile pot fi preluate recursiv din același thread, și trebuie eliberate de același număr de ori.
 
-```
+```c
 #define _XOPEN_SOURCE 500
 #include <pthread.h>
 pthread_mutexattr_gettype(const pthread_mutexattr_t * attr, int * protocol);
@@ -114,7 +114,7 @@ pthread_mutexattr_settype(pthread_mutexattr_t * attr, int protocol);
 
 ## Ocuparea/eliberearea unui mutex
 Funcțiile de ocupare blocantă/eliberare a unui mutex:
-```
+```c
 int pthread_mutex_lock(pthread_mutex_t *mutex);
 int pthread_mutex_unlock(pthread_mutex_t *mutex);
 ```
@@ -134,7 +134,7 @@ Nu este garantată o ordine FIFO de ocupare a unui mutex. Oricare din firele afl
 ## Încercarea neblocantă de ocupare a unui mutex
 
 Pentru a încerca ocuparea unui mutex fără a aștepta eliberarea acestuia în cazul în care este deja ocupat, se va apela funcția:
-```
+```c
 int pthread_mutex_trylock(pthread_mutex_t *mutex);
 int rc = pthread_mutex_trylock(&mutex);
 if (rc == 0) {
@@ -152,7 +152,7 @@ if (rc == 0) {
 ## Exemplu de utilizare a mutex-urilor
 
 Un exemplu de utilizare a unui mutex pentru a serializa accesul la variabilă globală global_counter:
-```
+```c
 #include <stdio.h>
 #include <pthread.h>
 #define NUM_THREADS 5
@@ -207,7 +207,7 @@ Thread 0 says global_counter=4
 ```
 
 Exemplu: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
-```
+```c
 #include <pthread.h>
 #include <stdio.h>
 
@@ -306,7 +306,7 @@ int sem_destroy(sem_t *sem);
 
 ## Operații pe semafoare
 
-```
+```c
 // incrementarea (V)
 int sem_post(sem_t *sem);
 
@@ -385,7 +385,7 @@ Alegerea firului care va fi deblocat este făcută de planificatorul de fire de 
 firele care așteaptă vor fi deblocate în ordinea în care i-au început așteptarea. Firul de execuție apelant trebuie
 să dețină mutexul asociat variabilei condiție în momentul apelului acestei funcții.
 Exemplu. mutex-test.c
-```
+```c
 #include <stdio.h>
 #include <sched.h>
 #include <stdlib.h>
@@ -454,7 +454,7 @@ ocuparea mutex-ului asociat variabilei condiție. Firul de execuție apelant tre
 ## Exemplu de utilizare a variabilelor de condiție
 În următorul program se utilizează o barieră pentru a sincroniza firele de execuție ale programului.
 Bariera este implementată cu ajutorului unei variabile de condiție.
-```
+```c
 #include <stdio.h>
 #include <pthread.h>
 #define NUM_THREADS 5
@@ -540,7 +540,7 @@ Din execuția programului se observă:
 # Bariere
 Standardul POSIX definește și un set de funcții și structuri de date de lucru cu bariere. Aceste funcții sunt disponibile dacă se definește macro-ul _XOPEN_SOURCE la o valoare >= 600.
 Cu bariere POSIX, programul de mai sus poate fi simplificat:
-```
+```c
 #define _XOPEN_SOURCE 600
 #include <pthread.h>
 #include <stdio.h>
@@ -598,7 +598,7 @@ thd 1: after the barrier
 ```
 
 ## Inițializarea/distrugearea unei bariere
-```
+```c
 // pentru a folosi functiile de lucru cu bariere e nevoie să se definească
 // _XOPEN_SOURCE la o valoare >= 600. Pentru detalii consultati feature_test_macros(7).
 #define _XOPEN_SOURCE 600
@@ -624,7 +624,7 @@ Dacă bariera a fost creată cu count=N, primele N-1 fire de execuție care apel
 - 0 valoare întoarsă în caz de succes de celelalte N-1 fire de execuție.
 
 Exercițiu: Să se creeze un mutex normal, un thread în care se cheamă funcția pthread_mutex_lock() de două ori. Se va bloca programul, deadlock. Pentru rezolvarea problemei se va crea mutex-ul recursiv.
-```
+```c
 void *thread_routine( )
 {
   pthread_mutex_lock(&lock);
@@ -638,7 +638,7 @@ void *thread_routine( )
 ```
 Exercițiu: Să se implementeze un deadlock intre două thread-uri folosind doi mutex. Să se rezolve deadlockul folosind blocare conditionată pthread_mutex_trylock.
 
-```
+```c
 THREAD1
 pthread_mutex_lock(&m1);
 /* use resource 1 */
@@ -647,7 +647,7 @@ pthread_mutex_lock(&m2);
 pthread_mutex_unlock(&m2);
 pthread_mutex_unlock(&m1);
 ```
-```
+```c
 THREAD2
 pthread_mutex_lock(&m2);
 /* use resource 2 */
@@ -657,7 +657,7 @@ pthread_mutex_unlock(&m1);
 pthread_mutex_unlock(&m2);
 ```
 Rezolvare thread2:
-```
+```c
 for (; ;)
 {
  pthread_mutex_lock(&m2);
