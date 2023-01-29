@@ -504,6 +504,7 @@ Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.
 Exercițiu: Folosind pipe se creează o comunicație unidirecțională între procese. Să se implementeze o comunicație bidirecțională între două procese (folosind două pipe-uri).
 
 Exercițiu: forks.c
+
 Să se studieze următoarea aplicație:
 http://www.cs.cmu.edu/afs/cs/academic/class/15213-f01/src/forks.c
 
