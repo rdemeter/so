@@ -198,7 +198,7 @@ Rezolvare1:
 
 Se folosesc 3 semafoare. Un semafor pe post de mutex pentru secţiunea critică (semafor binar, cu valoarea iniţială 1), semaforul EntriesFree, cu valoarea iniţială egală cu numărul de locaţii libere şi un semafor EntriesUsed, cu valoarea iniţială egală cu 0.
 
-![alt text](figs/prodcons.png)
+![Image](https://github.com/rdemeter/so/blob/master/lab9/figs/prodcons.png?raw=true)
 
 
 ## 3. Problema grădinii ornamentale
