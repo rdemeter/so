@@ -31,7 +31,7 @@ Este, în consecintă, fundamentală cunoașterea contextului în care acționea
 ## Spațiul de adrese al unui proces
 Spațiul de adrese al unui proces, sau, mai bine spus, spațiul virtual de adresă al unui proces reprezintă zona de memorie virtuală utilizabilă de un proces. Fiecare proces are un spațiu de adresă propriu. Chiar în situațiile în care două procese partajează o zonă de memorie, spațiul virtual este distinct, dar se mapează peste aceeași zonă de memorie fizică.
 
-![image](https://github.com/rdemeter/so/blob/master/lab4/figs/process_address_space.jpg)
+![image](https://github.com/rdemeter/so/blob/master/lab4/figs/process_address_space.jpg?raw=true)
 
 În figura alăturată este prezentat un spațiu de adresă tipic pentru un proces. În sistemele de operare moderne, în spațiul virtual al fiecărui proces se mapează memoria nucleului, aceasta poate fi mapată fie la începutul fie la sfârsitul spațiului de adresă. (Note). În continuare ne vom referi numai la spațiul de adresă din user-space pentru un proces.
 Cele 4 zone importante din spațiul de adresă al unui proces sunt zona de date, zona de cod, stiva și heap-ul. După cum se observă și din figură, stiva și heap-ul sunt zonele care pot creşte. De fapt, aceste două zone sunt dinamice şi au sens doar în contextul unui proces. De partea cealaltă,
@@ -67,7 +67,7 @@ const char *ptr;
 Stiva este o regiune dinamică în cadrul unui proces. Stiva este folosită pentru a reţine "stack frame-urile" (link) în cazul apelurilor de funcţii şi pentru a stoca variabilele locale. Pe marea majoritate a arhitecturilor moderne stiva creşte în jos şi heap-ul creşte în sus. Stiva este gestionată automat de compilator. La fiecare revenire din funcţie stiva este golită.
 În figura de mai jos este prezentată o vedere conceptuală asupra stivei in momentul apelului unei funcţii.
 
-![image](https://github.com/rdemeter/so/blob/master/lab4/figs/call_stack.png)
+![image](https://github.com/rdemeter/so/blob/master/lab4/figs/call_stack.png?raw=true)
 
 ## Heap-ul
 Heap-ul este zona de memorie dedicată alocării dinamice a memoriei. Heap-ul este folosit pentru7 alocarea de regiuni de memorie a căror dimensiune se află doar la runtime.
