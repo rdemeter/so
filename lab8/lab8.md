@@ -7,7 +7,6 @@
   * [Ocuparea/eliberearea unui mutex](#ocuparea-eliberearea-unui-mutex)
   * [Încercarea neblocantă de ocupare a unui mutex](#Încercarea-neblocantă-de-ocupare-a-unui-mutex)
   * [Exemplu de utilizare a mutex-urilor](#exemplu-de-utilizare-a-mutex-urilor)
-- [Futexuri](#futexuri)
 - [Semafoare](#semafoare)
   * [Operații pe semafoare](#operații-pe-semafoare)
 - [Variabile de condiție](#variabile-de-condiție)
@@ -267,18 +266,8 @@ Single Increment variable: got 5000000 expected 5000000
 Double Increment variable: got 10000000 expected 10000000
 ```
 
-# Futexuri
-Mutexurile din firele de execuție POSIX sunt implementate cu ajutorul futexurilor, din considerente de performanță. Numele de futex vine de la Fast User-space muTEX. Ideea de la care a plecat implementarea futexurilor a fost aceea de a optimiza operația de ocupare a unui mutex în cazul în care acesta nu este deja ocupat. Dacă mutexul nu este ocupat, el va fi ocupat fără ca procesul care îl ocupă să se blocheze. În acest caz, nefiind necesară blocarea, nu este necesar ca procesul să intre în kernel-mode (pentru a intra într-o stare de așteptare). Optimizarea constă în testarea și setarea atomică a valorii mutexului (printr-o instrucțiune de tip test-and-set-lock) în user-space, eliminându-se trap-ul în kernel în cazul în care nu este necesară blocarea.
-Futexul poate fi orice variabilă dintr-o zonă de memorie partajată între mai multe fire de executie sau procese.
-Asadar, operatiile efective cu futexurile se fac prin intermediul functiei do_futex, disponibilă prin includerea headerului linux/futex.h. Signatura ei arată astfel:
-```
-long do_futex(unsigned long uaddr, int op, int val, unsigned long timeout, unsigned long uaddr2, int val2);
-```
-În cazul în care este necesară blocarea, do_futex va face un apel de sistem - sys_futex. Futexurile pot fi utile (și poate fi necesară utilizarea lor explicită) în cazul sincronizării proceselor, alocate în variabile din zone de memorie partajată între procesele respective.
-
 # Semafoare
-Semafoarele sunt obiecte de sincronizare ce reprezintă o generalizare a mutexurilor prin aceea că salvează numărul de operații de eliberare (incrementare) efectuate asupra lor. Practic, un semafor reprezintă un întreg
-care se incrementează/decrementează atomic. Valoarea unui semafor nu poate scădea sub 0. Dacă semaforul are valoarea 0, operația de decrementare se va bloca până când valoarea semaforului devine strict pozitivă. Mutexurile pot fi privite, așadar, ca niște semafoare binare.
+Semafoarele sunt obiecte de sincronizare ce reprezintă o generalizare a mutexurilor prin aceea că salvează numărul de operații de eliberare (incrementare) efectuate asupra lor. Practic, un semafor reprezintă un întreg care se incrementează/decrementează atomic. Valoarea unui semafor nu poate scădea sub 0. Dacă semaforul are valoarea 0, operația de decrementare se va bloca până când valoarea semaforului devine strict pozitivă. Mutexurile pot fi privite, așadar, ca niște semafoare binare.
 Operațiile care pot fi efectuate asupra semafoarelor POSIX sunt:
 
 ```
