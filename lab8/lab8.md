@@ -265,8 +265,21 @@ $ ./race
 Single Increment variable: got 5000000 expected 5000000
 Double Increment variable: got 10000000 expected 10000000
 ```
+**Exercițiu**: Să se creeze un mutex normal, un thread în care se cheamă funcția pthread_mutex_lock() de două ori. Se va bloca programul, **deadlock**. Pentru rezolvarea problemei se va crea mutex-ul recursiv. (Este un exemplu didactic. În caz real, apelurile succesive de pthread_mutex_lock pe același mutex se face în fișiere diferite sau la multe rânduri distanță)
+```c
+void *thread_routine( )
+{
+  pthread_mutex_lock(&lock);
+  pthread_mutex_lock(&lock);
+  
+  printf("am ajuns in zona protejata de mutex\n");
+  
+  pthread_mutex_unlock(&lock);
+  pthread_mutex_unlock(&lock);
+}
+```
 
-**Exercițiu**: Să se implementeze un **deadlock** intre două thread-uri folosind doi mutex m1 și m2. Să se rezolve deadlock-ul folosind blocare conditionată cu **pthread_mutex_trylock**.
+**Exercițiu**: Să se implementeze un **deadlock** intre două thread-uri folosind doi mutex m1 și m2. Să se rezolve deadlock-ul folosind blocare conditionată cu **pthread_mutex_trylock()**.
 
 THREAD1
 ```c
@@ -658,17 +671,3 @@ Dacă bariera a fost creată cu count=N, primele N-1 fire de execuție care apel
 - EINVAL în cazul în care bariera nu este inițializată (singura eroare definită)
 - PTHREAD_BARRIER_SERIAL_THREAD în caz de succes, un singur fir de execuție va întoarce valoarea aceasta nu e specificat care este acel fir de execuție (nu e obligatoriu să fie ultimul ajuns la barieră)
 - 0 valoare întoarsă în caz de succes de celelalte N-1 fire de execuție.
-
-**Exercițiu**: Să se creeze un mutex normal, un thread în care se cheamă funcția pthread_mutex_lock() de două ori. Se va bloca programul, deadlock. Pentru rezolvarea problemei se va crea mutex-ul recursiv.
-```c
-void *thread_routine( )
-{
-  pthread_mutex_lock(&lock);
-  pthread_mutex_lock(&lock);
-  
-  printf("am ajuns in zona protejata de mutex\n");
-  
-  pthread_mutex_unlock(&lock);
-  pthread_mutex_unlock(&lock);
-}
-```
