@@ -327,45 +327,19 @@ $gcc client_sem.c -o client_sem -lpthread
 
 ![](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
 
-Deadlock-ul poate fi rezolvat prin aplicarea unei strategii de gestionare a resurselor astfel încât să se evite blocarea reciprocă a thread-urilor. Există mai multe metode de rezolvare a deadlock-ului. Iată două dintre cele mai comune:
+Deadlock-ul este o situație în care două sau mai multe procese sau thread-uri (sau fire de execuție) se blochează reciproc și niciunul dintre ele nu poate face progres. Aceasta este o problemă comună în sistemele concurente, în special în contextul gestionării resurselor partajate.
 
-**Evitarea deadlock-ului**: Această metodă implică planificarea resurselor astfel încât să se evite posibilitatea blocării reciproce. Acest lucru poate fi realizat prin definirea unei ordini fixe în care resursele sunt obținute și eliberate. În exemplul de mai sus, am putea modifica codul astfel încât toate thread-urile să solicite resursele în aceeași ordine:
+Un deadlock se produce atunci când următoarele condiții sunt îndeplinite simultan:
 
-```c
-// Thread 1
-pthread_mutex_lock(&resource1);
-printf("Thread 1: Locked resource 1\n");
+- Blocare reciprocă (Deadlock Mutual Exclusion): Cel puțin două procese sau thread-uri sunt angajate în așteptarea unor resurse pe care le dețin deja, iar aceste resurse nu pot fi eliberate până când procesul sau thread-ul a obținut resursele suplimentare de care are nevoie. Cu alte cuvinte, fiecare proces sau thread a blocat resursele necesare pentru alții.
 
-// Așteptare și procesare resursei 1
+- Posibilitatea de a elibera resurse (Hold and Wait): Procesele sau thread-urile care au deja resursele pot aștepta și solicita resurse suplimentare. În același timp, ele pot să nu elibereze resursele pe care le dețin până când nu obțin toate resursele necesare.
 
-pthread_mutex_lock(&resource2);
-printf("Thread 1: Locked resource 2\n");
+- Nicio eliberare a resurselor (No Preemption): Resursele nu pot fi luate de la un proces sau thread și acordate altuia în mod forțat. Ele pot fi eliberate numai voluntar de către procesul sau thread-ul care le deține.
 
-// Procesare resursa 2
+- Așteptare ciclică (Circular Wait): Există un cerc închis de procese sau thread-uri în care fiecare așteaptă resursele eliberate de următorul proces sau thread din cerc. Acest cerc de așteptare creează o situație de impas.
 
-pthread_mutex_unlock(&resource2);
-pthread_mutex_unlock(&resource1);
-```
-```c
-// Thread 2
-pthread_mutex_lock(&resource1);
-printf("Thread 2: Locked resource 1\n");
-
-// Așteptare și procesare resursei 1
-
-pthread_mutex_lock(&resource2);
-printf("Thread 2: Locked resource 2\n");
-
-// Procesare resursa 2
-
-pthread_mutex_unlock(&resource2);
-pthread_mutex_unlock(&resource1);
-```
-Prin acest mod de gestionare a resurselor, deadlock-ul este evitat pentru că toate thread-urile urmează aceeași ordine atunci când accesează resursele.
-
-**Detecția și tratarea deadlock-ului**: O altă metodă constă în detectarea deadlock-ului atunci când apare și în acțiunea corectivă a acestuia. Aceasta implică monitorizarea resurselor și thread-urilor pentru a detecta starea de deadlock și apoi luarea măsurilor adecvate. O abordare comună este să se utilizeze un algoritm de detectare a deadlock-ului, cum ar fi algoritmul Banker's, pentru a verifica starea sistemului și să se elibereze resursele într-un mod controlat pentru a evita blocarea perpetuă.
-
-Indiferent de metoda aleasă, gestionarea deadlock-ului necesită o planificare și o gestionare atentă a resurselor și a thread-urilor pentru a asigura un comportament corect și evitarea situațiilor de blocare.
+Pentru a evita deadlock-urile, se folosesc diverse tehnici și strategii, cum ar fi evitarea blocării reciproce, detecția deadlock-ului cu eliberare de resurse sau utilizarea algoritmilor de planificare care minimizează șansele de a se produce deadlock. Gestionarea deadlock-ului este o parte esențială a proiectării și dezvoltării sistemelor concurente și a sistemelor de operare.
 
 ## Cozi de mesaje
 
