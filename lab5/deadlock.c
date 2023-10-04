@@ -1,3 +1,7 @@
+/* În acest exemplu, thread1 încearcă să blocheze resursa 1 și apoi resursa 2, în timp ce thread2 încearcă
+să blocheze resursa 2 și apoi resursa 1. Dacă cele două thread-uri rulează în paralel, există posibilitatea
+ca ele să blocheze una pe cealaltă și să ajungă într-o stare de deadlock, în care niciuna dintre ele nu poate face progres */
+
 #include <stdio.h>
 #include <pthread.h>
 
