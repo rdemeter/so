@@ -196,15 +196,15 @@ Din fericire, pe un număr limitat de sisteme, printre care si Linux, gdb permit
 ```
 (gdb) set follow-fork-mode mode
 ```
-unde mode poate lua valoarea parent, caz în care debugger-ul continuă depanarea procesului părinte, sau valoarea child, și atunci noul proces creat va fi depanat în continuare. Se poate observa că în această manieră debugger-ul este atașat la un moment dat doar la un singur proces, neputând urmări mai multe simultan.
+unde **mode** poate lua valoarea **parent**, caz în care debugger-ul continuă depanarea procesului părinte, sau valoarea **child**, și atunci noul proces creat va fi depanat în continuare. Se poate observa că în această manieră debugger-ul este atașat la un moment dat doar la un singur proces, neputând urmări mai multe simultan.
 
-Cu toate acestea, gdb poate ține evidența tuturor proceselor create de către programul depanat, deși în continuare numai un singur proces poate fi rulat prin debugger la un moment dat. Comanda set detach-on-fork realizează acest lucru:
+Cu toate acestea, gdb poate ține evidența tuturor proceselor create de către programul depanat, deși în continuare numai un singur proces poate fi rulat prin debugger la un moment dat. Comanda **set detach-on-fork** realizează acest lucru:
 ```
 (gdb) set detach-on-fork mode
 ```
-unde mode poate fi on, atunci când gdb se va atașa unui singur proces la un moment dat (comportament implicit), sau off, caz în care gdb se atașează la toate procesele create în timpul execuției, și le suspendă pe acelea care nu sunt urmărite, în funcție de valoarea setării follow-fork-mode.
+unde **mode** poate fi **on**, atunci când gdb se va atașa unui singur proces la un moment dat (comportament implicit), sau **off**, caz în care gdb se atașează la toate procesele create în timpul execuției, și le suspendă pe acelea care nu sunt urmărite, în funcție de valoarea setării **follow-fork-mode**.
 
-Comanda info forks afișează informații legate de toate procesele aflate sub controlul gdb la un moment dat:
+Comanda **info forks** afișează informații legate de toate procesele aflate sub controlul gdb la un moment dat:
 ```
 (gdb) info forks
 ```
@@ -212,9 +212,9 @@ De asemenea, comanda fork poate fi utilizată pentru a seta unul din procesele d
 ```
 (gdb) fork fork-id
 ```
-unde fork-id este identificatorul asociat procesului, așa cum apare în lista afișată de comanda info forks.
+unde **fork-id** este identificatorul asociat procesului, așa cum apare în lista afișată de comanda **info forks**.
 
-Atunci când un anumit proces nu mai trebuie urmărit, el poate fi înlăturat din listă folosind comenzile detach fork şi delete fork:
+Atunci când un anumit proces nu mai trebuie urmărit, el poate fi înlăturat din listă folosind comenzile **detach fork** şi **delete fork**:
 ```
 (gdb) detach fork fork-id
 (gdb) delete fork fork-id
@@ -224,7 +224,7 @@ Diferenţa dintre cele două comenzi este că detach fork lasă procesul să rul
 Pentru a ilustra aceste comenzi într-un exemplu concret, să considerăm programul următor:
 
 Exemplu 5. forktest.c
-```
+```c
 // forktest.c
 1#include <stdio.h>
 2#include <sys/types.h>
