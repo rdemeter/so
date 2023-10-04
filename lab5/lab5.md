@@ -2,6 +2,9 @@
 # IPC
 
 - [IPC](#ipc)
+  * [Pipe-uri](#pipe-uri)
+    + [Pipe-uri anonime](#pipe-uri-anonime)
+    + [Pipe-uri cu nume](#Pipe-uri-cu-nume)
   * [Semafoare](#semafoare)
     + [Crearea și deschiderea](#crearea-și-deschiderea)
     + [Decrementare, incrementare și aflarea valorii](#decrementare--incrementare-și-aflarea-valorii)
@@ -28,6 +31,169 @@ Linux pune la dispoziție urmatoarele mecanisme de comunicare intre procese (IPC
 Obiectele de tip IPC pe care se concentrează laboratorul de față sunt gestionate global de sistem și rămân în viață chiar dacă procesul creator moare. Faptul că aceste resurse sunt globale în sistem are implicații contradictorii. Pe de o parte, dacă un proces se termină, datele plasate în obiecte IPC pot fi accesate ulterior de alte procese; pe de altă parte, procesul proprietar trebuie să se ocupe și de dealocarea resurselor, altfel ele rămân în sistem până la ștergerea lor manuală sau până la un reboot. Faptul că obiectele IPC sunt globale în sistem poate duce la apariția unor probleme: cum numărul de mesaje care se află în cozile de mesaje din sistem e limitat global, un proces care trimite multe asemenea mesaje poate bloca toate celelalte procese.
 
 ATENTIE!!! Pentru folosirea API-ului trebuie să includeți la linking biblioteca 'rt' (-lrt).
+
+# Pipe-uri
+
+Pipe-urile (canalele de comunicaţie) sunt mecanisme primitive de comunicare între procese. Un pipe poate conţine o cantitate limitată de date. Accesul la aceste date este de tip FIFO (datele se scriu la un capăt al pipe-ului şi sunt citite de la celălalt capăt). Sistemul de operare garantează sincronizarea între operaţiile de citire şi scriere la cele două capete.
+
+![image](https://github.com/rdemeter/so/blob/master/lab5/figs/pipe.png?raw=true)
+
+Există două tipuri de pipe-uri:
+
+• pipe-uri anonime - pot fi folosite doar de procese înrudite (un proces părinte şi un copil sau doi copii) deoarece este accesibil doar prin moştenire. Aceste pipe-uri nu mai există după ce procesele şi-au terminat execuţia.
+
+• pipe-uri cu nume - există ca fişiere cu drepturi de acces. Aceasta înseamnă că ele vor exista în continuare independent de procesul care le creează şi pot fi folosite de procese neînrudite.
+
+## Pipe-uri anonime
+
+Pipe-ul este un mecanism de comunicare unidirecţională între două procese. În majoritatea implementărilor de UNIX un pipe apare ca o zonă de memorie de o anumită dimensiune în spaţiul nucleului. Procesele care comunică printr-un pipe trebuie să aibă un grad de rudenie; de obicei, un proces care creează un pipe va apela după aceea fork, iar pipe-ul se va folosi pentru comunicarea între părinte şi fiu. În orice caz procesele care comunică prin pipe nu pot fi create de utilizatori diferiţi ai sistemului.
+ 
+
+Apelul de sistem pentru creare este pipe:
+```
+int pipe(int filedes[2]);
+```
+Parametrul filedes returnează 2 descriptori de fişier: filedes[0] deschis pentru citire şi filedes[1] deschis pentru scriere. Se consideră că ieşirea lui filedes[1] este intrare pentru filedes[0].
+Apelul returnează 0 în caz de succes şi -1 în caz de eroare. Observaţii:
+
+- Citirea/scrierea din/în pipe-uri este atomică dacă nu se citesc/scriu mai mult de PIPE_BUF octeţi.
+- Citirea/scrierea din/în pipe-uri se realizează cu ajutorul funcţiilor read / write.
+
+Majoritatea aplicaţiilor care folosesc pipe-uri închid în fiecare dintre procese capătul de pipe neutilizat în comunicarea unidirecţională. Dacă unul dintre descriptori este închis se aplică regulile:
+
+- O citire dintr-un pipe pentru care descriptorul de scriere a fost închis, după ce toate datele au fost citite, va returna 0, ceea ce indică sfârşitul fişierului. Descriptorul de scriere poate fi duplicat astfel încât mai multe procese să poată scrie în pipe. De regulă, în cazul pipe-urilor anonime există doar două procese, unul care scrie şi altul care citeşte pe când în cazul fişierelor FIFO pot exista mai multe procese care scriu date.
+- O scriere într-un pipe pentru care descriptorul de citire a fost închis cauzează generarea semnalului SIGPIPE. Dacă semnalul este captat şi se revine din rutina de tratare, funcţia de sistem write returnează eroare şi variabila errno are valoarea EPIPE.
+
+Cea mai frecventă greşeală relativ la lucrul cu pipe-urile constă în faptul că nu se trimite EOF prin pipe (citirea din pipe nu se termină) decât dacă sunt închise TOATE capetele de scriere din TOATE procesele care au deschis descriptorul de scriere în pipe (în cazul unui fork, nu uitaţi să închideţi capetele pipe-ului în procesul părinte).
+
+Alte funcţii utile: **popen**, **pclose**.
+
+Exemplu 6. pipe.c
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+int main(void)
+{
+    int   fd[2], nbytes;
+    pid_t childpid;
+    char  string[] = "Hello, world!\n";
+    char  readbuffer[80];
+
+    pipe(fd);
+
+    if((childpid = fork()) == -1) {
+        perror("fork");
+        exit(1);
+    }
+
+    if(childpid == 0) {
+        printf("Child process closes up input side of pipe\n");
+        close(fd[0]);
+
+        printf("Child: Send string through the output side of pipe\n");
+        write(fd[1], string, (strlen(string)+1));
+        printf("Child: Exiting\n");
+        exit(0);
+    }
+    else {
+        printf("Parent process closes up output side of pipe\n");
+        close(fd[1]);
+
+        printf("Parent: Read in a string from the pipe\n");
+        nbytes = read(fd[0], readbuffer, sizeof(readbuffer));
+        printf("Parent: Received string: %s\n", readbuffer);
+    }
+
+    return(0);
+}
+```
+```
+$gcc pipe.c -o pipe
+```
+## Pipe-uri cu nume
+
+**FIFO** numite şi pipe-uri cu nume, elimină necesitatea ca procesele care comunică să fie înrudite deoarece acestea nu trebuie să îşi transmită descriptorii. Astfel, fiecare proces îşi poate deschide pentru citire sau scriere fişierul pipe cu nume (FIFO) care este un tip de fişier special care păstrează caracteristicile unui pipe. Comunicaţia se face într-un sens sau în ambele sensuri. Fişierele de tip FIFO pot fi localizate ca având litera p în primul câmp al drepturilor de acces (ls -l) .
+Apelul de sistem pentru crearea FIFO este:
+```
+int mkfifo(const char *pathname, mode_t mode);
+```
+Parametrii sunt:
+- pathname - reprezintă numele de cale al fişierului FIFO.
+- mode - reprezintă un întreg ce indică drepturile de acces ale fişierului FIFO.
+
+Apelul returnează 0 în caz de succes si -1 în caz de eroare.
+
+Observaţii: după ce FIFO a fost creat, acestuia i se pot aplica toate funcţiile pentru operaţii cu fişiere: open, close, read, write la fel ca şi altor fişiere.
+
+Modul de comportare al unui FIFO este afectat de flagul O_NONBLOCK astfel:
+- Dacă O_NONBLOCK nu este specificat (cazul normal), atunci un open  pentru citire se va bloca până când un alt proces deschide acelaşi FIFO pentru scriere. Analog, dacă deschiderea este pentru scriere, se poate produce blocare până când un alt proces efectuează deschiderea pentru citire.
+- Dacă se specifică O_NONBLOCK, atunci deschiderea pentru citire revine imediat, dar o deschidere pentru scriere poate returna eroare cu errno având valoarea ENXIO, dacă nu există un alt proces care a deschis acelaşi FIFO pentru citire.
+Atunci când ultimul proces care scrie într-un FIFO îl închide, se va genera un "sfârşit de fişier" pentru procesul care citeşte din FIFO.
+
+Exemplu 7. fifoserver.c
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <linux/stat.h>
+
+#define  FIFO_FILE  "myfifo"
+#define  SZBUF  80
+#define  QUIT  "bye"
+
+int main(void) {
+    FILE* fp;
+    char readbuf[SZBUF];
+
+    /*create the fifo*/
+    umask(0);
+    mknod(FIFO_FILE, S_IFIFO|0666, 0);
+
+    printf("Running server... To quit, send via the client the msg 'bye'.\n");
+
+    while(1) {
+        fp = fopen(FIFO_FILE,"r");
+        fgets(readbuf, SZBUF, fp);
+
+        if (!strcmp(readbuf,QUIT)) break;
+
+        printf("Received string: %s\n",readbuf);
+        fclose(fp);
+    }
+    return 0;
+}
+```
+```
+$gcc fifoserver.c -o fifoserver
+```
+Exemplu 8. fifoclient.c
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define  FIFO_FILE  "myfifo"
+
+int main(int argc, char* argv[]) {
+    FILE* fp;
+
+    if (argc != 2) {
+        fprintf(stderr,"USAGE %s [string]\n",argv[0]);
+        return 1;
+    }
+    if ( (fp = fopen(FIFO_FILE,"w")) == NULL ) {
+        perror("fopen");
+        return 1;
+    }
+    fprintf(fp,"%s",argv[1]);
+    fclose(fp);
+    return 0;
+}
+```
+```
+$gcc fifoclient.c -o fifoclient
+```
 
 ## Semafoare
 
