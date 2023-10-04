@@ -323,9 +323,49 @@ int main(void)
 ```
 $gcc client_sem.c -o client_sem -lpthread
 ```
-Exercitiu: Să se modifice aplicatia, astfel incat procesele să astepte după resursele partajate, asa cum este ilustrat in figura, producand interblocarea proceselor, deadlock.
+**Exercitiu**: Să se modifice aplicația, astfel încât procesele să aștepte după resursele partajate, așa cum este ilustrat în figură, producând interblocarea proceselor, **deadlock**. 
 
 ![](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
+
+Deadlock-ul poate fi rezolvat prin aplicarea unei strategii de gestionare a resurselor astfel încât să se evite blocarea reciprocă a thread-urilor. Există mai multe metode de rezolvare a deadlock-ului. Iată două dintre cele mai comune:
+
+**Evitarea deadlock-ului**: Această metodă implică planificarea resurselor astfel încât să se evite posibilitatea blocării reciproce. Acest lucru poate fi realizat prin definirea unei ordini fixe în care resursele sunt obținute și eliberate. În exemplul de mai sus, am putea modifica codul astfel încât toate thread-urile să solicite resursele în aceeași ordine:
+
+```c
+// Thread 1
+pthread_mutex_lock(&resource1);
+printf("Thread 1: Locked resource 1\n");
+
+// Așteptare și procesare resursei 1
+
+pthread_mutex_lock(&resource2);
+printf("Thread 1: Locked resource 2\n");
+
+// Procesare resursa 2
+
+pthread_mutex_unlock(&resource2);
+pthread_mutex_unlock(&resource1);
+```
+```c
+// Thread 2
+pthread_mutex_lock(&resource1);
+printf("Thread 2: Locked resource 1\n");
+
+// Așteptare și procesare resursei 1
+
+pthread_mutex_lock(&resource2);
+printf("Thread 2: Locked resource 2\n");
+
+// Procesare resursa 2
+
+pthread_mutex_unlock(&resource2);
+pthread_mutex_unlock(&resource1);
+```
+Prin acest mod de gestionare a resurselor, deadlock-ul este evitat pentru că toate thread-urile urmează aceeași ordine atunci când accesează resursele.
+
+**Detecția și tratarea deadlock-ului**: O altă metodă constă în detectarea deadlock-ului atunci când apare și în acțiunea corectivă a acestuia. Aceasta implică monitorizarea resurselor și thread-urilor pentru a detecta starea de deadlock și apoi luarea măsurilor adecvate. O abordare comună este să se utilizeze un algoritm de detectare a deadlock-ului, cum ar fi algoritmul Banker's, pentru a verifica starea sistemului și să se elibereze resursele într-un mod controlat pentru a evita blocarea perpetuă.
+
+Indiferent de metoda aleasă, gestionarea deadlock-ului necesită o planificare și o gestionare atentă a resurselor și a thread-urilor pentru a asigura un comportament corect și evitarea situațiilor de blocare.
 
 ## Cozi de mesaje
 
