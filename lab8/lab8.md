@@ -612,7 +612,7 @@ Dacă bariera a fost creată cu count=N, primele N-1 fire de execuție care apel
 - PTHREAD_BARRIER_SERIAL_THREAD în caz de succes, un singur fir de execuție va întoarce valoarea aceasta nu e specificat care este acel fir de execuție (nu e obligatoriu să fie ultimul ajuns la barieră)
 - 0 valoare întoarsă în caz de succes de celelalte N-1 fire de execuție.
 
-Exercițiu: Să se creeze un mutex normal, un thread în care se cheamă funcția pthread_mutex_lock() de două ori. Se va bloca programul, deadlock. Pentru rezolvarea problemei se va crea mutex-ul recursiv.
+**Exercițiu**: Să se creeze un mutex normal, un thread în care se cheamă funcția pthread_mutex_lock() de două ori. Se va bloca programul, deadlock. Pentru rezolvarea problemei se va crea mutex-ul recursiv.
 ```c
 void *thread_routine( )
 {
@@ -625,10 +625,10 @@ void *thread_routine( )
   pthread_mutex_unlock(&lock);
 }
 ```
-Exercițiu: Să se implementeze un deadlock intre două thread-uri folosind doi mutex. Să se rezolve deadlockul folosind blocare conditionată pthread_mutex_trylock.
+**Exercițiu**: Să se implementeze un **deadlock** intre două thread-uri folosind doi mutex m1 și m2. Să se rezolve deadlock-ul folosind blocare conditionată cu **pthread_mutex_trylock**.
 
-```c
 THREAD1
+```c
 pthread_mutex_lock(&m1);
 /* use resource 1 */
 pthread_mutex_lock(&m2);
@@ -636,8 +636,8 @@ pthread_mutex_lock(&m2);
 pthread_mutex_unlock(&m2);
 pthread_mutex_unlock(&m1);
 ```
-```c
 THREAD2
+```c
 pthread_mutex_lock(&m2);
 /* use resource 2 */
 pthread_mutex_lock(&m1);
@@ -645,18 +645,28 @@ pthread_mutex_lock(&m1);
 pthread_mutex_unlock(&m1);
 pthread_mutex_unlock(&m2);
 ```
-Rezolvare thread2:
+Rezolvare THREAD2:
 ```c
-for (; ;)
-{
- pthread_mutex_lock(&m2);
- if(pthread_mutex_trylock(&m1)==0)
-   /* got it */
-   break;
- /* didn't get it */
- pthread_mutex_unlock(&m2);
+pthread_mutex_lock(&m2);
+printf("B1");
+
+if(pthread_mutex_trylock(&m1) == 0) {
+    pthread_mutex_unlock(&m2);
+    continue;
 }
-/* get locks; no processing */
+
+sleep(0);
+printf("B2\n");
+
 pthread_mutex_unlock(&m1);
 pthread_mutex_unlock(&m2);
+```
+Alegeți varianta corectă în urma rulării testului. Desenați schema logică a aplicației:
+```
+./deadlock2        ./deadlock2
+A1B1A2             A1B1B2
+B2A1A2             B1B1B2
+B1A1A1             B1B1B1A2
+A1B2B1             A1A2
+                   A1A1B2
 ```
