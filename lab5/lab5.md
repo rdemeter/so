@@ -253,12 +253,13 @@ int sem_unlink(const char *name);
 Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au deschis apelează sem_close sau se termină. Totuși, chiar și în acest caz, apelul sem_unlink nu va bloca!
 
 Exemplu: Implementați două procese care să fie sincronizate folosind un semafor cu nume.
-```
+```c
 // server_sem.c
 #include <fcntl.h> /* For O_* constants */
 #include <sys/stat.h> /* For mode constants */
 #include <semaphore.h>
 #define SEM_NAME "/my_semaphore"
+
 int main(void) {
   sem_t *my_sem;
   int rc, pvalue;
@@ -289,7 +290,7 @@ int main(void) {
 $gcc server_sem.c -o server_sem -lpthread
 ```
 Cele două procese se rulează din console diferite. După rularea primului proces, semaforul va fi creat în ”/dev/shm” cu numele “sem.my_semaphore” și procesul va aștepta apăsarea unei taste pentru a debloca următorul proces.
-```
+```c
 // client_sem.c
 #include <fcntl.h> /* For O_* constants */
 #include <sys/stat.h> /* For mode constants */
@@ -382,7 +383,7 @@ mqd_t mq_unlink(const char *name);
 Semantica este similară cu cea de la semafoare: coada nu va fi ștearsă efectiv decât după ce restul proceselor implicate o închid.
 
 Exemplu: Implementați un protocol simplu de comunicație între un client și un server folosind cozi de mesaje. Clientul se va conecta la server și va trimite acestuia numărul 1337 pe care server-ul îl va afișa. Apoi clientul va trimite server-ului un mesaj de închidere.
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -395,6 +396,7 @@ Exemplu: Implementați un protocol simplu de comunicație între un client și u
 #define MSG_END "done"
 /* descriptorul cozii de mesaje */
 mqd_t q;
+
 int main(int argc, char **argv) {
  char buf[MAX_SIZE];
  if ((q = mq_open(QUEUE_NAME, O_WRONLY)) < 0) {
@@ -420,7 +422,7 @@ int main(int argc, char **argv) {
 ```
 $gcc -Wall client_mq.c -o client_mq -lrt
 ```
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -434,6 +436,7 @@ $gcc -Wall client_mq.c -o client_mq -lrt
 #define MSG_END "done"
 /*descriptorul cozii de mesaje*/
 mqd_t q;
+
 int main(int argc, char **argv)
 {
   struct mq_attr attr;
@@ -523,7 +526,7 @@ Semantica este identică cu cea de la funcțiile *_unlink anterioare: ștergerea
 Exemplu: Folosind memoria partajată, realizați un transfer simplu de informație între două procese astfel: server-ul va crea o zona de 4k de memorie și va pune numărul 1337 începând cu primul octet, clientul va citi și afișa acest număr.
 
 Client pentru memoria partajată
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -565,7 +568,7 @@ int main(int argc, char **argv)
 $gcc client_mem.c -o client_mem -lrt
 ```
 Server pentru memoria partajata
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
