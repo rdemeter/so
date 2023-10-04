@@ -205,7 +205,7 @@ Thread 4 says global_counter=3
 Thread 0 says global_counter=4
 ```
 
-Exemplu: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
+**Exemplu**: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
 ```c
 #include <pthread.h>
 #include <stdio.h>
@@ -264,6 +264,52 @@ $ gcc race.c -o race -lpthread
 $ ./race
 Single Increment variable: got 5000000 expected 5000000
 Double Increment variable: got 10000000 expected 10000000
+```
+
+**Exercițiu**: Să se implementeze un **deadlock** intre două thread-uri folosind doi mutex m1 și m2. Să se rezolve deadlock-ul folosind blocare conditionată cu **pthread_mutex_trylock**.
+
+THREAD1
+```c
+pthread_mutex_lock(&m1);
+/* use resource 1 */
+pthread_mutex_lock(&m2);
+/* use resources 1 and 2 */
+pthread_mutex_unlock(&m2);
+pthread_mutex_unlock(&m1);
+```
+THREAD2
+```c
+pthread_mutex_lock(&m2);
+/* use resource 2 */
+pthread_mutex_lock(&m1);
+/* use resources 1 and 2 */
+pthread_mutex_unlock(&m1);
+pthread_mutex_unlock(&m2);
+```
+Rezolvare THREAD2:
+```c
+pthread_mutex_lock(&m2);
+printf("B1");
+
+if(pthread_mutex_trylock(&m1) == 0) {
+    pthread_mutex_unlock(&m2);
+    continue;
+}
+
+sleep(0);
+printf("B2\n");
+
+pthread_mutex_unlock(&m1);
+pthread_mutex_unlock(&m2);
+```
+Alegeți varianta corectă în urma rulării testului. Desenați schema logică a aplicației:
+```
+./deadlock2        ./deadlock2
+A1B1A2             A1B1B2
+B2A1A2             B1B1B2
+B1A1A1             B1B1B1A2
+A1B2B1             A1A2
+                   A1A1B2
 ```
 
 # Semafoare
@@ -373,7 +419,8 @@ pierde. Dacă la variabila condiție așteaptă mai multe fire de execuție, va 
 Alegerea firului care va fi deblocat este făcută de planificatorul de fire de execuție. Nu se poate presupune că
 firele care așteaptă vor fi deblocate în ordinea în care i-au început așteptarea. Firul de execuție apelant trebuie
 să dețină mutexul asociat variabilei condiție în momentul apelului acestei funcții.
-Exemplu. mutex-test.c
+
+**Exemplu**: mutex-test.c
 ```c
 #include <stdio.h>
 #include <sched.h>
@@ -624,49 +671,4 @@ void *thread_routine( )
   pthread_mutex_unlock(&lock);
   pthread_mutex_unlock(&lock);
 }
-```
-**Exercițiu**: Să se implementeze un **deadlock** intre două thread-uri folosind doi mutex m1 și m2. Să se rezolve deadlock-ul folosind blocare conditionată cu **pthread_mutex_trylock**.
-
-THREAD1
-```c
-pthread_mutex_lock(&m1);
-/* use resource 1 */
-pthread_mutex_lock(&m2);
-/* use resources 1 and 2 */
-pthread_mutex_unlock(&m2);
-pthread_mutex_unlock(&m1);
-```
-THREAD2
-```c
-pthread_mutex_lock(&m2);
-/* use resource 2 */
-pthread_mutex_lock(&m1);
-/* use resources 1 and 2 */
-pthread_mutex_unlock(&m1);
-pthread_mutex_unlock(&m2);
-```
-Rezolvare THREAD2:
-```c
-pthread_mutex_lock(&m2);
-printf("B1");
-
-if(pthread_mutex_trylock(&m1) == 0) {
-    pthread_mutex_unlock(&m2);
-    continue;
-}
-
-sleep(0);
-printf("B2\n");
-
-pthread_mutex_unlock(&m1);
-pthread_mutex_unlock(&m2);
-```
-Alegeți varianta corectă în urma rulării testului. Desenați schema logică a aplicației:
-```
-./deadlock2        ./deadlock2
-A1B1A2             A1B1B2
-B2A1A2             B1B1B2
-B1A1A1             B1B1B1A2
-A1B2B1             A1A2
-                   A1A1B2
 ```
