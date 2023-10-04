@@ -304,12 +304,11 @@ Rezolvare THREAD2:
 pthread_mutex_lock(&m2);
 printf("B1");
 
-if(pthread_mutex_trylock(&m1) == 0) {
+if(pthread_mutex_trylock(&m1) != 0) {
     pthread_mutex_unlock(&m2);
     continue;
 }
 
-sleep(0);
 printf("B2\n");
 
 pthread_mutex_unlock(&m1);
