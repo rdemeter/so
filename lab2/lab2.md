@@ -369,7 +369,7 @@ Program terminated with signal 11, Segmentation fault.
 ```
 ## Comenzi de bază GDB
 
-Câteva din comenzile de bază în gdb sunt **breakpoint**, **next** şi **step**. Prima dintre ele primeşte ca argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50) sau o adresă (ex: break *0x80483d3). Comanda next va continua execuția programului până ce se va ajunge la următoarea linie din codul sursă. Dacă linia de executat conţine un apel de funcţie, funcţia se va executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească step. Folosirea acestor comenzi este exemplificată mai jos:
+Câteva din comenzile de bază în gdb sunt **breakpoint**, **next** şi **step**. Prima dintre ele primeşte ca argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50) sau o adresă (ex: break *0x80483d3). Comanda **next** va continua execuția programului până ce se va ajunge la următoarea linie din codul sursă. Dacă linia de executat conţine un apel de funcţie, funcţia se va executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească **step**. Folosirea acestor comenzi este exemplificată mai jos:
 ```
 $ gdb a.out
 (gdb) break main
@@ -438,7 +438,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0x08048411 in main () at exemplul-6.c:16
 16	*bug=f(1, 2);
 ```
-Comanda **continue** se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este **print**. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. print poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, print poate afişa structuri de date precum struct şi union.
+Comanda **continue** se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este **print**. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. **print** poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, **print** poate afişa structuri de date precum struct şi union.
 ```
 $ gdb a.out
 (gdb) break f
@@ -465,6 +465,9 @@ Run till exit from #0	f (a=1, b=2) at exemplul-6.c:9
 (gdb) print bug
 $6 = 0x0
 ```
+**GNU DDD** este un front-end grafic pentru depanatorul de linie de comandă GDB. Pe lângă caracteristicile obișnuite de interfață, cum ar fi vizualizarea textelor sursă, DDD a devenit faimos prin afișarea grafică interactivă a datelor, în care structurile de date sunt afișate sub formă de grafice.
+
+![Image](https://github.com/rdemeter/so/blob/master/lab2/figs/ddd_all.png?raw=true)
 
 ## Resurse utile
 
