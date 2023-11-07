@@ -45,6 +45,19 @@ Dezavantaje - nu ia în considerare prioritatea sau timpul de explozie a procese
 | P4  |      5       |     1      |
 | P5  |      4       |     3      |
 
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fcfs.png?raw=true)
+
+Se calculează:
+Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
+
+| PID | Exit time | Turn around time | Waiting time |
+|-----|:---------:|-----------------:|-------------:|
+| P1  |     7     |      7-3=4       |     4-4=0    |
+| P2  |    13     |     13-5=8       |     8-3=5    |
+| P3  |     2     |      2-0=2       |     2-2=0    |
+| P4  |    14     |     14-5=9       |     9-1=8    |
+| P5  |    10     |     10-4=6       |     6-3=3    |
+
 Average Turn Around time = (4 + 8 + 2 + 9 + 6) / 5 = 29 / 5 = 5.8 unit
 
 Average waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
