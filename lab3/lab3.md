@@ -2,6 +2,7 @@
 # Procese
 
 - [Procese](#procese)
+  * [Planificarea proceselor](#Planificarea-proceselor)
   * [Procese în Linux](#Procese-în-Linux)
   * [Crearea unui proces](#crearea-unui-proces)
   * [Aşteptarea terminării unui proces](#Aşteptarea-terminării-unui-proces)
@@ -18,6 +19,35 @@ Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator sti
 În general un proces rulează într-un mediu specificat printr-un set de variabile de mediu. O variabilă de mediu este o pereche NUME=valoare. Un proces poate să verifice sau să seteze valoarea unei variabile de mediu printr-o serie de apeluri de bibliotecă.
 
 Pe sisteme de 32 de biți fiecare proces are un spaţiu de adrese de 4 GiB din care 2 (sau în anumite configuraţii 3) GiB sunt disponibili pentru alocare procesului, iar ceilalți 2 (respectiv 1) GiB fiind rezervat sistemului de operare (codul kernelului și al driverelor, date, cache-uri, etc.). Așadar fiecare proces "vede" sistemul de operare în spațiul său de adrese însă nu poate accesa zona respectivă decât prin intermediul apelurilor de sistem (comutând procesorul în modul de lucru privilegiat). Pe sisteme de 64 de biți spaţiul total de adrese este de 16 EiB, iar pe sisteme de 16 biți de doar 64 KiB (procesoarele x86 pe 16 biți puteau adresa 220 = 1 MiB de memorie folosind la adresare doi regiștri de 16 biți întrucât, deși era procesor pe 16 biți, avea 20 de linii de adresă).
+
+## Planificarea proceselor
+Când procesul este prezent în sistem, fie va aștepta CPU-ul în starea gata, fie se va executa pe CPU. Sunt definite următoarele:
+- arrival time - timpul de sosire este momentul în care un proces intră în coada de așteptare
+- waiting time - timpul de așteptare este cantitatea de timp petrecută de un proces așteptând în coada pregătită pentru obținerea procesorului
+- response time - timpul de răspuns este perioada de timp după care un proces primește CPU pentru prima dată după ce a intrat în coada de așteptare.
+- burst time - timpul de execuție este timpul necesar unui proces pentru a se executa pe CPU.
+- complition time - timpul de finalizare este momentul în care un proces își încheie execuția pe CPU și iese din sistem.
+- turnaraund time - timpul de întoarcere este timpul total petrecut de un proces în sistem.
+
+### First Come First Serve
+
+În planificarea FCFS, procesul care ajunge primul în coada de așteptare este mai întâi executat de CPU. În caz de egalitate, procesul cu un ID de proces mai mic este executat mai întâi. Este întotdeauna non-preemptivă (nu se întrerupe de alt proces).
+
+Avantaje - este simplu și ușor de înțeles, poate fi implementat cu ușurință folosind structura de date a cozii, nu duce la infometare (starvation).
+
+Dezavantaje - nu ia în considerare prioritatea sau timpul de explozie a proceselor, suferă de efectul de convoi.
+
+| PID | Arrival time | Burst time |
+|-----|:------------:|-----------:|
+| P1  |      3       |     4      |
+| P2  |      5       |     3      |
+| P3  |      0       |     2      |
+| P4  |      5       |     1      |
+| P5  |      4       |     3      |
+
+Average Turn Around time = (4 + 8 + 2 + 9 + 6) / 5 = 29 / 5 = 5.8 unit
+
+Average waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
 
 ## Procese în Linux
 
