@@ -37,6 +37,8 @@ Avantaje - este simplu și ușor de înțeles, poate fi implementat cu ușurinț
 
 Dezavantaje - nu ia în considerare prioritatea sau timpul de explozie a proceselor, suferă de efectul de convoi.
 
+**Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
+
 | PID | Arrival time | Burst time |
 |-----|:------------:|-----------:|
 | P1  |      3       |     4      |
@@ -61,6 +63,71 @@ Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Aro
 Average Turn Around time = (4 + 8 + 2 + 9 + 6) / 5 = 29 / 5 = 5.8 unit
 
 Average waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
+
+### Shortest Job First
+
+Dintre toate procesele disponibile, procesul cu cel mai mic timp de execuție se va executa. Planificare SJF poate fi utilizată atât în modul non-preemptiv (SJF) cât și în cel preemtiv (SRTF). 
+ 
+Dezavantaje - Nu poate fi implementat practic, deoarece timpul de explozie a proceselor nu poate fi cunoscut în avans.
+Aceasta duce la înfometare pentru procese cu timp de explozie mai mare. Procesele cu timp de explozie mai mare au timp de răspuns slab.
+
+**Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
+
+| PID | Arrival time | Burst time |
+|-----|:------------:|-----------:|
+| P1  |      3       |     1      |
+| P2  |      1       |     4      |
+| P3  |      4       |     2      |
+| P4  |      0       |     6      |
+| P5  |      2       |     3      |
+
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/sjf.png?raw=true)
+
+Se calculează:
+Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
+
+| PID | Exit time | Turn around time | Waiting time |
+|-----|:---------:|-----------------:|-------------:|
+| P1  |     7     |      7-3=4       |     4-1=3    |
+| P2  |    16     |     16-6=15      |    15-4=11   |
+| P3  |     9     |      9-4=5       |     5-2=3    |
+| P4  |     6     |      6-0=6       |     6-6=0    |
+| P5  |    12     |     12-2=10      |    10-3=7    |
+
+Average Turn Around time = (4 + 15 + 5 + 6 + 10) / 5 = 40 / 5 = 8 unit
+
+Average waiting time = (3 + 11 + 3 + 0 + 7) / 5 = 24 / 5 = 4.8 unit
+
+### Shortest Remaining Time First
+
+SRTF este optim și garantează timpul mediu de așteptare minim. Acesta oferă un standard pentru alți algoritmi, deoarece niciun alt algoritm nu are performanțe mai bune decât acesta.
+
+**Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
+
+| PID | Arrival time | Burst time |
+|-----|:------------:|-----------:|
+| P1  |      3       |     1      |
+| P2  |      1       |     4      |
+| P3  |      4       |     2      |
+| P4  |      0       |     6      |
+| P5  |      2       |     3      |
+
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/srtf.png?raw=true)
+
+Se calculează:
+Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
+
+| PID | Exit time | Turn around time | Waiting time |
+|-----|:---------:|-----------------:|-------------:|
+| P1  |     4     |      4-3=1       |    1-1=0     |
+| P2  |     6     |      6-1=5       |    5-4=1     |
+| P3  |     8     |      8-4=4       |    4-2=2     |
+| P4  |    16     |     16-0=16      |   16-6=10    |
+| P5  |    11     |     11-2=9       |    9-3=6     |
+
+Average Turn Around time = (1 + 5 + 4 + 16 + 9) / 5 = 35 / 5 = 7 unit
+
+Average waiting time = (0 + 1 + 2 + 10 + 6) / 5 = 19 / 5 = 3.8 unit
 
 ## Procese în Linux
 
