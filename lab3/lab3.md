@@ -10,7 +10,7 @@
 - [Depanarea unui proces](#depanarea-unui-proces)
 - [Exerciții](#exerciții)
 
-Un concept cheie în orice sistem de operare este **procesul**. Un proces este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
+Un concept cheie în orice sistem de operare este procesul. Un **proces** este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
 
 Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator stivă), tabelele de fisiere deschise, lista de semnale (blocate, ignorate sau care asteaptă să fie trimise procesului), handler-ele pentru semnale, informatiile referitoare la sistemele de fișiere (directorul rădăcină, directorul curent), toate acestea NU sunt partajate, ci aparțin fiecărui proces în parte. Aceste informații necesare pentru rularea programului sunt ținute de sistemul de operare într-o structură numită **Process Control Block**, câte una pentru fiecare proces existent în sistem.
 
@@ -23,11 +23,11 @@ Pe sisteme de 32 de biți fiecare proces are un spaţiu de adrese de 4 GiB din c
 ## Planificarea proceselor
 
 Fiecare proces trece prin diferite stări în ciclul său de viață:
-- new state - un proces este în stare nouă atunci când un program prezent în memoria secundară este inițiat pentru execuție.
-- ready state - un proces trece de la starea nouă la starea gata după ce este încărcat în memoria principală și este gata de execuție. În stare gata, procesul așteaptă execuția sa de către procesor. În mediul de multiprogramare, multe procese pot fi prezente în starea gata.
-- run state - un proces trece de la starea pregătită la starea de rulare după ce i se atribuie CPU pentru execuție.
-- terminate state - Un proces trece de la starea de rulare la starea de terminare după finalizarea execuției sale. După intrarea în starea de terminare, contextul (PCB) al procesului este șters de sistemul de operare.
-- block or wait state - Un proces trece de la starea de rulare la starea de blocare sau de așteptare dacă necesită o operație I/O sau o resursă blocată în timpul execuției sale. După ce operațiunea I/O este finalizată sau resursa devine disponibilă, procesul trece la starea gata.
+- new - un proces este în stare nouă atunci când un program prezent în memoria secundară este inițiat pentru execuție.
+- ready - un proces trece de la starea nouă la starea gata după ce este încărcat în memoria principală și este gata de execuție. În stare gata, procesul așteaptă execuția sa de către procesor. În mediul de multiprogramare, multe procese pot fi prezente în starea gata.
+- run - un proces trece de la starea pregătită la starea de rulare după ce i se atribuie CPU pentru execuție.
+- terminate - un proces trece de la starea de rulare la starea de terminare după finalizarea execuției sale. După intrarea în starea de terminare, contextul (PCB) al procesului este șters de sistemul de operare.
+- block or wait - un proces trece de la starea de rulare la starea de blocare sau de așteptare dacă necesită o operație I/O sau o resursă blocată în timpul execuției sale. După ce operațiunea I/O este finalizată sau resursa devine disponibilă, procesul trece la starea gata.
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/states.png?raw=true)
 
@@ -45,7 +45,7 @@ Când procesul este prezent în sistem, fie va aștepta CPU-ul în starea gata, 
 
 În planificarea FCFS, procesul care ajunge primul în coada de așteptare este mai întâi executat de CPU. În caz de egalitate, procesul cu un ID de proces mai mic este executat mai întâi. Este întotdeauna non-preemptivă (nu se întrerupe de alt proces).
 
-Avantaje - este simplu și ușor de înțeles, poate fi implementat cu ușurință folosind structura de date a cozii, nu duce la infometare (starvation).
+Avantaje - este simplu și ușor de înțeles, poate fi implementat cu ușurință folosind structura de date a cozii.
 
 Dezavantaje - nu ia în considerare prioritatea sau timpul de explozie a proceselor, suferă de efectul de convoi.
 
@@ -80,8 +80,7 @@ Average waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
 
 Dintre toate procesele disponibile, procesul cu cel mai mic timp de execuție se va executa. Planificare SJF poate fi utilizată atât în modul non-preemptiv (SJF) cât și în cel preemtiv (SRTF). 
  
-Dezavantaje - Nu poate fi implementat practic, deoarece timpul de explozie a proceselor nu poate fi cunoscut în avans.
-Aceasta duce la înfometare pentru procese cu timp de explozie mai mare. Procesele cu timp de explozie mai mare au timp de răspuns slab.
+Dezavantaje - Nu poate fi implementat practic, deoarece timpul de execuție a proceselor nu poate fi cunoscut în avans. Aceasta duce la înfometarea proceselor cu timp de execuție mai mare (starvation).
 
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
@@ -112,7 +111,7 @@ Average waiting time = (3 + 11 + 3 + 0 + 7) / 5 = 24 / 5 = 4.8 unit
 
 ### Shortest Remaining Time First
 
-SRTF este optim și garantează timpul mediu de așteptare minim. Acesta oferă un standard pentru alți algoritmi, deoarece niciun alt algoritm nu are performanțe mai bune decât acesta.
+SRTF este optim și garantează timpul mediu de așteptare minim, dar poate genera un număr mare de schimbări de context (întreruperi). Pentru a alege procesul cu cel mai mic timp rămas de execuție, SRTF necesită cunoașterea sau estimarea acestui timp pentru fiecare proces.
 
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
@@ -142,6 +141,8 @@ Average Turn Around time = (1 + 5 + 4 + 16 + 9) / 5 = 35 / 5 = 7 unit
 Average waiting time = (0 + 1 + 2 + 10 + 6) / 5 = 19 / 5 = 3.8 unit
 
 ### Round Robin
+
+Planificare Round Robin utilizează un algoritm în care fiecare proces primește o porție mică de timp CPU în ordine circulară, permițând astfel ca procesele scurte să nu aștepte prea mult.
 
 **Exercițiu:** Se consideră setul de 5 procese a căror oră de sosire și timp de execuție sunt date mai jos. Dacă politica de planificare a CPU este Round Robin cu cuantum de timp = 2 unități, calculați timpul mediu de așteptare și timpul mediu de întoarcere.
 
@@ -198,7 +199,7 @@ Implementarea system: se creează un nou proces cu fork; procesul copil execută
 
 ## Crearea unui proces
 
-În UNIX singura modalitate de creare a unui proces este prin apelul de sistem fork:
+În UNIX singura modalitate de creare a unui proces este prin apelul de sistem **fork()**:
 ```
 pid_t fork(void);
 ```
@@ -337,13 +338,13 @@ Pentru terminarea unui alt proces din sistem, se va trimite un semnal către pro
 
 # Depanarea unui proces
 
-Pe majoritatea sistemelor de operare pe care a fost portat, gdb nu poate detecta când un proces realizează o operație fork(). Atunci când programul este pornit, depanarea are loc exclusiv în procesul inițial, procesele copii nefiind atașate debugger-ului. În acest caz, singura soluție este introducerea unor întârzieri în execuția procesului nou creat (de exemplu, prin apelul de sistem sleep()), care să ofere programatorului suficient timp pentru a atașa manual gdb-ul la respectivul proces, presupunând că i-a aflat PID-ul în prealabil. Pentru a atașa debugger-ul la un proces deja existent, se folosește comanda attach, în felul următor:
+Pe majoritatea sistemelor de operare pe care a fost portat, gdb nu poate detecta când un proces realizează o operație fork(). Atunci când programul este pornit, depanarea are loc exclusiv în procesul inițial, procesele copii nefiind atașate debugger-ului. În acest caz, singura soluție este introducerea unor întârzieri în execuția procesului nou creat (de exemplu, prin apelul de sistem sleep()), care să ofere programatorului suficient timp pentru a atașa manual gdb-ul la respectivul proces, presupunând că i-a aflat PID-ul în prealabil. Pentru a atașa debugger-ul la un proces deja existent, se folosește comanda **attach**, în felul următor:
 ```
 (gdb) attach PID
 ```
 Această metodă este destul de incomodă și poate cauza chiar o funcționare anormală a aplicației depanate, în cazul în care necesitățile de sincronizare între procese sunt stricte (de exemplu operații cu time-out).
 
-Din fericire, pe un număr limitat de sisteme, printre care si Linux, gdb permite depanarea comodă a programelor care creează mai multe procese prin fork() și vfork(). Pentru ca gdb să urmărească activitatea proceselor create ulterior, se poate folosi comanda set follow-fork-mode, în felul următor:
+Din fericire, pe un număr limitat de sisteme, printre care și Linux, gdb permite depanarea comodă a programelor care creează mai multe procese prin fork() și vfork(). Pentru ca gdb să urmărească activitatea proceselor create ulterior, se poate folosi comanda **set follow-fork-mode**, în felul următor:
 ```
 (gdb) set follow-fork-mode mode
 ```
