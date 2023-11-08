@@ -10,9 +10,9 @@
 - [Depanarea unui proces](#depanarea-unui-proces)
 - [Exerciții](#exerciții)
 
-Un concept cheie în orice sistem de operare este procesul. Un proces este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
+Un concept cheie în orice sistem de operare este **procesul**. Un proces este un program în execuţie. Procesele formează unitatea primitivă prin care sistemul de operare alocă resurse utilizatorilor. Orice proces are un spaţiu de adrese şi unul sau mai multe fire de execuţie. Putem avea mai multe procese ce execută același program, dar oricare două procese sunt complet independente.
 
-Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator stivă), tabelele de fisiere deschise, lista de semnale (blocate, ignorate sau care asteaptă să fie trimise procesului), handler-ele pentru semnale, informatiile referitoare la sistemele de fișiere (directorul rădăcină, directorul curent), toate acestea NU sunt partajate, ci aparțin fiecărui proces în parte. Aceste informații necesare pentru rularea programului sunt ținute de sistemul de operare într-o structură numită Process Control Block, câte una pentru fiecare proces existent în sistem.
+Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator stivă), tabelele de fisiere deschise, lista de semnale (blocate, ignorate sau care asteaptă să fie trimise procesului), handler-ele pentru semnale, informatiile referitoare la sistemele de fișiere (directorul rădăcină, directorul curent), toate acestea NU sunt partajate, ci aparțin fiecărui proces în parte. Aceste informații necesare pentru rularea programului sunt ținute de sistemul de operare într-o structură numită **Process Control Block**, câte una pentru fiecare proces existent în sistem.
 
 În momentul lansării în execuţie al unui program, în sistemul de operare se va crea un proces pentru alocarea resurselor necesare rulării programului respectiv. Fiecare sistem de operare pune la dispoziţie apeluri de sistem pentru crearea unui proces, terminarea unui proces, așteptarea terminării unui proces precum şi apeluri pentru duplicarea descriptorilor de resurse între procese ori închiderea acestor descriptori.
 
@@ -21,6 +21,18 @@ Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator sti
 Pe sisteme de 32 de biți fiecare proces are un spaţiu de adrese de 4 GiB din care 2 (sau în anumite configuraţii 3) GiB sunt disponibili pentru alocare procesului, iar ceilalți 2 (respectiv 1) GiB fiind rezervat sistemului de operare (codul kernelului și al driverelor, date, cache-uri, etc.). Așadar fiecare proces "vede" sistemul de operare în spațiul său de adrese însă nu poate accesa zona respectivă decât prin intermediul apelurilor de sistem (comutând procesorul în modul de lucru privilegiat). Pe sisteme de 64 de biți spaţiul total de adrese este de 16 EiB, iar pe sisteme de 16 biți de doar 64 KiB (procesoarele x86 pe 16 biți puteau adresa 220 = 1 MiB de memorie folosind la adresare doi regiștri de 16 biți întrucât, deși era procesor pe 16 biți, avea 20 de linii de adresă).
 
 ## Planificarea proceselor
+
+Fiecare proces trece prin diferite stări în ciclul său de viață:
+- new state - un proces este în stare nouă atunci când un program prezent în memoria secundară este inițiat pentru execuție.
+- ready state - un proces trece de la starea nouă la starea gata după ce este încărcat în memoria principală și este gata de execuție. În stare gata, procesul așteaptă execuția sa de către procesor. În mediul de multiprogramare, multe procese pot fi prezente în starea gata.
+- run state - un proces trece de la starea pregătită la starea de rulare după ce i se atribuie CPU pentru execuție.
+- terminate state - Un proces trece de la starea de rulare la starea de terminare după finalizarea execuției sale. După intrarea în starea de terminare, contextul (PCB) al procesului este șters de sistemul de operare.
+- block or wait state - Un proces trece de la starea de rulare la starea de blocare sau de așteptare dacă necesită o operație I/O sau o resursă blocată în timpul execuției sale. După ce operațiunea I/O este finalizată sau resursa devine disponibilă, procesul trece la starea gata.
+
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/states.png?raw=true)
+
+Numărul minim de stări prin care trece obligatoriu un proces este 4. Aceste stări sunt stare nouă, stare gata, stare de rulare și stare de terminare. Cu toate acestea, dacă un proces necesită și operarea I/O, atunci numărul minim de stări este 5.
+
 Când procesul este prezent în sistem, fie va aștepta CPU-ul în starea gata, fie se va executa pe CPU. Sunt definite următoarele:
 - arrival time - timpul de sosire este momentul în care un proces intră în coada de așteptare
 - waiting time - timpul de așteptare este cantitatea de timp petrecută de un proces așteptând în coada pregătită pentru obținerea procesorului
@@ -40,7 +52,7 @@ Dezavantaje - nu ia în considerare prioritatea sau timpul de explozie a procese
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
 | PID | Arrival time | Burst time |
-|-----|:------------:|-----------:|
+|-----|:------------:|:----------:|
 | P1  |      3       |     4      |
 | P2  |      5       |     3      |
 | P3  |      0       |     2      |
@@ -53,7 +65,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 | PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|-----------------:|-------------:|
+|-----|:---------:|:----------------:|:------------:|
 | P1  |     7     |      7-3=4       |     4-4=0    |
 | P2  |    13     |     13-5=8       |     8-3=5    |
 | P3  |     2     |      2-0=2       |     2-2=0    |
@@ -74,7 +86,7 @@ Aceasta duce la înfometare pentru procese cu timp de explozie mai mare. Procese
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
 | PID | Arrival time | Burst time |
-|-----|:------------:|-----------:|
+|-----|:------------:|:----------:|
 | P1  |      3       |     1      |
 | P2  |      1       |     4      |
 | P3  |      4       |     2      |
@@ -87,7 +99,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 | PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|-----------------:|-------------:|
+|-----|:---------:|:----------------:|:------------:|
 | P1  |     7     |      7-3=4       |     4-1=3    |
 | P2  |    16     |     16-6=15      |    15-4=11   |
 | P3  |     9     |      9-4=5       |     5-2=3    |
@@ -105,7 +117,7 @@ SRTF este optim și garantează timpul mediu de așteptare minim. Acesta oferă 
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
 | PID | Arrival time | Burst time |
-|-----|:------------:|-----------:|
+|-----|:------------:|:----------:|
 | P1  |      3       |     1      |
 | P2  |      1       |     4      |
 | P3  |      4       |     2      |
@@ -118,7 +130,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 | PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|-----------------:|-------------:|
+|-----|:---------:|:----------------:|:------------:|
 | P1  |     4     |      4-3=1       |    1-1=0     |
 | P2  |     6     |      6-1=5       |    5-4=1     |
 | P3  |     8     |      8-4=4       |    4-2=2     |
@@ -128,6 +140,35 @@ Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Aro
 Average Turn Around time = (1 + 5 + 4 + 16 + 9) / 5 = 35 / 5 = 7 unit
 
 Average waiting time = (0 + 1 + 2 + 10 + 6) / 5 = 19 / 5 = 3.8 unit
+
+### Round Robin
+
+**Exercițiu:** Se consideră setul de 5 procese a căror oră de sosire și timp de execuție sunt date mai jos. Dacă politica de planificare a CPU este Round Robin cu cuantum de timp = 2 unități, calculați timpul mediu de așteptare și timpul mediu de întoarcere.
+
+| PID | Arrival time | Burst time |
+|-----|:------------:|:----------:|
+| P1  |      0       |     5      |
+| P2  |      1       |     3      |
+| P3  |      2       |     1      |
+| P4  |      3       |     2      |
+| P5  |      4       |     3      |
+
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/rr.png?raw=true)
+
+Se calculează:
+Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
+
+| PID | Exit time | Turn around time | Waiting time |
+|-----|:---------:|:----------------:|:------------:|
+| P1  |     13    |     13-0=13      |    13-5=8    |
+| P2  |     12    |     12-1=11      |    11-3=8    |
+| P3  |      5    |      5-2=3       |     3-1=2    |
+| P4  |      9    |      9-3=6       |     6-2=4    |
+| P5  |     14    |     14-4=10      |    10-3=7    |
+
+Average Turn Around time = (13 + 11 + 3 + 6 + 10) / 5 = 43 / 5 = 8.6 unit
+
+Average waiting time = (8 + 8 + 2 + 4 + 7) / 5 = 29 / 5 = 5.8 unit
 
 ## Procese în Linux
 
