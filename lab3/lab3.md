@@ -20,6 +20,13 @@ Spaţiile de adrese, regiștrii generali, PC (contor program), SP (indicator sti
 
 Pe sisteme de 32 de biți fiecare proces are un spaţiu de adrese de 4 GiB din care 2 (sau în anumite configuraţii 3) GiB sunt disponibili pentru alocare procesului, iar ceilalți 2 (respectiv 1) GiB fiind rezervat sistemului de operare (codul kernelului și al driverelor, date, cache-uri, etc.). Așadar fiecare proces "vede" sistemul de operare în spațiul său de adrese însă nu poate accesa zona respectivă decât prin intermediul apelurilor de sistem (comutând procesorul în modul de lucru privilegiat). Pe sisteme de 64 de biți spaţiul total de adrese este de 16 EiB, iar pe sisteme de 16 biți de doar 64 KiB (procesoarele x86 pe 16 biți puteau adresa 220 = 1 MiB de memorie folosind la adresare doi regiștri de 16 biți întrucât, deși era procesor pe 16 biți, avea 20 de linii de adresă).
 
+## Schimbarea de context
+
+![image](https://github.com/rdemeter/so/blob/master/lab3/figs/contextswitch.png?raw=true)
+
+Context switching este mecanismul de înlocuire al unui proces pe procesor cu alt proces. Se salvează procesul/contextul vechi, se restaurează procesul/contextul nou.
+O schimbare de context înseamnă overhead, adica mai multe schimbări de context: mai mult overhead, iar mai puține schimbări de context: mai puțină interactivitate
+
 ## Planificarea proceselor
 
 Fiecare proces trece prin diferite stări în ciclul său de viață:
