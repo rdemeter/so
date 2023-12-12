@@ -45,7 +45,7 @@
 Shell-ul este principala interfață de comunicare între utilizator și sistemul de operare. Deși, în mod intuitiv, shell-ul este identificat cu o interfață în linia de comandă, poate fi și o interfaţă grafică. Exemplu este File Explorer-ul sistemului de operare Microsoft Windows.
 
 În cele ce urmează vom studia interfaţa de tip CLI (Command Line Interface) oferită de sistemele de operare Unix. Deși cu o curbă de învăţare mai mare decât o interfaţă grafică, CLI permite un control mult mai bun al sistemului. Mai mult, shell-ul dispune de un limbaj de programare. Un program shell, denumit script shell, este folosit pentru a îmbina mai multe comenzi și diverse structuri de control pentru a obţine o nouă funcţionalitate sau pentru automatizarea sarcinilor. În acest fel un script shell este un instrument esenţial pentru sarcinile administrative și alte rutine repetitive care nu necesită funcţionalităţi ale unor limbaje de programare avansate.
-
+![image](https://github.com/rdemeter/so/blob/master/lab0/figs/shell_scripting.jpg?raw=true)
 În continuare ne vom referi la Bash (Bourne Again SHell). Există și alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, Microsoft oferă PowerShell pe sistemele Windows. PowerShell are o abordarea orientată pe obiecte și un set de funcţionalităţi care acoperă nevoile de administrare ale unui sistem Windows.
 
 ## Cel mai simplu script shell
