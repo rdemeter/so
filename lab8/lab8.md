@@ -374,7 +374,7 @@ Un exemplu de utilizare semafoare în limbajul Java este prezentat in video-ul u
 
 În aplicație se creeaza două semafoare și două thread-uri care se vor executa în ordine ping-pong, ping-pong, ...
 
-![Image](https://github.com/rdemeter/so/blob/5753ce3de97ff696da71f788379a0dec973d1bb8/lab8/figs/ping-pong.png?raw=true)
+![Image](https://github.com/rdemeter/so/blob/master/lab8/figs/ping-pong.png?raw=true)
 
 # Variabile de condiție
 
