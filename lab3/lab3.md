@@ -25,7 +25,7 @@ Pe sisteme de 32 de biți fiecare proces are un spaţiu de adrese de 4 GiB din c
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/contextswitch.png?raw=true)
 
 Context switching este mecanismul de înlocuire al unui proces pe procesor cu alt proces. Se salvează procesul/contextul vechi, se restaurează procesul/contextul nou.
-O schimbare de context înseamnă overhead, adica mai multe schimbări de context: mai mult overhead, iar mai puține schimbări de context: mai puțină interactivitate
+O schimbare de context înseamnă overhead, adică mai multe schimbări de context: mai mult overhead, iar mai puține schimbări de context: mai puțină interactivitate
 
 ## Planificarea proceselor
 
@@ -58,30 +58,21 @@ Dezavantaje - nu ia în considerare prioritatea sau timpul de explozie a procese
 
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
-| PID | Arrival time | Burst time |
-|-----|:------------:|:----------:|
-| P1  |      3       |     4      |
-| P2  |      5       |     3      |
-| P3  |      0       |     2      |
-| P4  |      5       |     1      |
-| P5  |      4       |     3      |
+| PID | Arrival time | Burst time | Exit time | Turn around time | Waiting time |
+|-----|:------------:|:----------:|:---------:|:----------------:|:------------:|
+| P1  |      3       |     4      |     7     |      7-3=4       |     4-4=0    |
+| P2  |      5       |     3      |    13     |     13-5=8       |     8-3=5    |
+| P3  |      0       |     2      |     2     |      2-0=2       |     2-2=0    |
+| P4  |      5       |     1      |    14     |     14-5=9       |     9-1=8    |
+| P5  |      4       |     3      |    10     |     10-4=6       |     6-3=3    |
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fcfs.png?raw=true)
 
 Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
-| PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|:----------------:|:------------:|
-| P1  |     7     |      7-3=4       |     4-4=0    |
-| P2  |    13     |     13-5=8       |     8-3=5    |
-| P3  |     2     |      2-0=2       |     2-2=0    |
-| P4  |    14     |     14-5=9       |     9-1=8    |
-| P5  |    10     |     10-4=6       |     6-3=3    |
-
 Average Turn Around time = (4 + 8 + 2 + 9 + 6) / 5 = 29 / 5 = 5.8 unit
-
-Average waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
+Average Waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
 
 ### Shortest Job First
 
@@ -91,29 +82,20 @@ Dezavantaje - Nu poate fi implementat practic, deoarece timpul de execuție a pr
 
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
-| PID | Arrival time | Burst time |
-|-----|:------------:|:----------:|
-| P1  |      3       |     1      |
-| P2  |      1       |     4      |
-| P3  |      4       |     2      |
-| P4  |      0       |     6      |
-| P5  |      2       |     3      |
+| PID | Arrival time | Burst time | Exit time | Turn around time | Waiting time |
+|-----|:------------:|:----------:|:---------:|:----------------:|:------------:|
+| P1  |      3       |     1      |     7     |      7-3=4       |     4-1=3    |
+| P2  |      1       |     4      |    16     |     16-6=15      |    15-4=11   |
+| P3  |      4       |     2      |     9     |      9-4=5       |     5-2=3    |
+| P4  |      0       |     6      |     6     |      6-0=6       |     6-6=0    |
+| P5  |      2       |     3      |    12     |     12-2=10      |    10-3=7    |
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/sjf.png?raw=true)
 
 Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
-| PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|:----------------:|:------------:|
-| P1  |     7     |      7-3=4       |     4-1=3    |
-| P2  |    16     |     16-6=15      |    15-4=11   |
-| P3  |     9     |      9-4=5       |     5-2=3    |
-| P4  |     6     |      6-0=6       |     6-6=0    |
-| P5  |    12     |     12-2=10      |    10-3=7    |
-
 Average Turn Around time = (4 + 15 + 5 + 6 + 10) / 5 = 40 / 5 = 8 unit
-
 Average waiting time = (3 + 11 + 3 + 0 + 7) / 5 = 24 / 5 = 4.8 unit
 
 ### Shortest Remaining Time First
@@ -122,29 +104,20 @@ SRTF este optim și garantează timpul mediu de așteptare minim, dar poate gene
 
 **Exemplu:** Se considerară setul de 5 procese ale căror timpi de sosire și timpi de execuție sunt date mai jos:
 
-| PID | Arrival time | Burst time |
-|-----|:------------:|:----------:|
-| P1  |      3       |     1      |
-| P2  |      1       |     4      |
-| P3  |      4       |     2      |
-| P4  |      0       |     6      |
-| P5  |      2       |     3      |
+| PID | Arrival time | Burst time | Exit time | Turn around time | Waiting time |
+|-----|:------------:|:----------:|:---------:|:----------------:|:------------:|
+| P1  |      3       |     1      |     4     |      4-3=1       |    1-1=0     |
+| P2  |      1       |     4      |     6     |      6-1=5       |    5-4=1     |
+| P3  |      4       |     2      |     8     |      8-4=4       |    4-2=2     |
+| P4  |      0       |     6      |    16     |     16-0=16      |   16-6=10    |
+| P5  |      2       |     3      |    11     |     11-2=9       |    9-3=6     |
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/srtf.png?raw=true)
 
 Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
-| PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|:----------------:|:------------:|
-| P1  |     4     |      4-3=1       |    1-1=0     |
-| P2  |     6     |      6-1=5       |    5-4=1     |
-| P3  |     8     |      8-4=4       |    4-2=2     |
-| P4  |    16     |     16-0=16      |   16-6=10    |
-| P5  |    11     |     11-2=9       |    9-3=6     |
-
 Average Turn Around time = (1 + 5 + 4 + 16 + 9) / 5 = 35 / 5 = 7 unit
-
 Average waiting time = (0 + 1 + 2 + 10 + 6) / 5 = 19 / 5 = 3.8 unit
 
 ### Round Robin
@@ -153,39 +126,28 @@ Planificare Round Robin utilizează un algoritm în care fiecare proces primeșt
 
 **Exercițiu:** Se consideră setul de 5 procese a căror oră de sosire și timp de execuție sunt date mai jos. Dacă politica de planificare a CPU este Round Robin cu cuantum de timp = 2 unități, calculați timpul mediu de așteptare și timpul mediu de întoarcere.
 
-| PID | Arrival time | Burst time |
-|-----|:------------:|:----------:|
-| P1  |      0       |     5      |
-| P2  |      1       |     3      |
-| P3  |      2       |     1      |
-| P4  |      3       |     2      |
-| P5  |      4       |     3      |
+| PID | Arrival time | Burst time | Exit time | Turn around time | Waiting time |
+|-----|:------------:|:----------:|:---------:|:----------------:|:------------:|
+| P1  |      0       |     5      |     13    |     13-0=13      |    13-5=8    |
+| P2  |      1       |     3      |     12    |     12-1=11      |    11-3=8    |
+| P3  |      2       |     1      |      5    |      5-2=3       |     3-1=2    |
+| P4  |      3       |     2      |      9    |      9-3=6       |     6-2=4    |
+| P5  |      4       |     3      |     14    |     14-4=10      |    10-3=7    |
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/rr.png?raw=true)
 
 Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
-| PID | Exit time | Turn around time | Waiting time |
-|-----|:---------:|:----------------:|:------------:|
-| P1  |     13    |     13-0=13      |    13-5=8    |
-| P2  |     12    |     12-1=11      |    11-3=8    |
-| P3  |      5    |      5-2=3       |     3-1=2    |
-| P4  |      9    |      9-3=6       |     6-2=4    |
-| P5  |     14    |     14-4=10      |    10-3=7    |
-
 Average Turn Around time = (13 + 11 + 3 + 6 + 10) / 5 = 43 / 5 = 8.6 unit
-
 Average waiting time = (8 + 8 + 2 + 4 + 7) / 5 = 29 / 5 = 5.8 unit
 
 ## Procese în Linux
 
-Apelurile de sistem puse la dispoziție de Linux pentru gestionarea proceselor sunt: fork  și exec pentru crearea unui proces și respectiv modificarea imaginii unui proces, wait și waitpid pentru așteptarea terminării unui proces și exit pentru terminarea unui proces. Pentru copierea descriptorilor de fișier Linux pune la dispoziţie apelurile de sistem dup și dup2. Pentru citirea, modificarea ori ștergerea unei variabile de mediu, biblioteca standard C pune la dispoziţie apelurile getenv, setenv, unsetenv precum şi un pointer la tabela de variabile de mediu environ.
+Apelurile de sistem puse la dispoziție de Linux pentru gestionarea proceselor sunt: **fork** și **exec** pentru crearea unui proces și respectiv modificarea imaginii unui proces, **wait** și **waitpid** pentru așteptarea terminării unui proces și **exit** pentru terminarea unui proces. Pentru copierea descriptorilor de fișier Linux pune la dispoziţie apelurile de sistem **dup** și **dup2**. Pentru citirea, modificarea ori ștergerea unei variabile de mediu, biblioteca standard C pune la dispoziţie apelurile **getenv**, **setenv**, **unsetenv** precum şi un pointer la tabela de variabile de mediu **environ**.
 
-Rularea unui program executabil
-
-Modul cel mai simplu prin care se poate crea un nou proces este prin folosirea funcţiei de bibliotecă system:
-```
+Modul cel mai simplu prin care se poate crea un nou proces este prin folosirea funcţiei de bibliotecă **system**:
+```c
 int system(const char* command);
 ```
 Apelul acestei funcţii are ca efect execuţia ca o comandă shell a comenzii reprezentate prin șirul de caractere command. Să luăm ca exemplu următorul program C:
@@ -207,7 +169,7 @@ Implementarea system: se creează un nou proces cu fork; procesul copil execută
 ## Crearea unui proces
 
 În UNIX singura modalitate de creare a unui proces este prin apelul de sistem **fork()**:
-```
+```c
 pid_t fork(void);
 ```
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fork_system_call.png?raw=true)
@@ -319,7 +281,7 @@ Funcția va întoarce PID-ul procesului a cărui stare e raportată; infomațiil
 Starea procesului interogat se poate afla examinând status cu macrodefiniții precum WEXITSTATUS, care întoarce codul de eroare cu care s-a încheiat procesul copil, evaluând cei mai nesemnificativi 8 biți. Prin convenție, un cod de eroare egal cu 0 semnifică succes.
 
 Există o variantă simplificată care așteaptă orice proces copil să se termine:
-```
+```c
 pid_t wait(int *status);
 ```
 Este echivalentă cu: waitpid(-1, &status, 0);
