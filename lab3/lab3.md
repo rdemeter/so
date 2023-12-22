@@ -72,6 +72,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 Average Turn Around time = (4 + 8 + 2 + 9 + 6) / 5 = 29 / 5 = 5.8 unit
+
 Average Waiting time = (0 + 5 + 0 + 8 + 3) / 5 = 16 / 5 = 3.2 unit
 
 ### Shortest Job First
@@ -96,6 +97,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 Average Turn Around time = (4 + 15 + 5 + 6 + 10) / 5 = 40 / 5 = 8 unit
+
 Average waiting time = (3 + 11 + 3 + 0 + 7) / 5 = 24 / 5 = 4.8 unit
 
 ### Shortest Remaining Time First
@@ -118,6 +120,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 Average Turn Around time = (1 + 5 + 4 + 16 + 9) / 5 = 35 / 5 = 7 unit
+
 Average waiting time = (0 + 1 + 2 + 10 + 6) / 5 = 19 / 5 = 3.8 unit
 
 ### Round Robin
@@ -140,6 +143,7 @@ Se calculează:
 Turn Around time = Exit time – Arrival time    și     Waiting time = Turn Around time – Burst time
 
 Average Turn Around time = (13 + 11 + 3 + 6 + 10) / 5 = 43 / 5 = 8.6 unit
+
 Average waiting time = (8 + 8 + 2 + 4 + 7) / 5 = 29 / 5 = 5.8 unit
 
 ## Procese în Linux
