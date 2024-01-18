@@ -39,7 +39,6 @@
   * [wc](#wc)
   * [cut](#cut)
 - [Exemple](#exemple)
-- [Exerciţii](#Exerciţii)
 - [Link-uri utile](#link-uri-utile)
 
 Shell-ul este principala interfață de comunicare între utilizator și sistemul de operare. Deși, în mod intuitiv, shell-ul este identificat cu o interfață în linia de comandă, poate fi și o interfaţă grafică. Exemplu este File Explorer-ul sistemului de operare Microsoft Windows.
@@ -668,14 +667,14 @@ $ dd if=/dev/zero of=/dev/hdX bs=512 count=1
 
 # Filtre de text
 
-Variabilele, structurile de control și procedurile sunt întâlnite în toate limbajele de programare. Ce face insa un script shell indicat pentru sarcini administrative și repetitive este posibilitatea de îmbinare a comenzilor simple, de lucru cu fișierele sistemului pentru a obține informatiile dorite și pentru a adăuga o nouă funcționalitate. De obicei aceste sarcini necesita o procesare sofisticată. În aceste situații se folosesc filtrele de text.
+Variabilele, structurile de control și procedurile sunt întâlnite în toate limbajele de programare. Ce face însă un script shell indicat pentru sarcini administrative și repetitive este posibilitatea de îmbinare a comenzilor simple, de lucru cu fișierele sistemului pentru a obține informatiile dorite și pentru a adăuga o nouă funcționalitate. De obicei aceste sarcini necesită o procesare sofisticată. În aceste situații se folosesc filtrele de text.
 
 Comenzi folosite ca și filtre de text sunt head, tail, grep, sort, uniq, tr, cut.
 
 
 ## head, tail
 
-Cele doua comenzi sunt folosite pentru afișarea numai a primelor sau a ultimelor linii de text din cadrul unui fișier. Sintaxa lor este asemanatoare:
+Cele doua comenzi sunt folosite pentru afișarea numai a primelor sau a ultimelor linii de text din cadrul unui fișier. Sintaxa lor este asemănătoare:
 ```
 head [-n lines] files
 
@@ -796,7 +795,7 @@ $ tr 'A-Z' 'a-z' < file
 ```
 In cazul în care setul set2 are mai puține caractere decât setul set1 acestea vor fi multiplicate pentru a ajunge la aceeasi dimensiune.
 
-Urmatorul pas ar fi eliminarea spatiilor redundante. Optiunea -s (squeeze) inlocuieste o succesiune de doua sau mai multe caractere cu unul singur. Un exemplu este:
+Urmatorul pas ar fi eliminarea spatiilor redundante. Opțiunea -s (squeeze) inlocuiește o succesiune de două sau mai multe caractere cu unul singur. Un exemplu este:
 ```
 $ echo shell programming | tr -s 'lm' shel programing
 ```
@@ -836,11 +835,11 @@ $ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
 43
 123
 ```
-De multe ori output-ul apare intr-o forma in care elementele de sortat sunt intr-o altă coloană (nu prima, cea folosita implicit de sort). Pentru aceasta se poate folosi opțiunea -k (key). Sintaxa, în cazul folosirii acestei optiuni, este:
+De multe ori output-ul apare intr-o forma în care elementele de sortat sunt într-o altă coloană (nu prima, cea folosita implicit de sort). Pentru aceasta se poate folosi opțiunea -k (key). Sintaxa, în cazul folosirii acestei optiuni, este:
 ```
 sort -k start, end file
 ```
-Aici start este coloana de start a cheii, iar end este coloana de stop a cheii. Prima coloana este cea dupa care se face sortarea, iar, in cazul in care sunt doua sau mai multe elemente egale, se face deosebirea intre acestea folosind coloana urmatoare din cheie, etc.
+Aici start este coloana de start a cheii, iar end este coloana de stop a cheii. Prima coloana este cea după care se face sortarea, iar, în cazul în care sunt două sau mai multe elemente egale, se face deosebirea între acestea folosind coloana următoare din cheie, etc.
 
 Exemplu de utilizare este:
 ```
@@ -849,7 +848,7 @@ sort -rn -k 2,2 file	; sorteaza dupa a doua coloana
 
 ## uniq
 
-Se pot elimina duplicatele folosind optiunea -u la sort. Totusi, de multe ori este util sa afisam de cate ori apare un cuvânt. Pentru aceasta vom folosi comanda **uniq** cu optiunea -c. Atentie! uniq face eliminarea duplicatelor numai daca liniile sunt sortate. Exemple de utilizare:
+Se pot elimina duplicatele folosind opțiunea -u la sort. Totusi, de multe ori este util să afișăm de câte ori apare un cuvânt. Pentru aceasta vom folosi comanda **uniq** cu optiunea -c. Atentie! uniq face eliminarea duplicatelor numai dacă liniile sunt sortate. Exemple de utilizare:
 ```
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | uniq
 alfa
@@ -997,35 +996,6 @@ find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
 
 exit 0
 ```
-
-# Exerciţii
-
-1.	Creaţi și rulaţi un script shell care afișează mesajul Hello, World!.
--	folosiţi apostrof (') pentru citare (! este văzut ca un caracter special)
-
-2.	Afișati numele utilizatorilor din sistem care încep cu litera 's'. 
--	nu e nevoie de script shell; se poate face cu un one-liner
--	folositi /etc/passwd, grep și cut
-
-3.	Afișaţi separate prin tab numele și shell-ul utilizatorilor din sistem care NU au home-ul în /home/...
--	nu e nevoie de script shell
--	folosiţi /etc/passwd, grep, cut, tr
-
-4.	Creaţi un script shell care să afiẟeze suma memoriei ocupate de procesele din sistem după cum reiese din ieșirea comenzii ps -e -o rss. Comparaţi cu rezultatul oferit prin rularea comenzii free.
--	folosiţi opţiuni tail pentru a afiẟa toate liniile mai puţin prima (prima este antetul RSS) (man tail)
--	la tail este utila aici forma cu + a argumentului; daca nu gasiti in man nimic despre asta info tail
--	folosiţi expandare aritmetica
-
-5.	Folosiţi un one-liner pentru a contoriza toate fișierele cu extensia .sh din ierarhia /etc.
--	folosiţi find
-
-6.	Creaţi un script shell pentru a număra toate fiẟierele din /etc pentru care comanda file spune că sunt scripturi Shell:
-$ file test.bash test.bash: Bourne shell script text executable
-Puteţi să faceţi scriptul un one-liner?
--	va trebui să folosiţi find în combinaţie cu for
-
-7.	Descărcaţi folosind wget arhiva cu sursele nucleului Linux 1.0: (ftp://ftp.eu.kernel.org/pub/linux/kernel/v1.0/linux-1.0.tar.bz2). Dezarhivaţi (tar xjf ...). Creaţi un script shell care să contorizeze numărul de linii din fișierele sursă.
--	fișierele sursă se consideră cele cu extensia .c sau .h
 
 # Link-uri utile
 
