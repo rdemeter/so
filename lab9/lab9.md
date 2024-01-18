@@ -10,7 +10,7 @@
 ## 1. Problema rezervării biletelor
 
 Se consideră 5 terminale de vânzare a 25 de bilete pentru un anumit scop (spectacol, călătorie). Se cere să se găsească o modalitate de a evita vânzarea mai multor bilete pentru acelaşi loc.
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -98,7 +98,7 @@ Fie un buffer la care în permanenţă au acces 2 entităţi: un producător, ca
 - Să se creeze încă un producător sau încă un consumator.
 - Să se rezolve această problemă folosind variabile de condiţie.
 
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -167,7 +167,7 @@ producer: buffer[3]=J
 producer: buffer[4]=N
 producer: buffer[0]=B
 producer: buffer[1]=P
-    consumer: buffer[0]=
+    consumer: buffer[0]=B
     consumer: buffer[1]=P
     consumer: buffer[2]=B
     consumer: buffer[3]=J
@@ -203,14 +203,14 @@ Se folosesc 3 semafoare. Un semafor pe post de mutex pentru secţiunea critică 
 
 ## 3. Problema grădinii ornamentale
 
-Intrarea in grădinile ornamentale ale unui oraş oriental se face prin N porţi. Să se ţină evidenţa persoanelor care au intrat în grădină.
+Intrarea în grădinile ornamentale ale unui oraş oriental se face prin N porţi. Să se ţină evidenţa persoanelor care au intrat în grădină.
 
 ## 4. Problema scriitor cititor
 
 Considerăm o bază de date (un buffer) și multe procese care vor să acceseze această bază de date pentru scriere sau citire. Se permite ca mai multe procese să citească simultan dar, dacă unul din procese vrea să scrie (să modifice) baza de date, niciunul din celelalte procese nu au voie să acceseze baza de date (nici pentru scriere, nici pentru citire).
 Se consideră următoarea secvență de program nesincronizat. Să se adauge elementele de sincronizare.
 
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
