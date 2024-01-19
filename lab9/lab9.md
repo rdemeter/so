@@ -275,4 +275,44 @@ Thread-urile reprezintă atomi de hidrogen sau oxigen. O moleculă de apă se fo
 - Dacă există doi atomi de hidrogen, vor trebui să aștepte un atom de oxigen
 - Dacă există un atom de oxigen, va trebui să aștepte doi atomi de hidrogen
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <pthread.h>
+#include <semaphore.h>
 
+#define DATA_LENGTH 200
+
+void *hydrogen(void* arg)
+{
+  int i;
+  for(i=0; i < DATA_LENGTH; i++)
+  {
+    printf("H");
+    sleep(rand() % 5);
+  }
+}
+
+void* oxygen(void* arg)
+{
+  int i;
+  for(i=0; i < DATA_LENGTH/2; i++)
+  {
+    printf("O");
+    sleep(rand()%3);
+  }
+}
+
+int main(void)
+{
+  pthread_t hyd, oxy;
+  pthread_create(&hyd, NULL, hydrogen, NULL);
+  pthread_create(&oxy, NULL, oxygen, NULL);
+
+  pthread_join(hyd, NULL);
+  pthread_join(oxy, NULL);
+  return 0;
+}
+```
