@@ -272,7 +272,7 @@ int main(void)
 ## 5. Problema H2O
 
 Thread-urile reprezintă atomi de hidrogen sau oxigen. O moleculă de apă se formează din doi atomi de hidrogen și unul de oxigen
-- Dacă există doi atomi de hidrogen, va trebui să aștepte un atom de oxigen
+- Dacă există doi atomi de hidrogen, vor trebui să aștepte un atom de oxigen
 - Dacă există un atom de oxigen, va trebui să aștepte doi atomi de hidrogen
 
 ```c
