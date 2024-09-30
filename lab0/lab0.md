@@ -195,7 +195,7 @@ new_var2=${var2}var3
 ```
 ATENTIE! Sintaxa shell este foarte strictă; NU este permis sa existe spatii intre numele variabilei si caracterul = sau intre caracterul = si valoarea variabilei.
 
-Se observă ca valoarea unei variabile este referită prin folosirea simbolului $.
+Se observă că valoarea unei variabile este referită prin folosirea simbolului $.
 
 Exemple de folosire de variabile:
 ```
@@ -276,7 +276,7 @@ $ ls 'my dir'
 
 ## backslash
 
-Caracterul **backslash** forțeaza caracterul ce-l precede să-și păstreze semnificația literală; cu alte cuvinte, este folosit pentru a intârzia (a escapa) acel caracter:
+Caracterul **backslash** forțeaza caracterul ce-l precede să-și păstreze semnificația literală; cu alte cuvinte, este folosit pentru a întârzia (a escapa) acel caracter:
 
 ```
 $ echo $var1
@@ -289,7 +289,7 @@ $var1
 
 ## ghilimele
 
-Un șir intre ghilimele (double quotes ") va păstra semnificația literală a caracterelor ce-l compun cu excepția caracterelor ' (apostrof) și $ (dollar). Caracterul \ (backslash) își păstrează semnificația specială numai în cazul în care este urmat de $, ', ``, \ sau newline.
+Un șir între ghilimele (double quotes ") va păstra semnificația literală a caracterelor ce-l compun cu excepția caracterelor ' (apostrof) și $ (dollar). Caracterul \ (backslash) își păstrează semnificația specială numai în cazul în care este urmat de $, ', ``, \ sau newline.
 
 
 ## apostrof
@@ -298,7 +298,7 @@ Un șir între caractere apostrof (single quotes) va păstra semnificatia litera
 
 ## dollar - expansion
 
-Caracterul dollar este folosit in mai multe situatii in ceea ce se numește expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca într-o variabila ieșirea unei funcții, etc.
+Caracterul dollar este folosit în mai multe situații în ceea ce se numește expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca într-o variabila ieșirea unei funcții, etc.
 
 ### expandarea unui parametru
 
@@ -363,7 +363,7 @@ sau
 
 test conditie_efectiva
 
-Pentru condițiile posibile consultați pagina de manual a utilitarului test.
+Pentru condițiile posibile consultați pagina de manual a utilitarului **test**.
 
 ATENTIE! Dacă folosiți prima variantă este nevoie de spatiu după [ si inainte de ].
 
@@ -463,7 +463,7 @@ while CONDITIE; do
     comenzi
 done
 ```
-Conditia are același format ca la if.
+Conditia are același format ca la **if**.
 
 Exemplu:
 ```
@@ -674,13 +674,13 @@ Comenzi folosite ca și filtre de text sunt head, tail, grep, sort, uniq, tr, cu
 
 ## head, tail
 
-Cele doua comenzi sunt folosite pentru afișarea numai a primelor sau a ultimelor linii de text din cadrul unui fișier. Sintaxa lor este asemănătoare:
+Cele două comenzi sunt folosite pentru afișarea numai a primelor sau a ultimelor linii de text din cadrul unui fișier. Sintaxa lor este asemănătoare:
 ```
 head [-n lines] files
 
 tail [-n lines] files
 ```
-Primul argument, dacă există, afiseaza primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
+Primul argument, dacă există, afișează primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
 
 Exemple de comenzi sunt:
 ```
@@ -785,17 +785,17 @@ Comanda **tr** (transliterate) este folosita pentru a translata caracterele dint
 ```
 tr 'set1' 'set2'
 ```
-Spre exemplu, daca am dori să aflăm numărul de cuvinte dintr-un text, am translata toate caracterele speciale în spații cu o comanda de forma:
+Spre exemplu, dacă am dori să aflăm numărul de cuvinte dintr-un text, am translata toate caracterele speciale în spații cu o comanda de forma:
 ```
 $ tr '!?":'\[\]{}(),.' ' ' < file
 ```
-Caracterele [ si ] au fost escapate folosind \. Daca dorim sa translatam literele mari in litere mici, folosim:
+Caracterele [ si ] au fost escapate folosind \. Dacă dorim să translatăm literele mari în litere mici, folosim:
 ```
 $ tr 'A-Z' 'a-z' < file
 ```
 In cazul în care setul set2 are mai puține caractere decât setul set1 acestea vor fi multiplicate pentru a ajunge la aceeasi dimensiune.
 
-Urmatorul pas ar fi eliminarea spatiilor redundante. Opțiunea -s (squeeze) inlocuiește o succesiune de două sau mai multe caractere cu unul singur. Un exemplu este:
+Următorul pas ar fi eliminarea spațiilor redundante. Opțiunea -s (squeeze) inlocuiește o succesiune de două sau mai multe caractere cu unul singur. Un exemplu este:
 ```
 $ echo shell programming | tr -s 'lm' shel programing
 ```
@@ -874,12 +874,12 @@ $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq -c
 
 ## wc
 
-Comanda **wc** (word count) este folosita pentru a contoriza numarul de linii, de cuvinte sau de caractere dintr-un text sau de la intrarea standard. Pentru aceasta i se pot specifica optiunile -c, -w, -l.
+Comanda **wc** (word count) este folosită pentru a contoriza numărul de linii, de cuvinte sau de caractere dintr-un text sau de la intrarea standard. Pentru aceasta i se pot specifica opțiunile -c, -w, -l.
 
 
 ## cut
 
-Comanda **cut** selecteaza numai anumite părți (coloane) ale fișierului de intrare sau ale intrării standard.
+Comanda **cut** selectează numai anumite părți (coloane) ale fișierului de intrare sau ale intrării standard.
 
 Sintaxa cea mai folosită este:
 ```
@@ -938,11 +938,60 @@ drwxr-xr-x solab
 drwxr-xr-x tema1
 ```
 
-Comenzi din aceeasi categorie sunt **paste** si **join**.
+Comenzi din aceeași categorie sunt **paste** și **join**.
 
 # Exemple
 
-In continuare sunt prezentate cateva exemple de script-uri shell.
+In continuare sunt prezentate câteva exemple de script-uri shell.
+
+```
+#!/bin/bash
+echo "This is a simple calculator program!"
+echo -n "insert first number:"
+read a;
+echo -n "insert second number:"
+read b;
+echo "Sum = $((a+b))"
+echo "Diff = $((a-b))"
+echo "Prod = $((a*b))"
+exit
+```
+
+```
+#!/bin/bash
+
+# Assign two numbers to variables
+num1=5
+num2=10
+
+# Compare the numbers using if-else statements
+if [ $num1 -gt $num2 ]
+then
+  echo "$num1 is greater than $num2"
+elif [ $num1 -lt $num2 ]
+then
+  echo "$num1 is less than $num2"
+else
+  echo "$num1 is equal to $num2"
+fi
+```
+
+```
+#!/bin/bash
+#	Să se copieze în directorul bkup toate fișierele modificate
+#	cu mai mult de 30 de zile în urmă pentru utilizatorul curent
+
+if ! test -d ~/bkup; then
+    mkdir ~/bkup
+fi
+
+#	caută fișirele dorite
+#	do not try this if you have a lot of old files and little disk space ;) 
+find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
+
+exit 0
+```
+
 ```
 #!/bin/bash
 #	Afisarea numelui de utilizator si a home directory-ului pentru
@@ -977,22 +1026,6 @@ else
 fi
 
 done
-
-exit 0
-```
-
-```
-#!/bin/bash
-#	Sa se mute copieze in directorul bkup toate fisierele modificate
-#	cu mai mult de 30 de zile in urma pentru utilizatorul curent
-
-if ! test -d ~/bkup; then
-    mkdir ~/bkup
-fi
-
-#	cauta fisirele dorite
-#	do not try this if u have a lot of old files and little disk space ;) 
-find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
 
 exit 0
 ```
