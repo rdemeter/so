@@ -31,6 +31,7 @@ Modificarea unei astfel de resurse dintr-un fir este vizibilă instantaneu şi c
   - set de regiştri (deci şi un contor de program - registrul (E)IP)
 
 Procesele sunt folosite de SO pentru a grupa şi aloca resurse, iar firele de execuţie pentru a planifica execuţia de cod care accesează (în mod partajat) aceste resurse.
+![Image](https://github.com/rdemeter/so/blob/master/lab7/figs/processvsthreads.png?raw=true)
 
 ### Avantajele thread-urilor
 Deoarece thread-urile aceluiaşi proces folosesc tot spaţiul de adrese al procesului de care aparţin, folosirea lor
