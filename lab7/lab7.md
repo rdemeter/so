@@ -162,7 +162,7 @@ Dacă există alte procese interesate de procesor acesta li se oferă, iar dacă
 
 # Alte operaţii
 Dacă dorim să fim siguri că un cod de iniţializare se execută o singură dată putem folosi funcţia :
-```
+```c
 pthread_once_t once_control = PTHREAD_ONCE_INIT;
 int pthread_once(pthread_once_t *once_control, void (*init_routine) (void));
 ```
@@ -170,15 +170,15 @@ Scopul funcţiei pthread_once este de a asigura că o bucată de cod (de obicei 
 
 Funcţia pthread_once întoarce întotdeauna 0.
 Pentru a determina identificatorul thread-ului curent se poate folosi funcţia :
-```
+```c
 pthread_t pthread_self(void);
 ```
 Pentru a determina dacă doi identificatori se referă la același thread se poate folosi :
-```
+```c
 int pthread_equal(pthread_t thread1, pthread_t thread2);
 ```
 Pentru aflarea/modificarea priorităţilor sunt disponibile următoarele apeluri:
-```
+```c
 int pthread_setschedparam(pthread_t target_thread, int policy, const struct sched_param *param);
 int pthread_getschedparam(pthread_t target_thread, int *policy, struct sched_param *param);
 ```
