@@ -178,7 +178,7 @@ pid_t fork(void);
 ```
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/fork_system_call.png?raw=true)
 
-[https://www.geeksforgeeks.org/fork-practice-questions/](https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/create.html)
+[https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/create.html](https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/create.html)
 
 Efectul este crearea unui nou proces - procesul copil, copie a celui care a apelat fork - procesul părinte. Copilul primeşte un nou PID de la sistemul de operare. Secvența clasică de creare a unui proces este prezentată în continuare:
 
