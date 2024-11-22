@@ -8,10 +8,6 @@
   * [Crearea firelor de execuţie](#crearea-firelor-de-execuţie)
   * [Așteptarea firelor de execuţie](#așteptarea-firelor-de-execuţie)
   * [Terminarea firelor de execuţie](#terminarea-firelor-de-execuţie)
-- [Thread Specific Data](#thread-specific-data)
-  * [Crearea şi ştergerea unei variabile](#crearea-şi-ştergerea-unei-variabile)
-  * [Modificarea şi citirea unei variabile](#modificarea-şi-citirea-unei-variabile)
-  * [Funcţii pentru cleanup](#funcţii-pentru-cleanup)
   * [Atributele unui thread](#atributele-unui-thread)
 - [Cedarea procesorului](#cedarea-procesorului)
 - [Alte operaţii](#alte-operaţii)
@@ -126,95 +122,22 @@ Metodele ca un fir de execuţie să termine un alt thread sunt:
 #include <pthread.h>
 #include <stdlib.h>
 void* thread_function(void){
- char *a = malloc(12);
- strcpy(a, "hello world");
- pthread_exit((void*)a);
+  char *a = malloc(12);
+  strcpy(a, "hello world");
+  pthread_exit((void*)a);
 }
 int main(){
- pthread_t thread_id;
- char *b;
- pthread_create (&thread_id, NULL, &thread_function, NULL);
- //here we are reciving one pointer value so to use that we need double pointer
- pthread_join(thread_id,(void**)&b);
- printf("b is %s\n",b);
- free(b); // lets free the memory
+  pthread_t thread_id;
+  char *b;
+  pthread_create (&thread_id, NULL, &thread_function, NULL);
+  //here we are reciving one pointer value so to use that we need double pointer
+  pthread_join(thread_id,(void**)&b);
+  printf("b is %s\n",b);
+  free(b); // lets free the memory
 }
 ```
-Exemplul de mai sus creează un fir de execuție și returnează un pointer cu pthread_exit(). În timp ce rulează thread-ul creat, thread-ul principal poate executa alte sarcini. Când se dorește utilizarea datelor generate de thread se apelează funcția pthread_join().
+Exemplul de mai sus creează un fir de execuție și returnează un pointer cu **pthread_exit()**. În timp ce rulează thread-ul creat, thread-ul principal poate executa alte sarcini. Când se dorește utilizarea datelor generate de thread se apelează funcția **pthread_join()**.
 
-# Thread Specific Data
-Uneori este util ca o variabilă să fie specifică unui thread (invizibilă pentru celelalte thread-uri). Linux permite memorarea de perechi (cheie, valoare) într-o zonă special desemnată din stiva fiecărui thread al procesului curent.
-Cheia are acelaşi rol pe care o are numele unei variabile: desemnează locaţia de memorie la care se află valoarea.
-Fiecare thread va avea propria copie a unei "variabile" corespunzătoare unei chei k, pe care o poate modifica, fără ca acest lucru să fie observat de celelalte thread-uri, sau să necesite sincronizare. De aceea, TSD este folosită uneori pentru a optimiza operaţiile care necesită multă sincronizare între thread-uri: fiecare thread calculează informaţia specifică, şi există un singur pas de sincronizare la sfârşit, necesar pentru reunirea rezultatelor tuturor
-thread-urilor.
-Cheile sunt de tipul pthread_key_t, iar valorile asociate cu ele, de tipul generic void* (pointeri către locaţia de pe stivă unde este memorată variabila respectivă). Descriem în continuare operaţiile disponibile cu variabilele din TSD:
-## Crearea şi ştergerea unei variabile
-O variabilă se crează folosind:
-```c
-int pthread_key_create(pthread_key_t *key, void (*destr_function) (void *));
-```
-Al doilea parametru reprezintă o funcţie de cleanup. Acesta poate avea una din valorile:
-- NULL, şi este ignorat
-- pointer către o funcţie de clean-up care se execută la terminarea thread-ului
-Pentru ştergerea unei variabile se apelează:
-```
-int pthread_key_delete(pthread_key_t key);
-```
-Ea nu apelează funcţia de cleanup asociată acesteia.
-
-## Modificarea şi citirea unei variabile
-După crearea cheii, fiecare fir de execuţie poate modifica propria copie a variabilei asociate folosind funcţia pthread_setspecific :
-```
-int pthread_setspecific(pthread_key_t key, const void *pointer);
-```
-Primul parametru reprezintă cheia, iar al doilea parametru reprezintă valoarea specifică ce trebuie stocată si care este de tipul void*.
-Pentru a determina valoarea unei variabile de tip TSD se folosete funcţia :
-```c
-void* pthread_getspecific(pthread_key_t key);
-```
-
-## Funcţii pentru cleanup
-Funcţiile de cleanup asociate TSD-urilor pot fi foarte utile pentru a asigura faptul că resursele sunt eliberate atunci când un fir se termină singur sau este terminat de către un alt fir. Uneori poate fi util să se poată specifica astfel de funcţii fără a crea neapărat un thread specific data. Pentru acest scop exista funcţiile de cleanup.
-O astfel de funcţie de cleanup este o funcţie care este apelată când un thread se termină. Ea primeste un singur parametru de tipul void * care este specificat la înregistrarea funcţiei.
-O funcţie de cleanup este folosită pentru a elibera o resursă numai în cazul în care un fir de execuţie apelează pthread_exit sau este terminat de un alt fir folosind pthread_cancel. În circumstanţe normale, atunci când un fir nu se termină în mod forţat, resursa trebuie eliberată explicit, iar funcţia de cleanup trebuie sa
-fie scoasă.
-Pentru a înregistra o astfel de funcţie de cleanup se foloseste :
-```c
-void pthread_cleanup_push(void (*routine) (void *), void *arg);
-```
-Aceasta funcţie primeste ca parametri un pointer la funcţia care este înregistrată si valoarea argumentului care va fi transmis acesteia. Funcţia routine va fi apelată cu argumentul arg atunci când firul este terminat forţat.
-Dacă sunt înregistrate mai multe funcţii de cleanup, ele vor fi apelate în ordine LIFO (cea mai recent instalată va fi prima apelată).
-
-Pentru fiecare apel pthread_cleanup_push trebuie să existe si apelul corespunzător
-pthread_cleanup_pop care deînregistrează o funcţie de cleanup :
-```
-void pthread_cleanup_pop(int execute);
-```
-Această funcţie va deînregistra cea mai recent instalată funcţie de cleanup, si dacă parametrul execute este nenul o va și executa.
-
-**Atentie!** Un apel pthread_cleanup_push trebuie să aibă un apel corespunzător pthread_cleanup_pop în aceeași funcţie și la același nivel de imbricare.
-Un mic exemplu de folosire a funcţiilor de cleanup :
-```c
-void *alocare_buffer(int size)
-{
- return malloc(size);
-}
-void dealocare_buffer(void *buffer)
-{
- free(buffer);
-}
-/* functia apelata de un thread */
-void functie()
-{
- void *buffer = alocare_buffer(512);
- /* inregistrarea functiei de cleanup */
-
- pthread_cleanup_push(dealocare_buffer, buffer);
- /* aici au loc prelucrari, si se poate apela pthread_exit sau firul poate fi terminat de un alt fir*/
- /* deinregistrarea functiei de cleanup si executia ei (parametrul dat este nenul) */
- pthread_cleanup_pop(1);
-}
-```
 ## Atributele unui thread
 Atributele reprezintă o modalitate de specificare a unui comportament diferit de comportamentul implicit.
 Atunci când un fir de execuţie este creat cu pthread_create se poate specifica un atribut pentru
