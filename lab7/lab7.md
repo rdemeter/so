@@ -19,8 +19,7 @@
 - [Exerciţii](#exerciţii)
 
 ## Introducere
-În laboratoarele anterioare a fost prezentat conceptul de proces, acesta fiind unitatea elementară de alocare a resurselor utilizatorilor. În acest laborator este prezentat conceptul de fir de execuţie (sau thread), acesta fiind
-unitatea elementară de planificare într-un sistem. Ca și procesele, thread-urile reprezintă un mecanism prin care un calculator poate să ruleze mai multe lucruri simultan.
+În laboratoarele anterioare a fost prezentat conceptul de proces, acesta fiind unitatea elementară de alocare a resurselor utilizatorilor. În acest laborator este prezentat conceptul de fir de execuţie (sau thread), acesta fiind unitatea elementară de planificare într-un sistem. Ca și procesele, thread-urile reprezintă un mecanism prin care un calculator poate să ruleze mai multe lucruri simultan.
 
 Un fir de execuţie există în cadrul unui proces, și reprezintă o unitate de execuţie mai fină decât acesta. În momentul în care un proces este creat, în cadrul lui există un singur fir de execuţie, care execută programul
 secvenţial. Acest fir poate la rândul lui să creeze alte fire de execuţie; aceste fire vor rula porţiuni ale binarului asociat cu procesul curent, posibil aceleaşi cu firul iniţial (care le-a creat).
@@ -85,7 +84,7 @@ Aceste fire încearcă să combine avantajele thread-urilor user-level cu cele a
 
 ## Crearea firelor de execuţie
 Pentru crearea unui nou fir de execuţie se foloseste funcţia pthread_create :
-```
+```c
 #include <pthread.h>
 int pthread_create(pthread_t *tid, const pthread_attr_t *tattr, void*(*start_routine)(void *), void *arg);
  ```
@@ -94,7 +93,7 @@ Prin parametrul tattr se stabilesc atributele noului fir de execuţie. Dacă tra
 
 ## Așteptarea firelor de execuţie
 La fel ca la procese, un părinte îi poate aștepta fiul apelând pthread_join (înlocuiește waitpid).
-```
+```c
 int pthread_join(pthread_t th, void **thread_return);
 ```
 Primul parametru specifică identificatorul firului de execuţie așteptat, iar al doilea parametru specifică unde se va plasa codul întors de funcţia copil (printr-un pthread_exit sau printr-un return). În caz de succes se întoarce valoarea 0, altfel se întoarce o valoare negativă reprezentând un cod de eroare.
@@ -113,7 +112,7 @@ Thread-urile se împart în două categorii :
 
 ## Terminarea firelor de execuţie
 Un fir de execuţie se termină la un apel al funcţiei pthread_exit :
-```
+```c
 void pthread_exit(void *retval);
 ```
 Dacă nu există un astfel de apel este adăugat unul, în mod automat, la sfârșitul codului firului de execuţie.
@@ -122,7 +121,7 @@ Metodele ca un fir de execuţie să termine un alt thread sunt:
 - stabilirea unui protocol de terminare (spre exemplu, firul master setează o variabilă globală, pe care firul slave o verifică periodic).
 - mecanismul de "thread cancellation", pus la dispozitie de libpthread. Totuşi, această metodă nu este recomandată, pentru că este greoaie, şi pune probleme foarte delicate la clean-up.
 
-```
+```c
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -151,7 +150,7 @@ thread-urilor.
 Cheile sunt de tipul pthread_key_t, iar valorile asociate cu ele, de tipul generic void* (pointeri către locaţia de pe stivă unde este memorată variabila respectivă). Descriem în continuare operaţiile disponibile cu variabilele din TSD:
 ## Crearea şi ştergerea unei variabile
 O variabilă se crează folosind:
-```
+```c
 int pthread_key_create(pthread_key_t *key, void (*destr_function) (void *));
 ```
 Al doilea parametru reprezintă o funcţie de cleanup. Acesta poate avea una din valorile:
@@ -162,6 +161,7 @@ Pentru ştergerea unei variabile se apelează:
 int pthread_key_delete(pthread_key_t key);
 ```
 Ea nu apelează funcţia de cleanup asociată acesteia.
+
 ## Modificarea şi citirea unei variabile
 După crearea cheii, fiecare fir de execuţie poate modifica propria copie a variabilei asociate folosind funcţia pthread_setspecific :
 ```
@@ -169,7 +169,7 @@ int pthread_setspecific(pthread_key_t key, const void *pointer);
 ```
 Primul parametru reprezintă cheia, iar al doilea parametru reprezintă valoarea specifică ce trebuie stocată si care este de tipul void*.
 Pentru a determina valoarea unei variabile de tip TSD se folosete funcţia :
-```
+```c
 void* pthread_getspecific(pthread_key_t key);
 ```
 
@@ -179,7 +179,7 @@ O astfel de funcţie de cleanup este o funcţie care este apelată când un thre
 O funcţie de cleanup este folosită pentru a elibera o resursă numai în cazul în care un fir de execuţie apelează pthread_exit sau este terminat de un alt fir folosind pthread_cancel. În circumstanţe normale, atunci când un fir nu se termină în mod forţat, resursa trebuie eliberată explicit, iar funcţia de cleanup trebuie sa
 fie scoasă.
 Pentru a înregistra o astfel de funcţie de cleanup se foloseste :
-```
+```c
 void pthread_cleanup_push(void (*routine) (void *), void *arg);
 ```
 Aceasta funcţie primeste ca parametri un pointer la funcţia care este înregistrată si valoarea argumentului care va fi transmis acesteia. Funcţia routine va fi apelată cu argumentul arg atunci când firul este terminat forţat.
@@ -192,9 +192,9 @@ void pthread_cleanup_pop(int execute);
 ```
 Această funcţie va deînregistra cea mai recent instalată funcţie de cleanup, si dacă parametrul execute este nenul o va și executa.
 
-Atentie! Un apel pthread_cleanup_push trebuie să aibă un apel corespunzător pthread_cleanup_pop în aceeași funcţie și la același nivel de imbricare.
+**Atentie!** Un apel pthread_cleanup_push trebuie să aibă un apel corespunzător pthread_cleanup_pop în aceeași funcţie și la același nivel de imbricare.
 Un mic exemplu de folosire a funcţiilor de cleanup :
-```
+```c
 void *alocare_buffer(int size)
 {
  return malloc(size);
@@ -260,12 +260,12 @@ int pthread_setschedparam(pthread_t target_thread, int policy, const struct sche
 int pthread_getschedparam(pthread_t target_thread, int *policy, struct sched_param *param);
 ```
 # Compilare
-La compilare trebuie specificată și biblioteca libpthread (deci se va folosi argumentul -lpthread).
-Atentie! Nu link-aţi un program single-threaded cu această bibliotecă. Dacă faceţi așa ceva se vor stabili niște mecanisme multithreading care vor fi iniţializate la execuţie. Atunci programul va fi mult mai lent, va ocupa mult mai multe resurse și va fi mult mai dificil de depanat.
+La compilare trebuie specificată și biblioteca **libpthread** (deci se va folosi argumentul -lpthread).
+**Atentie!** Nu link-aţi un program single-threaded cu această bibliotecă. Dacă faceţi așa ceva se vor stabili niște mecanisme multithreading care vor fi iniţializate la execuţie. Atunci programul va fi mult mai lent, va ocupa mult mai multe resurse și va fi mult mai dificil de depanat.
 
-Exemplu
+**Exemplu**
 În continuare este prezentat un exemplu simplu în care sunt create 2 fire de execuţie, fiecare afișând un caracter de un anumit număr de ori pe ecran.
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
