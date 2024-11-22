@@ -154,7 +154,7 @@ Un thread cedează dreptul de execuție unui alt thread, în urma unuia din urm�
 - efectuează un apel blocant (cerere de I/O, sincronizare cu un alt thread) şi kernel-ul decide că este rentabil să facă un context switch
 - i-a expirat cuanta de timp alocată de către kernel
 - cedează voluntar dreptul, folosind funcţia:
-```
+```c
 #include <sched.h>
 int sched_yield(void);
 ```
@@ -215,7 +215,6 @@ int main()
   fir1_args.caracter = 'x';
   fir1_args.numar = 11;
   if (pthread_create(&fir1, NULL, &afisare_caracter, &fir1_args)) {
-
     perror("pthread_create");
     exit(1);
   }
