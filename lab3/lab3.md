@@ -3,6 +3,7 @@
 
 - [Procese](#procese)
   * [Planificarea proceselor](#Planificarea-proceselor)
+    * [First Come First Serve](#First-Come-First-Serve)
   * [Procese în Linux](#Procese-în-Linux)
   * [Crearea unui proces](#crearea-unui-proces)
   * [Aşteptarea terminării unui proces](#Aşteptarea-terminării-unui-proces)
@@ -434,7 +435,7 @@ Observăm că ultimele două mesaje au fost inversate, față de cazul precedent
 
 ## Exerciții
 
-Exercițiu: test.c
+**Exercițiu:** test.c
 
 Scrieți secvența afișată după rularea următorului program și desenați arborele de procese:
 ```c
@@ -454,18 +455,23 @@ int main(void)
 ```
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png?raw=true)
 
-Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
+**Exercitiu:** [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex2_fork_pids.png?raw=true)
 
-Exercitiu: [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
+Explicaţie:
+1. Va crea două procese, unul părinte P (are ID de proces al procesului copil) și celălalt este copilul C1 (ID de proces = 0).
+2. În instrucțiunea if am folosit operatorul SAU ( || ) și în acest caz a doua condiție este evaluată când prima condiție este falsă.
+3. Procesul părinte P va returna un întreg pozitiv, astfel încât să execute direct instrucțiunea și să creeze încă două procese (unul părinte P și celălalt este copilul C2). Procesul copil C1 va returna 0, așa că verifică a doua condiție și a doua condiție creează din nou încă două procese (unul părinte C1 și celălalt este copilul C3).
+4. C1 returnează un întreg pozitiv, astfel încât va crea în continuare încă două procese (unul părinte C1 și celălalt este copilul C4). Copilul C3 returnează 0, așa că va imprima direct 1.
+
+**Exercițiu:** [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex3_fork_pids.png?raw=true)
 
+**Exercițiu:** Folosind pipe se creează o comunicație unidirecțională între procese. Să se implementeze o comunicație bidirecțională între două procese (folosind două pipe-uri).
 
-Exercițiu: Folosind pipe se creează o comunicație unidirecțională între procese. Să se implementeze o comunicație bidirecțională între două procese (folosind două pipe-uri).
-
-Exercițiu: forks.c
+**Exercițiu:** forks.c
 
 Să se studieze următoarea aplicație:
 http://www.cs.cmu.edu/afs/cs/academic/class/15213-f01/src/forks.c
