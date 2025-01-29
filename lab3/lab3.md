@@ -301,7 +301,7 @@ Pentru a folosi wait sau waitpid trebuie incluse header-ele sys/types.h şi sys/
 ## Terminarea unui proces
 
 Pentru terminarea procesului curent, Linux pune la dispoziție apelul de sistem exit. 
-```
+```c
 #include <stdlib.h>
 void exit (int status);
 ```
@@ -458,7 +458,7 @@ int main(void)
 ```
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex1_fork_pids.png?raw=true)
 
-**Exercitiu:** [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
+**Exercițiu:** [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
 ![image](https://github.com/rdemeter/so/blob/master/lab3/figs/ex2_fork_pids.png?raw=true)
 
@@ -467,6 +467,7 @@ Explicaţie:
 2. În instrucțiunea if am folosit operatorul SAU ( || ) și în acest caz a doua condiție este evaluată când prima condiție este falsă.
 3. Procesul părinte P va returna un întreg pozitiv, astfel încât să execute direct instrucțiunea și să creeze încă două procese (unul părinte P și celălalt este copilul C2). Procesul copil C1 va returna 0, așa că verifică a doua condiție și a doua condiție creează din nou încă două procese (unul părinte C1 și celălalt este copilul C3).
 4. C1 returnează un întreg pozitiv, astfel încât va crea în continuare încă două procese (unul părinte C1 și celălalt este copilul C4). Copilul C3 returnează 0, așa că va imprima direct 1.
+5. Se va rula comanda **pstree -ps** pentru verificare și aprofundare.
 
 **Exercițiu:** [https://www.geeksforgeeks.org/fork-practice-questions/](https://www.geeksforgeeks.org/fork-practice-questions/)
 
