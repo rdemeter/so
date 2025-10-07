@@ -24,14 +24,14 @@ Se compilează fiecare fișier separat, iar la o modificare se va recompila doar
 Utilitarul Make foloseşte un fişier de configurare denumit Makefile. Un astfel de fişier conţine reguli şi comenzi de automatizare. În continuare este prezentat un exemplu foarte simplu de Makefile cu ajutorul căruia se va specifica sintaxa Make.
 
 Exemplu 7. Makefile
-```
+```c
 all:
     gcc -Wall intro-04.c -o intro-04
 clean:
     rm -f intro-04
 ```
 Pentru rularea exemplului de mai sus se folosesc comenzile:
-```
+```console
 $ make
 gcc -Wall intro-04.c -o intro-04
 $ ./intro-04
@@ -39,7 +39,7 @@ variabila my_uber_var are valoarea 12345
 ```
 Exemplul prezentat mai sus conţine două reguli: all şi clean. La rularea comenzii make se execută prima regulă din Makefile (în cazul de faţă all, nu contează în mod special denumirea). Comanda executată este gcc     -Wall intro-04.c -o intro-04. Se poate preciza explicit ce regulă să se execute prin transmiterea
 ca argument comenzii make:
-```
+```console
 $ make clean
 rm -f intro-04
 $ make all
@@ -49,7 +49,7 @@ gcc -Wall intro-04.c -o intro-04
 
 Se observă că nu se transmite niciun argument comenzii make pentru a preciza fișierul Makefile care va trebui analizat. În mod implicit, GNU Make caută, în ordine, fişierele GNUmakefile, Makefile, makefile şi le
 analizează. Pentru a preciza ce fişier Makefile trebuie analizat, se foloseşte opţiunea -f. Astfel, în exemplul de mai jos, folosim fişierul Makefile.ex1:
-```
+```console
 $ mv Makefile Makefile.ex1
 $ make
 make: *** No targets specified and no makefile found.	Stop.
@@ -65,7 +65,7 @@ gcc -Wall intro-04.c -o intro-04
 ## Sintaxa unei reguli
 
 În continuare este prezentată sintaxa unei reguli dintr-un fişier Makefile:
-```
+```c
 target: prerequisites
 <tab> command
 ```
@@ -78,7 +78,7 @@ reprezintă caracterul tab şi trebuie neaparat folosit înaintea precizării co
 Un exemplu indicat pentru un fişier Makefile este:
 
 Exemplu 8. Makefile.ex2
-```
+```c
 all: intro-04
 
 intro-04: intro-04.o
@@ -91,7 +91,7 @@ clean:
     rm -f *.o *~ intro-04
 ```
 Se observă prezenţa regulii all care va fi executată implicit. all are ca dependinţă intro-04 şi nu execută nicio comandă; intro-04 are ca dependinţă intro-04.o şi realizează link-editarea fişierului intro-04.o; intro-04.o are ca dependinţă intro-04.c şi realizează compilarea şi asamblarea fişierului intro-04.c. Pentru obţinerea executabilului se foloseşte comanda:
-```
+```console
 $ make -f Makefile.ex2
 gcc -Wall -c intro-04.c
 gcc intro-04.o -o intro-04
@@ -114,12 +114,12 @@ Pentru obţinerea unui target trebuie satisfăcute dependinţele (prerequisites)
 De remarcat este faptul că un target nu trebuie să aibă neapărat numele fişierului care se obţine. Se recomandă, însă, acest lucru pentru înţelegerea mai uşoară a fişierului Makefile, şi pentru a beneficia de faptul că make utilizează timpul de modificare al fişierelor pentru a decide când nu trebuie să facă nimic.
 
 Acest format al fişierului Makefile are avantajul eficientizării procesului de compilare. Astfel, după ce s-a obţinut executabilul intro-04 conform fişierului Makefile anterior, o nouă rulare a make nu va genera nimic:
-```
+```console
 $ make -f Makefile.ex2
 make: Nothing to be done for `all'.
 ```
 Mesajul "Nothing to be done for 'all'" înseamnă că ţinta all are toate dependinţele satisfăcute. Dacă, însă, folosim comanda touch pe fişierul obiect, se va considera că a fost modificat şi vor trebui refăcute target-urile care depindeau de el:
-```
+```console
 $ touch intro-04.o
 $ make -f Makefile.ex2
 gcc intro-04.o -o intro-04
@@ -127,7 +127,7 @@ $ make -f Makefile.ex2
 make: Nothing to be done for `all'.
 ```
 La fel, dacă ştergem fişierul obiect, acesta va trebui regenerat, ca şi toate target-urile care depindeau, direct sau indirect, de el:
-```
+```console
 $ rm intro-04.o
 $ make -f Makefile.ex2
 gcc -Wall -c intro-04.c
@@ -139,7 +139,7 @@ gcc intro-04.o -o intro-04
 Un fişier Makefile permite folosirea de variabile. Astfel, un exemplu uzual de fişier Makefile este:
 
 Exemplu 9. Makefile.ex3
-```
+```c
 CC = gcc
 CFLAGS = -Wall -g
 all: intro-04
@@ -167,13 +167,13 @@ Nişte variabile predefinite sunt $@, $^ şi $<.
 ```
 În acest fel, comanda
 
-```
+```c
 $(CC) $^ -o $@
 se expandează la
 gcc intro-04.o -o intro-04
 ```
 iar comanda
-```
+```c
 $(CC) $(CFLAGS) -c $<
 se expandează la
 gcc -Wall -g -c intro-04.c
@@ -195,7 +195,7 @@ $(CC) $(CFLAGS) -c -o $@ $<
 Astfel, fişierul Makefile.ex2 de mai sus poate fi simplificat, folosind reguli implicite, ca mai jos:
 
 Exemplu 10. Makefile.ex4
-```
+```c
 CC = gcc
 CFLAGS = -Wall -g all: intro-04
 intro-04: intro-04.o
@@ -206,7 +206,7 @@ clean:
     rm -f *.o *~ intro-04
 ```
 Pentru rulare, se foloseşte comanda:
-```
+```console
 $ make -f Makefile.ex4
 gcc -Wall -g	-c -o intro-04.o intro-04.c
 gcc	intro-04.o	-o intro-04
@@ -214,7 +214,7 @@ gcc	intro-04.o	-o intro-04
 Se observă că se folosesc reguli implicite. Makefile-ul poate fi simplificat şi mai mult, ca în exemplul de mai jos:
 
 Exemplul 11. Makefile.ex5
-```
+```c
 CC = gcc
 CFLAGS = -Wall -g
 
@@ -227,13 +227,13 @@ clean:
     rm -f *.o *~ intro-04
 ```
 În exemplul de mai sus s-a eliminat regula intro-04.o: intro-04.c. Make "vede" că nu există fişierul intro-04.o şi caută fişierul C din care poate să-l obţină. Pentru aceasta creează o regulă implicită şi compilează fişierul intro-04.c:
-```
+```console
 $ make -f Makefile.ex5
 gcc -Wall -g	-c -o intro-04.o intro-04.c
 gcc intro-04.o	-o intro-04
 ```
 De remarcat este faptul că dacă avem un singur fișier sursă nici nu trebuie să existe un fișier Makefile pentru a obține executabilul dorit.
-```
+```console
 $ ls
 intro-04.c
 $ make intro-04
@@ -253,7 +253,7 @@ Fişierele folosite sunt:
 Dorim, aşadar, obţinerea executabilelor client şi server pentru rularea celor două entităţi. Structura fişierului Makefile este prezentată mai jos:
 
 Exemplu 12. Makefile.ex6
-```
+```c
 CC = gcc	# compilatorul folosit
 CFLAGS = -Wall -g	# optiunile pentru compilare
 LDLIBS = -lefence	# optiunile pentru linking
@@ -291,7 +291,7 @@ clean:
     rm -fr *~ *.o server client
 ```
 Pentru obţinerea executabilelor server şi client se foloseşte:
-```
+```console
 $ make -f Makefile.ex6
 gcc -Wall -g -c -o client.o client.c
 gcc -Wall -g -c -o user.o user.c
@@ -325,7 +325,7 @@ Cea de a doua modalitate este utilă în cazul în care bug-ul nu a fost corecta
 Cea mai simplă formă de depanare cu ajutorul GDB este cea în care dorim să determinăm linia programului la care s-a produs eroarea. Pentru exemplificare considerăm următorul program:
 
 Exemplu 13. exemplul-6.c
-```
+```c
 #include <stdio.h>
 int f(int a, int b)
 {
@@ -342,7 +342,7 @@ int main()
 }
 ```
 După compilarea programului acesta poate fi depanat folosind GDB. După încărcarea programului de depanat, GDB într-un mod interactiv. Utilizatorul poate folosi apoi comenzi pentru a depana programul:
-```
+```console
 $ gcc -Wall -g exemplul-6.c
 $ gdb a.out
 [...]
@@ -356,7 +356,7 @@ Program received signal SIGSEGV, Segmentation fault.
 ```
  
 Prima comandă folosită este **run**. Această comandă va porni execuţia programului. Dacă această comandă primeşte argumente de la utilizator, acestea vor fi transmise programului. Înainte de a trece la prezentarea unor comenzi de bază din gdb, să demonstrăm cum se poate depana un program cu ajutorul fişierului core:
-```
+```console
 # ulimit -c 4
 # ./a.out
 Segmentation fault (core dumped)
@@ -370,7 +370,7 @@ Program terminated with signal 11, Segmentation fault.
 ## Comenzi de bază GDB
 
 Câteva din comenzile de bază în gdb sunt **breakpoint**, **next** şi **step**. Prima dintre ele primeşte ca argument un nume de funcţie (ex: main), un număr de linie şi, eventual, un fişier (ex: break sursa.c:50) sau o adresă (ex: break *0x80483d3). Comanda **next** va continua execuția programului până ce se va ajunge la următoarea linie din codul sursă. Dacă linia de executat conţine un apel de funcţie, funcţia se va executa complet. Dacă se doreşte şi inspectarea funcţiilor trebuie să se folosească **step**. Folosirea acestor comenzi este exemplificată mai jos:
-```
+```console
 $ gdb a.out
 (gdb) break main
 Breakpoint 1 at 0x80483f6: file exemplul-6.c, line 14. 
@@ -410,7 +410,7 @@ Program received signal SIGSEGV, Segmentation fault.
 (gdb)
 ```
 O altă comandă utilă este **list**. Aceasta va lista fişierul sursă al programului depanat. Comanda primeşte ca argument un număr de linie (eventual nume fişier), o funcţie sau o adresă de la care să listeze. Al doilea argument este opţional şi precizează câte linii vor fi afişate. În cazul în care comanda nu are niciun parametru, ea va lista de unde s-a oprit ultima afişare.
-```
+```console
 $ gdb a.out
 (gdb) list exemplul-6.c:1
 1	/* exemplul-6.c */
@@ -439,7 +439,7 @@ Program received signal SIGSEGV, Segmentation fault.
 16	*bug=f(1, 2);
 ```
 Comanda **continue** se foloseşte atunci când se doreşte continuarea execuţiei programului. Ultima comandă de bază este **print**. Cu ajutorul acesteia se pot afişa valorile variabilelor din funcţia curentă sau a variabilelor globale. **print** poate primi ca argument şi expresii complicate (dereferenţieri de pointeri, referenţieri ale variabilelor, expresii aritmetice, aproape orice expresie C valid). În plus, **print** poate afişa structuri de date precum struct şi union.
-```
+```console
 $ gdb a.out
 (gdb) break f
 Breakpoint 1 at 0x80483d6: file exemplul-6.c, line 8.
