@@ -47,7 +47,20 @@ Shell-ul este principala interfață de comunicare între utilizator și sistemu
 
 ![image](https://github.com/rdemeter/so/blob/master/lab0/figs/shell_scripting.png?raw=true)
 
-În continuare ne vom referi la Bash (Bourne Again SHell). Există și alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, Microsoft oferă PowerShell pe sistemele Windows. PowerShell are o abordarea orientată pe obiecte și un set de funcţionalităţi care acoperă nevoile de administrare ale unui sistem Windows.
+În continuare ne vom referi la Bash (Bourne Again SHell). Există și alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, începând cu versiunea Windows 10 (versiunea 2004 din mai 2020), Microsoft oferă subsistemul **WSL** (Windows Subsystem for Linux).
+WSL este un strat de compatibilitate pentru rularea nativă a fișierelor binare Linux pe Windows. Se integrează cu sistemul de fișiere Windows și vă permite să rulați direct instrumente din linia de comandă Linux. WSL este ideal pentru utilizatorii care trebuie să utilizeze instrumente Linux fără costurile suplimentare ale unei mașini virtuale complete sau ale unei configurări dual-boot.
+
+Pași pentru configurarea WSL:
+
+Activați WSL: Accesați Setări > Actualizare și securitate > Pentru dezvoltatori și activați „Mod dezvoltator”. Acest pas pregătește sistemul Windows pentru a accepta WSL.
+Instalați WSL: Deschideți PowerShell ca administrator și executați **wsl –-install -d Ubuntu**. Această comandă va descărca și configura componentele necesare pentru WSL.
+Lansați Linux: Deschideți un terminal, executați wsl și începeți să utilizați comenzile Linux. Puteți accesa sistemul de fișiere Windows direct din Linux și puteți utiliza instrumentele Linux preferate fără probleme.
+
+Se vor instala urmăroarele pachete software: mc, gcc, ..
+```console
+sudo apt install mc
+sudo apt install gcc
+```
 
 ## Cel mai simplu script shell
 
@@ -82,7 +95,7 @@ aici putem scrie orice ... oricum se va șterge
 ```
 Un script poate fi rulat prin precizarea explicită a interpretorului în linia de comandă:
 
-```
+```console
 $ bash hello.sh
 Hello, World!
 ```
@@ -113,7 +126,7 @@ Următorii operatori sunt folosiți pentru concatenarea diverselor comenzi:
 Inlănțuirea comenzilor se realizează folosind operatorul | (pipe). În această situatie ieșirea unei comenzi devine intrarea pentru cealaltă comandă.
 
 Câteva exemple sunt prezentate în continuare:
-```
+```console
 $ last -30 | grep Tue							
 razvan	pts/2	:0.0	Tue Jan	2	20:42 - down	(05:12)
 razvan	pts/2	:0.0	Tue Jan	2	20:35 - 20:41	(00:06)
@@ -122,7 +135,7 @@ razvan	pts/0	:0.0	Tue	Jan	2	20:27 -	down	(05:27)
 wtmp begins Tue Nov 14 04:22:33
 ```
 
-```
+```console
 $ last -30 | grep Tue | tr -s '	'	
 razvan pts/2 :0.0 Tue Jan 2 20:42	- down (05:12)
 razvan pts/2 :0.0 Tue Jan 2 20:35	- 20:41 (00:06)
@@ -131,7 +144,7 @@ razvan pts/0 :0.0 Tue Jan 2	20:27	- down (05:27)
 wtmp begins Tue Nov 14 04:22:33
 ```
 
-```
+```console
 $ last -30 | grep Tue | tr -s '	'	| head -4
 razvan pts/2 :0.0 Tue Jan 2	20:42	- down (05:12)
 razvan pts/2 :0.0 Tue Jan 2	20:35	- 20:41 (00:06)
@@ -139,7 +152,7 @@ razvan pts/1 :0.0 Tue Jan 2 20:34 - 21:23 (00:48)
 razvan pts/0 :0.0 Tue Jan 2 20:27 - down (05:27)
 ```
 
-```
+```console
 $ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2
 pts/2
 pts/2
@@ -147,14 +160,14 @@ pts/1
 pts/0
 ```
 
-```
+```console
 $ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2 | uniq
 pts/2
 pts/1
 pts/0
 ```
 
-```
+```console
 $ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2 | uniq | wc -l 3
 ```
 
