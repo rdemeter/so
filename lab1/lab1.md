@@ -120,7 +120,7 @@ Programul s-a compilat fără erori, pentru că funcţia suma a fost declarată 
 int function(...);
 ```
 În prototipul de mai sus se poate recunoaşte operatorul ... (se citeşte elipses) care precizează faptul că funcţia are un număr variabil de parametri. Dacă se compilează acelaşi program folosind optiunea -Wall, programatorul va avea cel puţin ocazia să afle că funcţia a fost declarată implicit (şi, în cazul de faţă, şi faptul că a uitat să întoarcă un rezultat din funcţia main):
-```
+```console
 $ gcc intro-01.c -Wall
 exemplul-1.c: In function `main':
 exemplul-1.c:5: warning: implicit declaration of function `suma'
@@ -129,7 +129,7 @@ exemplul-1.c:6: warning: control reaches end of non-void function
 Soluţia este crearea unei declaraţii pentru funcţia suma şi apelul corespunzător al acesteia:
 
 Exemplu 2. intro-02.c
-```
+```c
 #include <stdio.h> 
 int suma(int a, int b, int c);
 
@@ -142,7 +142,7 @@ int suma(int a, int b, int c) {
     return a + b + c;
 }
 ```
-```
+```console
 $ gcc -Wall intro-02.c
 $ ./a.out
 1 + 2 fac 3
@@ -171,7 +171,7 @@ Exemplele de până acum tratează programe scrise într-un singur fişier surs�
 Următoarele fişiere sunt folosite ca suport pentru a exemplifica modul de compilare a unui program provenind din mai multe fişiere sursă:
 
 Exemplu 3. intro-03-main.c
-```
+```c
 #include <stdio.h>
 #include "intro-03-util.h"
 
@@ -183,7 +183,7 @@ int main(void) {
 }
 ```
 Exemplu 3. intro-03-util.h
-```
+```c
 #ifndef _INTRO_03_UTIL_H
 #define _INTRO_03_UTIL_H   1
 
@@ -193,7 +193,7 @@ void f2(void);
 #endif
 ```
 Exemplu 3. intro-03-f1.c
-```
+```c
 #include "intro-03-util.h"
 #include <stdio.h>
 
@@ -202,7 +202,7 @@ void f1(void) {
 }
 ```
 Exemplu 3. intro-03-f2.c
-```
+```c
 #include "intro-03-util.h"
 #include <stdio.h>
 
@@ -211,7 +211,7 @@ void f2(void) {
 }
 ```
 În programul de mai sus se apelează, respectiv, funcţiile f1 şi f2 în funcţia main pentru a afişa diverse informaţii. Pentru compilarea acestora se transmit toate fişierele C ca argumente comenzii gcc:
-```
+```console
 $ gcc -Wall intro-03-main.c intro-03-f1.c intro-03-f2.c -o intro-03
 $ ./intro-03
 Fisierul curent este intro-03-f1.c
@@ -222,7 +222,7 @@ Executabilul de ieşire a fost denumit intro-03; pentru acest lucru s-a folosit 
 Se observă folosirea fişierului header intro-03-util.h pentru declararea funcţiilor f1 şi f2. Declararea unei funcţii se realizează prin precizarea antetului. Fişierul header este inclus în fişierul intro-03-main.c pentru ca acesta să aibă cunoştinţă de formatul de apel al funcţiilor f1 şi f2. Funcţiile f1 şi f2 sunt definite, respectiv, în fişierele intro-03-f1 şi intro-03-f2. Codul acestora este integrat în executabil în momentul link-editării.
 
 În general în obţinerea unui executabil din surse multiple se obişnuieşte compilarea fiecărei surse până la modulul obiect şi apoi link-editarea acestora:
-```
+```console
 $ gcc -Wall -c intro-03-f1.c
 $ gcc -Wall -c intro-03-f2.c
 $ gcc -Wall -c intro-03-main.c
@@ -236,7 +236,7 @@ Se observă obţinerea executabilului intro-03-m prin legarea modulelor obiect. 
 Scăderea timpului de dezvoltare prin compilarea numai a surselor care au fost modificate este motivaţia de bază pentru existenţa utilitarelor de automatizare precum **make** sau **nmake**.
 
 Un lucru important în utilizarea header-elor pentru aplicaţii cu mai multe fişiere este folosirea directivelor de procesare #ifndef, #define, #endif prezentate în secţiunea următoare. Un fişier header tipic va avea structura:
-```
+```c
 #ifndef _NUME_HEADER_H	/* numele fisierului header scris cu majuscule */
 #define _NUME_HEADER_H	1
 
@@ -259,7 +259,7 @@ Directivele de preprocesare cele mai întâlnite sunt:
 - #include pentru includerea de fişiere (de obicei header) într-un alt fişier
 - #define, #undef folosite pentru definirea, respectiv anularea definirii de macrouri
 
-```
+```c
 #define MY_MACRO 1	/* macro simplu */
 #undef MY_MACRO
 
@@ -276,7 +276,7 @@ do {	\
 ```
 • #if, #ifdef, #ifndef, #else, #elif, #endif folosite pentru compilare condiţionată
 
-```
+```c
 #define ON	1
 #define OFF	0
 #define DEBUG	ON
@@ -293,7 +293,7 @@ do {	\
 
 
 Exemplu 4. intro-04.c
-```
+```c
 #include <stdio.h>
 #define expand_macro(a) printf ("variabila %s are valoarea %d\n", #a, a)
 
@@ -303,7 +303,7 @@ int main (void) {
     return 0;
 } 
 ```
-```
+```console
 $ gcc -Wall intro-04.c
 $ ./a.out
 variabila my_uber_var are valoarea 12345
@@ -317,7 +317,7 @@ Preprocesorului îi pot fi transmise opţiuni prin parametri transmişi comenzii
 
 Opţiunea -I este utilă pentru a preciza locul în care se află fişierele incluse. Astfel, daca fişierul header
 utils.h se află în directorul includes/, utilizatorul poate include fişierul în forma
-```
+```c
 #include "utils.h"
 ```
 dar va trebui să precizeze calea către fişier folosind opţiunea -I:
@@ -335,7 +335,7 @@ Opţiunea -U este utilă pentru a anula definirea unui macro.
 
 De multe ori, un dezvoltator va dori să poată activa sau dezactiva foarte facil afişarea de mesaje suplimentare
 (de informare sau de debug) în sursele sale. Metoda cea mai simplă pentru a realiza acest lucru este prin intermediul unui macro:
-```
+```c
 #define DEBUG	1
 
 #ifdef DEBUG
@@ -343,11 +343,11 @@ De multe ori, un dezvoltator va dori să poată activa sau dezactiva foarte faci
 #endif
 ```
 Dacă se foloseşte opţiunea -D în linia de comandă, atunci definiţia macroului DEBUG poate fi eliminată:
-```
+```c
 $ gcc -DDEBUG [...]
 ```
 Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcării codului. Se poate încerca modularizarea afişării mesajelor de debug printr-o construcţie de forma:
-```
+```c
 #ifdef DEBUG
 #define Dprintf(msg)	printf(msg)
 #else
@@ -358,7 +358,7 @@ Folosirea perechii de directive #ifdef, #endif prezintă dezavantajul încărcă
 Problema este folosirea mai multor argumente la printf. Acest lucru poate fi rezolvat cu \_\_VA_ARGS\_\_ și operatorul ##.
 
 Exemplu: intro_debug.c, cu afişarea fişierului şi liniei unde s-a apelat macroul
-```
+```c
 #include <stdio.h>
 #ifdef DEBUG
 #define Dprintf(fmt, ...) printf("%s:%d "fmt, __FILE__ , __LINE__ , ## __VA_ARGS__)
@@ -375,7 +375,7 @@ int main()
 ````
 
 Compilați intro_debug.c cu și fără -DDEBUG
-```
+```console
 $gcc -Wall -DDEBUG intro_debug.c -o intro_debug
 ./intro_debug
 ./intro_debug.c:11 mesaj1
@@ -390,7 +390,7 @@ $gcc -Wall intro_debug.c -o intro_debug
 Linker-ul este folosit pentru a "unifica" mai multe module obiect şi biblioteci şi a obţine un executabil sau o bibliotecă. Linker-ul are rolul de a rezolva simbolurile nedefinite dintr-un modul obiect prin inspectarea celor existente într-un altul. Erorile de linker apar ca urmare a lipsei unui simbol, ca în exemplul de mai jos:
 
 Exemplu 5. intro-05-main.c
-```
+```c
 void f(void);
 
 int main (void) {
@@ -399,14 +399,14 @@ int main (void) {
 }
 ```
 Exemplu 5. intro-05-f.c
-```
+```c
 #include <stdio.h>
 
 void f(void) {
     printf ("Hello, World!\n");
 }
 ```
-```
+```console
 $ gcc -Wall intro-05-main.c
 /tmp/ccVBU35X.o: In function `main':
 intro-05-main.c:(.text+0x12): undefined reference to `f'
@@ -422,7 +422,7 @@ Linker-ul pe distribuţiile Linux este GNU LD. Executabilul asociat este ld. De 
 # Biblioteci
 
 O bibliotecă este o colecţie de funcţii precompilate. În momentul în care un program are nevoie de o funcţie, linker-ul va apela respectiva funcţie din bibliotecă. Numele fişierului reprezentând biblioteca trebuie să aibă prefixul lib:
-```
+```console
 $ ls -l /usr/lib/libm.*
 -rw-r--r-- 1 root root 481574 Jul 30 23:41 /usr/lib/libm.a
 lrwxrwxrwx 1 root root	14 Aug 25 20:20 /usr/lib/libm.so -> /lib/libm.so.6
@@ -436,7 +436,7 @@ Detalii despre crearea bibliotecilor se găsesc în secţiunea următoare.
 Legarea se face folosind opţiunea -l transmisă comenzii gcc. Astfel, dacă se doreşte folosirea unor funcţii din math.h, trebuie legată biblioteca matematică:
 
 Exemplu 6. intro-06.c
-```
+```c
 #include <stdio.h>
 #include <math.h>
 
@@ -447,13 +447,13 @@ int main (void) {
     return 0;
 }
 ```
-```
+```console
 $ gcc -Wall intro-06.c
 /tmp/ccRqG57V.o: In function `main':
 intro-06.c:(.text+0x1b): undefined reference to `cos'
 intro-06.c:(.text+0x2c): undefined reference to `sin' collect2: ld returned 1 exit status
 ```
-```
+```console
 $ gcc -Wall intro-06.c -lm
 $ ./a.out
 sin = 0.707107, cos = 0.707107
@@ -465,14 +465,14 @@ Se observă că, în primă fază, nu s-au rezolvat simbolurile cos şi sin. Dup
 Pentru crearea de biblioteci vom folosi exemplul 3. Vom include modulele obiect rezultate din fişierele sursă intro-03-f1.c şi intro-03-f2.c într-o bibliotecă pe care o vom folosi ulterior pentru obţinerea executabilului final.
 
 Primul pas constă în obţinerea modulelor obiect asociate:
-```
+```console
 $ gcc -Wall -c intro-03-f1.c
 $ gcc -Wall -c intro-03-f2.c
 ```
 ## Crearea unei biblioteci statice
 
 O bibliotecă statică este o arhivă ce conține fișiere obiect creată cu ajutorul utilitarului ar.
-```
+```console
 $ ar rc libintro.a intro-03-f1.o intro-03-f2.o
 $ gcc -Wall intro-03-main.c -o intro-lib -lintro
 /usr/bin/ld: cannot find -lintro
@@ -481,7 +481,7 @@ collect2: ld returned 1 exit status
 Aruncați o privire în pagina de manual a utilitarului ar și interpretați parametrii rc de mai sus.
 
 Linker-ul returnează eroare precizând că nu găseşte biblioteca libintro. Aceasta deoarece linker-ul nu a fost configurat să caute şi în directorul curent. Pentru aceasta se foloseşte opţiunea -L, urmată de directorul în care trebuie căutată biblioteca (în cazul nostru este vorba de directorul curent):
-```
+```console
 $ gcc -Wall intro-03-main.c -o intro-lib -lintro -L.
 $ ./intro-lib
 Fisierul curent este intro-03-f1.c
@@ -491,7 +491,7 @@ Va aflati la linia 5 din fisierul intro-03-f2.c
 ## Crearea unei biblioteci partajate
 
 Spre deosebire de o bibliotecă statică despre care am văzut că nu este nimic altceva decât o arhivă de fișiere obiect, o bibliotecă partajată este ea insăși un fișier obiect. Crearea unei biblioteci partajate se realizează prin intermediul linker-ului. Opțiunea -shared indică compilatorului să creeze un obiect partajat și nu un fișier executabil. Este, de asemenea, indicată folosirea opţiunii -fPIC:
-```
+```console
 $ gcc -shared -fPIC intro-03-f1.o intro-03-f2.o -o libintro_shared.so
 $ gcc -Wall intro-03-main.c -o intro-lib -lintro_shared -L.
 $ ./intro-lib
@@ -502,14 +502,14 @@ cannot open shared object	file: No such file or directory
 La rularea executabilului se poate observa că nu se poate încărca biblioteca partajată. Cauza este deosebirea dintre bibliotecile statice şi bibliotecile partajate. În cazul bibliotecilor statice codul funcţiei de bibliotecă este copiat în codul executabil la link-editare. De partea cealaltă, în cazul bibliotecilor partajate, codul este încărcat în memorie în momentul rulării.
 
 Astfel, în momentul rulării unui program, loader-ul (programul responsabil cu încărcarea programului în memorie), trebuie să ştie unde să caute biblioteca partajată pentru a o încărca în memorie în cazul în care aceasta nu a fost încărcată deja. Loader-ul foloseşte câteva căi predefinite (/lib, /usr/lib, etc) şi de asemenea locaţii definite în variabila de mediu LD_LIBRARY_PATH:
-```
+```console
 $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 $ ./intro-lib
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
 ```
 În exemplul de mai sus variabilei de mediu LD_LIBRARY_PATH i-a fost adăugată calea către directorul curent rezultând în posibilitatea rulării programului. LD_LIBRARY_PATH va rămâne modificată cât timp va rula consola curentă. Pentru a face o modificare a unei variabile de mediu doar pentru o instanță a unui program se face atribuirea noii valori înaintea comenzii de execuție:
-```
+```console
 $ LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.  ./intro-lib
 Fisierul curent este intro-03-f1.c
 Va aflati la linia 5 din fisierul intro-03-f2.c
