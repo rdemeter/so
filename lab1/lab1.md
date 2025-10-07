@@ -54,28 +54,28 @@ Pe durata analizei sintactice, de obicei are loc și o analiză semantică, ceea
 
 GCC foloseşte pentru compilarea de programe C/C++ comanda gcc, respectiv g++. O invocare tipică este pentru compilarea unui program dintr-un singur fişier sursă:
 Exemplu hello.c
-```
+```c
 #include <stdio.h>
 int main() {
     printf("Hello, world!\n);
     return 0;
 }
 ```
-```
+```console
 $ gcc hello.c
 $ ./a.out
 Hello, world!
 ```
 Comanda gcc hello.c a fost folosită pentru compilarea fişierului sursă hello.c. Rezultatul a fost obţinerea executabilului a.out care a fost rulat.\
 Executabilul a.out este executabilul implicit obţinut de gcc. Dacă se doreşte obţinerea unui executabil cu alt nume se poate folosi opţiunea -o:
-```
+```console
 $ gcc hello.c -o hello
 $ ./hello
 Hello, world!
 ```
 Comanda de mai sus a produs executabilul hello.
 La fel se poate folosi g++ pentru compilarea unui fişier sursă C++:
-```
+```console
 $ g++ hello.cpp -o hello_cpp
 $ ./hello_cpp
 Hello, world!
@@ -98,7 +98,7 @@ $ gcc -c hello.c -o my_obj_hello.o
 Considerăm ca fiind indispensabilă folosirea opţiunii -Wall pentru a putea detecta încă din momentul compilării posibilele erori. O cauză importantă a apariţiilor acestor erori o constituie sintaxa foarte permisivă a limbajului C. Sperăm ca exemplul de mai jos să justifice utilitatea folosirii opţiunii -Wall:
 
 Exemplu 1. intro-01.c
-```
+```c
 #include <stdio.h>
 
 int main() {
@@ -110,13 +110,13 @@ int suma(int a, int b, int c) {
 }
 ```
 În exemplul mai sus, programatorul a uitat că funcţia definită de el pentru adunare primeşte trei parametri şi nu doi. Dacă programul se compilează fără opţiunea -Wall, nu se vor genera erori sau avertismente, dar rezultatul nu va fi cel aşteptat:
-```
+```console
 $ gcc intro-01.c
 $ ./a.out
 1+2 fac -1073743413
 ```
 Programul s-a compilat fără erori, pentru că funcţia suma a fost declarată implicit de compilator (în C, în mod normal, funcţiile trebuie să fie declarate înainte de a fi folosite). O funcţie declarat implicit are prototipul:
-```
+```c
 int function(...);
 ```
 În prototipul de mai sus se poate recunoaşte operatorul ... (se citeşte elipses) care precizează faptul că funcţia are un număr variabil de parametri. Dacă se compilează acelaşi program folosind optiunea -Wall, programatorul va avea cel puţin ocazia să afle că funcţia a fost declarată implicit (şi, în cazul de faţă, şi faptul că a uitat să întoarcă un rezultat din funcţia main):
