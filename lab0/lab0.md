@@ -59,7 +59,7 @@ Lansați Linux: Deschideți un terminal, executați wsl și începeți să utili
 Se vor instala urmăroarele pachete software: mc, gcc, ..
 ```console
 sudo apt install mc
-sudo apt install gcc
+sudo apt install build-essential
 ```
 
 ## Cel mai simplu script shell
