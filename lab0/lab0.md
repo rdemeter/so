@@ -50,10 +50,12 @@ Shell-ul este principala interfață de comunicare între utilizator și sistemu
 În continuare ne vom referi la Bash (Bourne Again SHell). Există și alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, începând cu versiunea Windows 10 (versiunea 2004 din mai 2020), Microsoft oferă subsistemul **WSL** (Windows Subsystem for Linux).
 WSL este un strat de compatibilitate pentru rularea nativă a fișierelor binare Linux pe Windows. Se integrează cu sistemul de fișiere Windows și vă permite să rulați direct instrumente din linia de comandă Linux. WSL este ideal pentru utilizatorii care trebuie să utilizeze instrumente Linux fără costurile suplimentare ale unei mașini virtuale complete sau ale unei configurări dual-boot.
 
-Pași pentru configurarea WSL:
+**Pași pentru configurarea WSL:**
 
 Activați WSL: Accesați Setări > Actualizare și securitate > Pentru dezvoltatori și activați „Mod dezvoltator”. Acest pas pregătește sistemul Windows pentru a accepta WSL.
+
 Instalați WSL: Deschideți PowerShell ca administrator și executați **wsl –-install -d Ubuntu**. Această comandă va descărca și configura componentele necesare pentru WSL.
+
 Lansați Linux: Deschideți un terminal, executați wsl și începeți să utilizați comenzile Linux. Puteți accesa sistemul de fișiere Windows direct din Linux și puteți utiliza instrumentele Linux preferate fără probleme.
 
 Se vor instala urmăroarele pachete software: mc, gcc, ..
@@ -66,7 +68,7 @@ sudo apt install build-essential
 
 Un script simplu care doar afișează mesajul "Hello, World!" este următorul:
 
-```
+```console
 #!/bin/bash
 
 #afiseaza mesaj
@@ -74,13 +76,13 @@ echo "Hello, World!"
 exit 0
 ```
 Execuţia acestuia este următoarea:
-```
+```console
 $ chmod +x hello.sh
 $ ./hello.sh
 Hello, World!
 ```
 Se observă că este necesar ca fișierul să fie executabil pentru a putea fi interpretat. Șirul #! de la începutul fișierului poartă denumirea de shebang. Acesta indică sistemului ce program va fi invocat pentru a interpreta scriptul. Exemple pot fi:
-```
+```console
 #!/bin/sh
 #!/bin/bash
 #!/usr/bin/perl
@@ -88,7 +90,7 @@ Se observă că este necesar ca fișierul să fie executabil pentru a putea fi i
 #!/usr/bin/awk -f
 ```
 Spre exemplu, următorul script se șterge pe sine:
-```
+```console
 #!/bin/rm -f
 
 aici putem scrie orice ... oricum se va șterge
@@ -181,13 +183,13 @@ Comenzilor le pot fi redirectate, respectiv, intrarea standard, ieșirea standar
 -	< - redirectarea intrării standard
 
 Exemple:
-```
+```console
 $ ls -l > ls.out
 ```
-```
+```console
 $ strace ls 2> strace.out
 ```
-```
+```console
 $ grep "alpha" < file.txt
 ```
 
@@ -197,7 +199,7 @@ Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de lim
 
 Exemple de definire de variabile:
 
-```
+```c
 var1=2
 var2=4asa
 var3='abcd'
@@ -211,30 +213,30 @@ ATENTIE! Sintaxa shell este foarte strictă; NU este permis sa existe spatii int
 Se observă că valoarea unei variabile este referită prin folosirea simbolului $.
 
 Exemple de folosire de variabile:
-```
+```console
 $ echo $var1
 2
 ```
-```
+```console
 $ echo $var12
 ```
-```
+```console
 $ echo ${var1}2
 22
 ```
-```
+```console
 $ echo "$var1"
 2
 ```
-```
+```console
 $ echo "$var1"2
 22
 ```
-```
+```console
 $ echo $var1$my_other_var
 2a 1 3 4
 ```
-```
+```console
 $ echo "$var1 $my_other_var"
 2 a 1 3 4
 ```
@@ -248,7 +250,7 @@ Numărul de argumente din linia de comandă este dat de '$#'. '$#' va fi 0 daca 
 $@ poate fi folosit pentru obținerea întregii liste de argumente separate prin spațiu.
 
 Exemplu:
-```
+```console
 #!/bin/sh
 echo "Scriptul are $# parametri"
 echo "Numele scriptului este $0"
@@ -264,7 +266,7 @@ fi
 echo "Lista de parametri este $@"
 ```
 Rularea scriptului este:
-```
+```console
 $ chmod +x test.bash
 $ ./test.bash alfa "beta gamma"
 Scriptul are 2 parametri
@@ -281,7 +283,7 @@ Un set de caractere au semnificație specială in cadrului shell-ului.
 ## spațiu
 
 Caracterul spațiu (blank) este separator pentru argumentele in linia de comandă sau pentru elementele unei liste. Dacă se dorește transmiterea ca parametru a unui argument ce conține spatiu acesta trebuie citat (quoted):
-```
+```console
 $ ls my\ dir
 $ ls "my dir"
 $ ls 'my dir'
@@ -291,11 +293,11 @@ $ ls 'my dir'
 
 Caracterul **backslash** forțeaza caracterul ce-l precede să-și păstreze semnificația literală; cu alte cuvinte, este folosit pentru a întârzia (a escapa) acel caracter:
 
-```
+```console
 $ echo $var1
 test
 ```
-```
+```console
 $ echo \$var1
 $var1
 ```
@@ -316,13 +318,13 @@ Caracterul dollar este folosit în mai multe situații în ceea ce se numește e
 ### expandarea unui parametru
 
 Se înlocuiește un parametru (variabila) sau se înlocuiesc parametrii poziționali. $? se traduce in valoarea de retur a ultimei comenzi executate.
-```
+```console
 $ ls -l | grep 126
 -rwxr-xr-x 1 razvan razvan 126 2007-01-06 21:42 pos2.sh 
 $ echo $?
 0
 ```
-```
+```console
 $ ls -l | grep 1267 
 $ echo $?
 1
@@ -331,7 +333,7 @@ $ echo $?
 ### substitutia unei comenzi
 
 Ieșirea unei comenzi inlocuiește comanda efectivă:
-```
+```console
 $ ls -l | wc -l 11
 $ var=$(ls -l | wc -l)
 $ echo $var
@@ -341,7 +343,7 @@ $ echo $var
 ### expansiune aritmetică
 
 Se realizează evaluarea unei expresii aritmetice cu furnizarea rezultatului:
-```
+```console
 $ num="1+2*3"
 $ echo $num
 1+2*3
@@ -357,7 +359,7 @@ Ca orice limbaj de programare, shell-ul are un set de structuri de control pentr
 ## if
 
 Sintaxa pentru **if** este următoarea:
-```
+```c
 if CONDITIE1; then
     comenzi
 elif CONDITIE2; then
@@ -381,7 +383,7 @@ Pentru condițiile posibile consultați pagina de manual a utilitarului **test**
 ATENTIE! Dacă folosiți prima variantă este nevoie de spatiu după [ si inainte de ].
 
 Exemple:
-```
+```c
 if test $i -eq 3; then
     echo "valoarea este 3"
 else
@@ -404,7 +406,7 @@ fi
 ## case
 
 Sintaxa pentru **case** este următoarea:
-```
+```c
 case VARIABILA in
     pattern1) comenzi ;;
     pattern2) comenzi ;;
@@ -413,7 +415,7 @@ esac
 Se poate folosi ca pattern * pe post de default.
 
 Exemplu:
-```
+```c
 #!/bin/sh
 echo -n "Enter the name of an animal: "
 read ANIMAL
@@ -431,7 +433,7 @@ echo " legs."
 ## for
 
 Sintaxa pentru **for** este următoarea:
-```
+```c
 for VARIABILA in LISTA; do
     comenzi
 done
@@ -439,28 +441,28 @@ done
 LISTA este o inșiruire de elemente separate prin spații. Variabila va lua pe rând aceste valori. Dacă se doresc variabile numerice în stilul C se poate folosi construcția (( ... )).
 
 Exemple:
-```
+```c
 for i in *; do
     if test -f "$i"; then
         echo "$i este fisier"
     fi
 done
 ```
-```
+```c
 for i in "1 2 3"; do
     sum=$(($sum + $i))
 done
 
 echo "suma este $sum"
 ```
-```
+```c
 for i in $(seq 1 10); do
     sum=$(($sum + $i))
 done
 
 echo "suma primelor 10 numere este $sum"
 ```
-```
+```c
 for ((i = 0; i < 100; i += 2)); do
     sum=$(($sum + $i))
 done
@@ -471,7 +473,7 @@ echo "suma numerelor pare pana la 100 este $sum"
 ## while
 
 Sintaxa pentru **while** este următoarea:
-```
+```c
 while CONDITIE; do
     comenzi
 done
@@ -479,7 +481,7 @@ done
 Conditia are același format ca la **if**.
 
 Exemplu:
-```
+```c
 i=1
 prod=1
 while test $i -le 30; do
@@ -493,7 +495,7 @@ echo "produsul este $prod"
 # Functii shell
 
 Ca orice alt limbaj de programare, shell-ul permite lucrul cu funcții proceduri. Sintaxa unei funcții este:
-```
+```c
 [function] nume_functie ()
 {
     comenzi
@@ -504,7 +506,7 @@ Identificatorul function este optional. Sintaxa de apel este simplă: numele fun
 ATENTIE! In cadrul unei funcții argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incât dacă dorim să referim într-o funcție argumentele în linia de comandă va trebui să-i transmitem ca parametri la apelul funcției.
 
 Exemplu:
-```
+```c
 #!/bin/sh
 function fun1 ()
 {
@@ -541,7 +543,7 @@ Pentru următoarele pattern-uri trebuie activată optiunea shopt -s extglob.
 -	!(lista_sabloane) - se potriveste cu toate sabloanele din lista mai putin unul
 
 Exemplu:
-```
+```console
 $ ls *.sh fun.sh hello.sh pos2.sh pos.sh 
 $ ls ?h* shell2.lyx shell.lyx shell.tex 
 $ ls *{e,y}x lab8.lyx shell2.lyx shell.lyx shell.tex 
@@ -559,7 +561,7 @@ Comanda **echo** este folosită pentru a afișa un șir de caractere, o variabil
 $ echo alfa
 alfa
 ```
-```
+```console
 $ echo $PATH
 /home/razvan/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
 $ echo '$PATH' $PATH
@@ -569,25 +571,25 @@ $ echo '$PATH' $PATH
 
 Comanda **cat** afișează conţinutul unui fișier sau al intrării standard. Comanda **tac** afișează conţinutul unui fișier inversat. Comanda **head** afișează începutul unui fișier sau al intrării standard, în timp ce comanda **tail** afișează sfârșitul acestuia:
 
-```
+```console
 $ cat /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
 ```
-```
+```console
 $ tac /etc/passwd
 bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
 monica:x:1005:1005:,,,:/home/students/monica:/bin/bash
 lucian:x:1004:1004:,,,:/home/lucian:/bin/bash
 ```
-```
+```console
 $ head -n 3 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
 ```
-```
+```console
 $ tail -n -3 /etc/passwd
 lucian:x:1004:1004:,,,:/home/lucian:/bin/bash
 monica:x:1005:1005:,,,:/home/students/monica:/bin/bash
@@ -597,16 +599,16 @@ bogdan:x:1006:1005:,,,:/home/students/bogdan:/bin/bash
 ## read
 
 Comanda **read** este folosită pentru citirea de informaţii de la intrarea standard:
-```
+```console
 $ read a
 alfa
 ```
-```
+```console
 $ echo $a
 alfa
 ```
 O folosire frecventă este în combinaţie cu while pentru citirea linie cu linie a conţinutului unui fișier:
-```
+```console
 $ cat out.txt | while read a; do echo "am citit $a"; done
 am citit a
 am citit b
@@ -618,7 +620,7 @@ am citit c
 Comanda **find** este o comandă fundamentală pentru parcurgerea intrărilor dintr-o ierarhie a sistemului de fișiere. Câteva exemple de utilizare sunt prezentate în continuare:
 
 -	cautarea headerelor de sistem care încep cu șirul std:
-```
+```console
 $ find /usr/include/ -type f -name 'std*'
 /usr/include/c++/4.1.2/ext/stdio_sync_filebuf.h 
 /usr/include/c++/4.1.2/ext/stdio_filebuf.h 
@@ -635,7 +637,7 @@ $ find /usr/include/ -type f -name 'std*'
 /usr/include/stdio_ext.h
 ```
 -	căutarea șirului mutex în headerele de sistem care conţin șirul lock
-```
+```console
 $ find /usr/include/ -name '*lock*' -exec grep -H mutex {} \;
 /usr/include/linux/seqlock.h: * This can be used when code [...]
 /usr/include/linux/seqlock.h: * own mutexing.
@@ -653,7 +655,7 @@ Utilitarul **dd** din Linux poate fi folosit pentru a:
 - Șterge conținutul hard diskului
 
 syntaxa:
-```
+```console
 $ sudo dd if=source-disk of=destination-disk [option]
 
 Unde
@@ -666,15 +668,15 @@ option: progresul, viteza de transfer al fișierului, formatul fișierului etc.
 Mai întâi, se execută comanda **lsblk** pentru a vizualiza toate discurile disponibile pe sistem, sau **fdisk -l**.
 
 Pentru a clona un întreg disc /dev/sdb în /dev/sdc, vom folosi următoarea comandă:
-```
+```console
 $ sudo dd if=/dev/sdb of=/dev/sdc status=progress
 ```
 De exemplu, pentru a clona o partiție /dev/sdb2 în /dev/sdc2, comanda ar fi:
-```
+```console
 $ sudo dd if=/dev/sdb2 of=/dev/sdc2 status=progress
 ```
 Următoarea comandă dd elimină datele din /dev/hdX:
-```
+```console
 $ dd if=/dev/zero of=/dev/hdX bs=512 count=1
 ```
 
@@ -696,7 +698,7 @@ tail [-n lines] files
 Primul argument, dacă există, afișează primele, respectiv ultimele n linii din text. Lipsa acestuia impune n = 10.
 
 Exemple de comenzi sunt:
-```
+```console
 $ ls -l
 
 total 44
@@ -713,13 +715,13 @@ drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
 drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096 Nov	12	20:06 tema1
 ```
-```
+```console
 $ ls -l | head -3
 total 44				
 drwxr-xr-x	2	razvan razvan 4096 Nov	16	00:01 lab1
 drwxr-xr-x	3	razvan razvan 4096 Oct	12	00:02 lab2
 ```
-```
+```console
 $	ls	-l | tail -4
 drwxr-xr-x	2	razvan razvan 4096 Nov	16	12:43 lab7
 drwxr-xr-x	2	razvan razvan 4096 Nov	20	12:34 lab8
@@ -727,7 +729,7 @@ drwxr-xr-x	5	razvan razvan 4096 Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096 Nov	12	20:06 tema1
 ```
 În cazul comenzi **tail** o opțiune utilă este -f care menține fișierul de vizualizat deschis pe masura ce programele scriu in el, spre exemplu pentru a vizualiza un fișier de log pe măsura ce informațiile sunt scrise în el:
-```
+```console
 $ tail -f /var/log/apache/access_log
 ```
 
@@ -744,13 +746,13 @@ $ grep latex lab2html.sh latex2html "$BASE.tex" 2>&1 > /dev/null latex "$BASE.te
 De multe ori dorim să realizăm căutarea în mod case-insensitive (adică să nu conteze faptul ca se caută UNIX sau unix). Pentru aceasta folosim optiunea -i.
 
 Când nu se precizează un fișier se folosește intrarea standard, grep devenind ideal pentru lucrul cu pipes. De exemplu:
-```
+```console
 $ last	| head -100 | grep tty
 root	tty1	Wed	Nov	16	11:00 -	down	(00:00)
 razvan	tty1	Wed	Nov	16	00:07 -	00:08	(00:01)
 ```
 O altă opțiune utilă este -v. Aceasta permite căutarea acelor linii care NU conțin cuvantul transmis ca parametru. Spre exemplu, dacă dorim afișarea utilizatorilor care nu au ca și director de baza un director de forma /home/nume, vom folosi comanda:
-```
+```console
 $ grep -v /home /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
@@ -764,19 +766,19 @@ mail:x:8:8:mail:/var/mail:/bin/sh
 ```
 
 Un alt exemplu de folosire este parsarea output-ului comenzii ps:
-```
+```console
 $ ps -af | grep lyx
 razvan	3767	3719	0	12:19	pts/0	00:00:05	lyx
 razvan	4219	3719	0	12:53	pts/0	00:00:00	grep lyx
 ```
-```
+```console
 $ ps -af | grep lyx | grep -v grep
 razvan	3767	3719	0 12:19 pts/0	00:00:05 lyx
 ```
 Optiunea -n permite afisarea numarului liniei care continea cuvantul cautat.
 
 Putem de asemenea să afișăm numai fișierele care conțin acel cuvânt (fără afișarea liniilor). Pentru aceasta folosim opțiunea -l (listare). De obicei este folosită în conjuncție cu opțiunea -R pentru căutarea recursivă in cadrul unei structuri de directoare:
-```
+```console
 $ grep -r -l "#include <sys/wait.h>" .
 
 ./lab2/lab2.lyx
@@ -816,14 +818,14 @@ $ echo shell programming | tr -s 'lm' shel programing
 ## sort
 
 Comanda **sort** este utilizată pentru sortarea liniilor alfabetic. Un exemplu de utilizare este:
-```
+```console
 $ echo -en "alfa\nomega\ngamma\nbeta\n"
 alfa
 omega
 gamma
 beta
 ```
-```
+```console
 $ echo -en "alfa\nomega\ngamma\nbeta\n" | sort
 alfa
 beta
@@ -831,7 +833,7 @@ gamma
 omega
 ```
 O optiune utilă in cazul sort este sortarea după valoarea numerică a șirurilor. Pentru aceasta folosim -n. De exemplu:
-```
+```console
 $ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
 123
 4
@@ -839,7 +841,7 @@ $ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
 5
 9
 ```
-```
+```console
 $ echo -en "10\n43\n4\n9\n123\n5\n" | sort -n
 4
 5
@@ -862,7 +864,7 @@ sort -rn -k 2,2 file	; sorteaza dupa a doua coloana
 ## uniq
 
 Se pot elimina duplicatele folosind opțiunea -u la sort. Totusi, de multe ori este util să afișăm de câte ori apare un cuvânt. Pentru aceasta vom folosi comanda **uniq** cu optiunea -c. Atentie! uniq face eliminarea duplicatelor numai dacă liniile sunt sortate. Exemple de utilizare:
-```
+```console
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | uniq
 alfa
 beta
@@ -871,13 +873,13 @@ beta
 gamma
 alfa
 ```
-```
+```console
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq
 alfa
 beta
 gamma
 ```
-```
+```console
 $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq -c
 3	alfa
 3	beta
@@ -899,7 +901,7 @@ Sintaxa cea mai folosită este:
 cut -d delim -f fields
 ```
 Folosindu-se delimitatorul delim se vor selecta numai câmpurile fields. Exemple de utilizare sunt:
-```
+```console
 $ ls -l
 
 total 44					
@@ -916,7 +918,7 @@ drwxr-xr-x	5	razvan razvan 4096	Oct	17	19:52 solab
 drwxr-xr-x	2	razvan razvan 4096	Nov	12	20:06 tema1
 ```
 
-```
+```console
 $ ls -l | cut -d ' ' -f 1,9
 
 total
@@ -933,7 +935,7 @@ drwxr-xr-x 14:38
 drwxr-xr-x 19:52
 drwxr-xr-x 20:06
 ```
-```
+```console
 $ ls -l | tr -s ' ' | cut -d ' ' -f 1,9
 
 total
@@ -957,7 +959,7 @@ Comenzi din aceeași categorie sunt **paste** și **join**.
 
 In continuare sunt prezentate câteva exemple de script-uri shell.
 
-```
+```console
 #!/bin/bash
 echo "This is a simple calculator program!"
 echo -n "insert first number:"
@@ -970,7 +972,7 @@ echo "Prod = $((a*b))"
 exit
 ```
 
-```
+```console
 #!/bin/bash
 
 # Assign two numbers to variables
@@ -989,7 +991,7 @@ else
 fi
 ```
 
-```
+```console
 #!/bin/bash
 #	Să se copieze în directorul bkup toate fișierele modificate
 #	cu mai mult de 30 de zile în urmă pentru utilizatorul curent
@@ -1005,7 +1007,7 @@ find ~ -type f -ctime +30 -exec cp -u {} ~/bkup \;
 exit 0
 ```
 
-```
+```console
 #!/bin/bash
 #	Afisarea numelui de utilizator si a home directory-ului pentru
 #	utilizatorii care se afla in ultimele N login-uri in sistem, unde
