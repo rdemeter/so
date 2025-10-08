@@ -125,9 +125,9 @@ Următorii operatori sunt folosiți pentru concatenarea diverselor comenzi:
 
 ## Înlănțuirea comenzilor
 
-Inlănțuirea comenzilor se realizează folosind operatorul | (pipe). În această situatie ieșirea unei comenzi devine intrarea pentru cealaltă comandă.
+Inlănțuirea comenzilor se realizează folosind operatorul | (pipe). În această situație ieșirea unei comenzi devine intrarea pentru cealaltă comandă.
 
-Câteva exemple sunt prezentate în continuare:
+Câteva exemple sunt prezentate în continuare. Se vor lista ultimele 30 de înregistrări din jurnalul login/logout care s-au realizat Tuesday:
 ```console
 $ last -30 | grep Tue							
 razvan	pts/2	:0.0	Tue Jan	2	20:42 - down	(05:12)
@@ -136,7 +136,7 @@ razvan	pts/1	:0.0	Tue	Jan	2	20:34 -	21:23	(00:48)
 razvan	pts/0	:0.0	Tue	Jan	2	20:27 -	down	(05:27)
 wtmp begins Tue Nov 14 04:22:33
 ```
-
+Se vor lista ultimele 30 de înregistrări din jurnalul login/logout care s-au realizat Tuesday, și se elimină spațiile din rezultat:
 ```console
 $ last -30 | grep Tue | tr -s '	'	
 razvan pts/2 :0.0 Tue Jan 2 20:42	- down (05:12)
@@ -145,7 +145,7 @@ razvan pts/1 :0.0 Tue Jan 2 20:34	- 21:23 (00:48)
 razvan pts/0 :0.0 Tue Jan 2	20:27	- down (05:27)
 wtmp begins Tue Nov 14 04:22:33
 ```
-
+Se vor lista ultimele 30 de înregistrări din jurnalul login/logout care s-au realizat Tuesday, se elimină spațiile din rezultat și se selectează primele 4 rânduri:
 ```console
 $ last -30 | grep Tue | tr -s '	'	| head -4
 razvan pts/2 :0.0 Tue Jan 2	20:42	- down (05:12)
@@ -153,25 +153,7 @@ razvan pts/2 :0.0 Tue Jan 2	20:35	- 20:41 (00:06)
 razvan pts/1 :0.0 Tue Jan 2 20:34 - 21:23 (00:48)
 razvan pts/0 :0.0 Tue Jan 2 20:27 - down (05:27)
 ```
-
-```console
-$ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2
-pts/2
-pts/2
-pts/1
-pts/0
-```
-
-```console
-$ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2 | uniq
-pts/2
-pts/1
-pts/0
-```
-
-```console
-$ last -30 | grep Tue | tr -s ' ' | head -4 | cut -d ' ' -f 2 | uniq | wc -l 3
-```
+Dacă comanda last nu afișează nimica (în emulatoare de Linux), se poate rula comanda: $cat /etc/passwd | grep nume_utilizator.
 
 ## Redirectări
 
@@ -179,7 +161,7 @@ Comenzilor le pot fi redirectate, respectiv, intrarea standard, ieșirea standar
 
 -	\> - redirectarea ieșirii standard
 -	2> - redirectarea erorii standard
--	2>&1 - redirectarea erorii standard in ieșirea standard. Efectiv, unificarea stderr cu stdout.
+-	2>&1 - redirectarea erorii standard în ieșirea standard. Efectiv, unificarea stderr cu stdout.
 -	< - redirectarea intrării standard
 
 Exemple:
@@ -195,7 +177,7 @@ $ grep "alpha" < file.txt
 
 # Variabile
 
-Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de limbajele cunoscute, variabilele shell nu au tipuri. O variabila poate fi evaluată atât ca număr cât și ca șir de caractere.
+Ca orice limbaj, shell-ul permite utilizarea de variabile. Spre deosebire de limbajele cunoscute, variabilele shell nu au tipuri. O variabilă poate fi evaluată atât ca număr cât și ca șir de caractere.
 
 Exemple de definire de variabile:
 
@@ -208,7 +190,7 @@ my_other_var="a 1 3 4"
 new_var=$var1
 new_var2=${var2}var3
 ```
-ATENTIE! Sintaxa shell este foarte strictă; NU este permis sa existe spatii intre numele variabilei si caracterul = sau intre caracterul = si valoarea variabilei.
+ATENTIE! Sintaxa shell este foarte strictă; NU este permis să existe spații între numele variabilei și caracterul = sau între caracterul = și valoarea variabilei.
 
 Se observă că valoarea unei variabile este referită prin folosirea simbolului $.
 
@@ -245,7 +227,7 @@ $ echo "$var1 $my_other_var"
 
 Un script poate primi argumente în linia de comandă. Argumentele sunt referite respectiv folosind parametrii poziționali: $1, $2, ... $0 este numele scriptului (echivalent cu argv[0] din C).
 
-Numărul de argumente din linia de comandă este dat de '$#'. '$#' va fi 0 daca nu avem argumente in linia de comandă (echivalentul C - argc - ar fi avut valoarea 1 in acest caz).
+Numărul de argumente din linia de comandă este dat de '$#'. '$#' va fi 0 dacă nu avem argumente în linia de comandă (echivalentul C - argc - ar fi avut valoarea 1 în acest caz).
 
 $@ poate fi folosit pentru obținerea întregii liste de argumente separate prin spațiu.
 
@@ -309,15 +291,15 @@ Un șir între ghilimele (double quotes ") va păstra semnificația literală a 
 
 ## apostrof
 
-Un șir între caractere apostrof (single quotes) va păstra semnificatia literală a tuturor caracterelor ce-l compun (nu există excepții).
+Un șir între caractere apostrof (single quotes) va păstra semnificația literală a tuturor caracterelor ce-l compun (nu există excepții).
 
 ## dollar - expansion
 
-Caracterul dollar este folosit în mai multe situații în ceea ce se numește expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca într-o variabila ieșirea unei funcții, etc.
+Caracterul dollar este folosit în mai multe situații în ceea ce se numește expansion. Este folosit pentru a recupera valoarea unei variabile, pentru a stoca într-o variabilă ieșirea unei funcții, etc.
 
 ### expandarea unui parametru
 
-Se înlocuiește un parametru (variabila) sau se înlocuiesc parametrii poziționali. $? se traduce in valoarea de retur a ultimei comenzi executate.
+Se înlocuiește un parametru (variabila) sau se înlocuiesc parametrii poziționali. $? se traduce în valoarea de retur a ultimei comenzi executate.
 ```console
 $ ls -l | grep 126
 -rwxr-xr-x 1 razvan razvan 126 2007-01-06 21:42 pos2.sh 
@@ -330,11 +312,12 @@ $ echo $?
 1
 ```
 
-### substitutia unei comenzi
+### substituția unei comenzi
 
 Ieșirea unei comenzi inlocuiește comanda efectivă:
 ```console
-$ ls -l | wc -l 11
+$ ls -l | wc -l
+11
 $ var=$(ls -l | wc -l)
 $ echo $var
 11
@@ -478,7 +461,7 @@ while CONDITIE; do
     comenzi
 done
 ```
-Conditia are același format ca la **if**.
+Condiția are același format ca la **if**.
 
 Exemplu:
 ```c
@@ -492,7 +475,7 @@ done
 echo "produsul este $prod"
 ```
 
-# Functii shell
+# Funcții shell
 
 Ca orice alt limbaj de programare, shell-ul permite lucrul cu funcții proceduri. Sintaxa unei funcții este:
 ```c
@@ -501,12 +484,12 @@ Ca orice alt limbaj de programare, shell-ul permite lucrul cu funcții proceduri
     comenzi
 }
 ```
-Identificatorul function este optional. Sintaxa de apel este simplă: numele funcției urmat de eventualii parametri.
+Identificatorul function este opțional. Sintaxa de apel este simplă: numele funcției urmat de eventualii parametri.
 
-ATENTIE! In cadrul unei funcții argumentele vor fi referite tot ca parametri pozitionali ($1, $2, ...) astfel incât dacă dorim să referim într-o funcție argumentele în linia de comandă va trebui să-i transmitem ca parametri la apelul funcției.
+ATENTIE! In cadrul unei funcții argumentele vor fi referite tot ca parametri poziționali ($1, $2, ...) astfel incât dacă dorim să referim într-o funcție argumentele în linia de comandă va trebui să-i transmitem ca parametri la apelul funcției.
 
 Exemplu:
-```c
+```console
 #!/bin/sh
 function fun1 ()
 {
