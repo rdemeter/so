@@ -834,7 +834,8 @@ omega
 ```
 O optiune utilă in cazul sort este sortarea după valoarea numerică a șirurilor. Pentru aceasta folosim -n. De exemplu:
 ```console
-$ echo -en "10\n43\n4\n9\n123\n5\n" | sort 10
+$ echo -en "10\n43\n4\n9\n123\n5\n" | sort
+10
 123
 4
 43
