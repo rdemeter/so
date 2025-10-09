@@ -66,7 +66,7 @@ sudo apt install build-essential
 
 ## Cel mai simplu script shell
 
-Un script simplu care doar afișează mesajul "Hello, World!" este următorul:
+Un script simplu care doar afișează mesajul "Hello, World!" este următorul. Se creează un fișier nou cu touch hello.sh și se introduce în fișier următorul conținut folosind mcedit, gedit, notepad sau vi.
 
 ```console
 #!/bin/bash
@@ -102,7 +102,7 @@ $ bash hello.sh
 Hello, World!
 ```
 
-În această situaţie nu este nevoie ca scriptul sa fie executabil și nici nu este nevoie de prezenţa liniei #!/bin/bash.
+În această situaţie nu este nevoie ca scriptul să fie executabil și nici nu este nevoie de prezenţa liniei #!/bin/bash.
 
 Caracterul # semnifică începutul unui comentariu care durează pană la sfarșitul liniei.
 
@@ -111,7 +111,7 @@ Comanda exit este folosită pentru a indica valoarea de retur a scriptului. Este
 
 # Operatori shell
 
-Shell-ul prezintă o serie de operatori folositi pentru îmbinarea comenzilor.
+Shell-ul prezintă o serie de operatori folosiți pentru îmbinarea comenzilor.
 
 
 ## Concatenarea comenzilor
