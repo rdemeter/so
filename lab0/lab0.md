@@ -122,7 +122,6 @@ Următorii operatori sunt folosiți pentru concatenarea diverselor comenzi:
 -	command1 && command2 - command2 este executată numai dacă command1 are valoare de retur 0
 -	command1 || comand2 - command2 este executată numai dacă command1 are valoare de retur diferita de 0
 
-
 ## Înlănțuirea comenzilor
 
 Inlănțuirea comenzilor se realizează folosind operatorul | (pipe). În această situație ieșirea unei comenzi devine intrarea pentru cealaltă comandă.
@@ -134,15 +133,6 @@ razvan	pts/2	:0.0	Tue Jan	2	20:42 - down	(05:12)
 razvan	pts/2	:0.0	Tue Jan	2	20:35 - 20:41	(00:06)
 razvan	pts/1	:0.0	Tue	Jan	2	20:34 -	21:23	(00:48)
 razvan	pts/0	:0.0	Tue	Jan	2	20:27 -	down	(05:27)
-wtmp begins Tue Nov 14 04:22:33
-```
-Se vor lista ultimele 30 de înregistrări din jurnalul login/logout care s-au realizat Tuesday, și se elimină spațiile din rezultat:
-```console
-$ last -30 | grep Tue | tr -s '	'	
-razvan pts/2 :0.0 Tue Jan 2 20:42	- down (05:12)
-razvan pts/2 :0.0 Tue Jan 2 20:35	- 20:41 (00:06)
-razvan pts/1 :0.0 Tue Jan 2 20:34	- 21:23 (00:48)
-razvan pts/0 :0.0 Tue Jan 2	20:27	- down (05:27)
 wtmp begins Tue Nov 14 04:22:33
 ```
 Se vor lista ultimele 30 de înregistrări din jurnalul login/logout care s-au realizat Tuesday, se elimină spațiile din rezultat și se selectează primele 4 rânduri:
