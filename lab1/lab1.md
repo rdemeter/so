@@ -471,7 +471,7 @@ $ gcc -Wall -c intro-03-f2.c
 ```
 ## Crearea unei biblioteci statice
 
-O bibliotecă statică este o arhivă ce conține fișiere obiect creată cu ajutorul utilitarului ar.
+O bibliotecă statică este o arhivă ce conține fișiere obiect creată cu ajutorul utilitarului **ar**.
 ```console
 $ ar rc libintro.a intro-03-f1.o intro-03-f2.o
 $ gcc -Wall intro-03-main.c -o intro-lib -lintro
@@ -517,6 +517,10 @@ $ ./intro-lib
 ./intro-lib: error while loading shared libraries: libintro_shared.so:
 cannot open shared object	file: No such file or directory
 ```
+Utilizarea bibliotecilor statice sau dinamice are impact asupra dimensiunii fișierului executabil:
+
+![Image](https://github.com/rdemeter/so/blob/master/lab1/static_dynamic_libs.png?raw=true)
+
 # Resurse utile
 1. GCC Online Documentation
 2. The C Preprocessor
