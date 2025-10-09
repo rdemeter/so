@@ -302,7 +302,7 @@ Caracterul dollar este folosit în mai multe situații în ceea ce se numește e
 Se înlocuiește un parametru (variabila) sau se înlocuiesc parametrii poziționali. $? se traduce în valoarea de retur a ultimei comenzi executate.
 ```console
 $ ls -l | grep 126
--rwxr-xr-x 1 razvan razvan 126 2007-01-06 21:42 pos2.sh 
+-rwxr-xr-x 1 razvan razvan 126 2024-01-06 21:42 pos2.sh 
 $ echo $?
 0
 ```
@@ -1015,8 +1015,6 @@ users=$(last -$1 | head -$(($1-2)) | cut -d ' ' -f 1 | sort | uniq | tr '\n' ' '
 for i in $users; do
 
 home_dir=$(cat /etc/passwd | grep "$i" | cut -d ':' -f 6)
-
-#no home dir
 
 if test -z $home_dir; then
     echo "User: $i Home dir: NONE"
