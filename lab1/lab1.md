@@ -499,7 +499,9 @@ $ ./intro-lib
 cannot open shared object	file: No such file or directory
 ```
  
-La rularea executabilului se poate observa că nu se poate încărca biblioteca partajată. Cauza este deosebirea dintre bibliotecile statice şi bibliotecile partajate. În cazul bibliotecilor statice codul funcţiei de bibliotecă este copiat în codul executabil la link-editare. De partea cealaltă, în cazul bibliotecilor partajate, codul este încărcat în memorie în momentul rulării.
+La rularea executabilului se poate observa că nu se poate încărca biblioteca partajată. Cauza este deosebirea dintre bibliotecile statice şi bibliotecile partajate. În cazul bibliotecilor statice codul funcţiei de bibliotecă este copiat în codul executabil la link-editare. De partea cealaltă, în cazul bibliotecilor partajate, codul este încărcat în memorie în momentul rulării. Altfel spus, utilizarea bibliotecilor statice sau dinamice influențează dimensiunea fișierului executabil:
+
+![Image](https://github.com/rdemeter/so/blob/master/lab1/static_dynamic_libs.png?raw=true)
 
 Astfel, în momentul rulării unui program, loader-ul (programul responsabil cu încărcarea programului în memorie), trebuie să ştie unde să caute biblioteca partajată pentru a o încărca în memorie în cazul în care aceasta nu a fost încărcată deja. Loader-ul foloseşte câteva căi predefinite (/lib, /usr/lib, etc) şi de asemenea locaţii definite în variabila de mediu LD_LIBRARY_PATH:
 ```console
@@ -517,9 +519,6 @@ $ ./intro-lib
 ./intro-lib: error while loading shared libraries: libintro_shared.so:
 cannot open shared object	file: No such file or directory
 ```
-Utilizarea bibliotecilor statice sau dinamice are impact asupra dimensiunii fișierului executabil:
-
-![Image](https://github.com/rdemeter/so/blob/master/lab1/static_dynamic_libs.png?raw=true)
 
 # Resurse utile
 1. GCC Online Documentation
