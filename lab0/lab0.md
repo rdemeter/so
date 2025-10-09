@@ -50,13 +50,13 @@ Shell-ul este principala interfață de comunicare între utilizator și sistemu
 În continuare ne vom referi la Bash (Bourne Again SHell). Există și alte shell-uri pe sisteme Unix precum tcsh, zsh, ash, etc. De curând, începând cu versiunea Windows 10 (versiunea 2004 din mai 2020), Microsoft oferă subsistemul **WSL** (Windows Subsystem for Linux).
 WSL este un strat de compatibilitate pentru rularea nativă a fișierelor binare Linux pe Windows. Se integrează cu sistemul de fișiere Windows și vă permite să rulați direct instrumente din linia de comandă Linux. WSL este ideal pentru utilizatorii care trebuie să utilizeze instrumente Linux fără costurile suplimentare ale unei mașini virtuale complete sau ale unei configurări dual-boot.
 
-**Pași pentru configurarea WSL:**
+**Pași pentru instalarea WSL:**
 
-Activați WSL: Accesați Setări > Actualizare și securitate > Pentru dezvoltatori și activați „Mod dezvoltator”. Acest pas pregătește sistemul Windows pentru a accepta WSL.
-
-Instalați WSL: Deschideți PowerShell ca administrator și executați **wsl –-install -d Ubuntu**. Această comandă va descărca și configura componentele necesare pentru WSL.
-
-Lansați Linux: Deschideți un terminal, executați wsl și începeți să utilizați comenzile Linux. Puteți accesa sistemul de fișiere Windows direct din Linux și puteți utiliza instrumentele Linux preferate fără probleme.
+```console
+wsl –-install
+wsl --install -d Ubuntu
+```
+Aceaste comenzi vor descărca și configura componentele necesare pentru WSL. După instalare, se deschide un terminal în care se execută wsl.exe și se pot introduce comenzi Linux. Se poate accesa sistemul de fișiere Windows direct din Linux și se pot utiliza instrumentele Linux preferate fără probleme.
 
 Se vor instala urmăroarele pachete software: mc, gcc, ..
 ```console
