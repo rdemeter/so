@@ -795,7 +795,8 @@ In cazul în care setul set2 are mai puține caractere decât setul set1 acestea
 
 Următorul pas ar fi eliminarea spațiilor redundante. Opțiunea -s (squeeze) inlocuiește o succesiune de două sau mai multe caractere cu unul singur. Un exemplu este:
 ```
-$ echo shell programming | tr -s 'lm' shel programing
+$ echo shell programming | tr -s 'lm'
+shel programing
 ```
 
 ## sort
