@@ -1011,17 +1011,13 @@ fi
 #se obtine lista utilizatorilor
 
 users=$(last -$1 | head -$(($1-2)) | cut -d ' ' -f 1 | sort | uniq | tr '\n' ' ')
-
 for i in $users; do
-
-home_dir=$(cat /etc/passwd | grep "$i" | cut -d ':' -f 6)
-
-if test -z $home_dir; then
+  home_dir=$(cat /etc/passwd | grep "$i" | cut -d ':' -f 6)
+  if test -z $home_dir; then
     echo "User: $i Home dir: NONE"
-else
+  else
     echo "User: $i Home dir: $home_dir"
-fi
-
+  fi
 done
 
 exit 0
