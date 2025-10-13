@@ -503,6 +503,9 @@ La rularea executabilului se poate observa că nu se poate încărca biblioteca 
 
 ![Image](https://github.com/rdemeter/so/blob/master/lab1/static_dynamic_libs.png?raw=true)
 
+![Image](https://github.com/rdemeter/so/blob/master/lab1/static_dynamic_libs2.png?raw=true)
+
+
 Astfel, în momentul rulării unui program, loader-ul (programul responsabil cu încărcarea programului în memorie), trebuie să ştie unde să caute biblioteca partajată pentru a o încărca în memorie în cazul în care aceasta nu a fost încărcată deja. Loader-ul foloseşte câteva căi predefinite (/lib, /usr/lib, etc) şi de asemenea locaţii definite în variabila de mediu LD_LIBRARY_PATH:
 ```console
 $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
