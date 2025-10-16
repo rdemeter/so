@@ -517,10 +517,14 @@ Pentru următoarele pattern-uri trebuie activată optiunea shopt -s extglob.
 
 Exemplu:
 ```console
-$ ls *.sh fun.sh hello.sh pos2.sh pos.sh 
-$ ls ?h* shell2.lyx shell.lyx shell.tex 
-$ ls *{e,y}x lab8.lyx shell2.lyx shell.lyx shell.tex 
-$ ls *[a-h]e* hello.sh shell2.lyx shell.lyx shell.tex
+$ ls *.sh
+fun.sh hello.sh pos2.sh pos.sh 
+$ ls ?h*
+shell2.lyx shell.lyx shell.tex 
+$ ls *{e,y}x
+lab8.lyx shell2.lyx shell.lyx shell.tex 
+$ ls *[a-h]e*
+hello.sh shell2.lyx shell.lyx shell.tex
 ```
 
 # Comenzi utile
