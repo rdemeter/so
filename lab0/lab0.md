@@ -143,7 +143,7 @@ razvan pts/2 :0.0 Tue Jan 2	20:35	- 20:41 (00:06)
 razvan pts/1 :0.0 Tue Jan 2 20:34 - 21:23 (00:48)
 razvan pts/0 :0.0 Tue Jan 2 20:27 - down (05:27)
 ```
-Dacă comanda last nu afișează nimica (în emulatoare de Linux), se poate rula comanda: $cat /etc/passwd | grep nume_utilizator.
+Dacă comanda **last** nu afișează nimica (în emulatoare de Linux), se poate rula comanda: $cat /etc/passwd | grep <nume_utilizator>.
 
 ## Redirectări
 
