@@ -465,6 +465,23 @@ Run till exit from #0	f (a=1, b=2) at exemplul-6.c:9
 (gdb) print bug
 $6 = 0x0
 ```
+O listă cu câteva comenzi utile pentru depanare:
+- comanda **finish** - iese din funcția curentă
+- comanda **print &x** - afișează adresa variabilei x
+- comanda **print/x x** - afișează valoarea variabilei în format hex
+- comanda **until 50** - execută programul până la linua 50
+- comanda **jump \*0x400800** - sare la o adresă
+- comanda **info registers** - afișează registrele procesorului
+- comanda **info threads** - afișeaza lista de thread-uri
+- comanda **info proc** - afișează informații despre procesul depanat
+- comanda **info proc mappings** - afișează informații legate de memoria utilizată
+- comanda **info locals** - afișează variabilele locale
+- comanda **info sharedlibrary** - afișează toate bibliotecile dinamice încărcate de programul depanat
+- comanda **set var x = 999** - modifică valoarea variabilei x în timpul execuției
+- comenzile **up** și **down** navighează în stack
+- comanda **info breakpoints** - afișează lista de breakpoint-uri
+- comenzile **break main**, **break 50**, **enable**, **disable**, **delete** - setează, activează/dezactivează/șterge breakpoint-uri
+
 ## DDD
 
 **GNU DDD** este un front-end grafic pentru depanatorul de linie de comandă GDB. Pe lângă caracteristicile obișnuite de interfață, cum ar fi vizualizarea textelor sursă, DDD a devenit faimos prin afișarea grafică interactivă a datelor, în care structurile de date sunt afișate sub formă de grafice.
@@ -488,7 +505,7 @@ int main() {
     return 0;
 }
 ```
-VS Code folosec două fișiere:
+VS Code folosește două fișiere:
 - tasks.json → pentru compilare
 - launch.json → pentru debug
 
@@ -533,7 +550,9 @@ VS Code folosec două fișiere:
     ]
 }
 ```
-Comenzile gdb se execută cu **-exec <comanda_gdb>**
+Se setează breakpoints, făcând Click în stânga liniei de cod și apare un punct roșu. După care, se ruleză debuggerul apăsând **F5** sau în tab-ul **Run and Debug** click pe **Start Debugging**. Programul se va compila automat, apoi GDB pornește sub VS Code. Comenzile gdb se execută în fereastra DEBUG CONSOLE **-exec comanda_gdb**.
+
+![Image](https://github.com/rdemeter/so/blob/master/lab2/figs/vscode.png?raw=true)
 
 ## Resurse utile
 
