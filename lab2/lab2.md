@@ -1,7 +1,6 @@
 # GNU Make și GDB
 
-- [GNU Make și GDB](#gnu-make--i-gdb)
-  * [GNU Make](#gnu-make)
+- [GNU Make](#gnu-make)
   * [Exemplu simplu Makefile](#exemplu-simplu-makefile)
   * [Sintaxa unei reguli](#sintaxa-unei-reguli)
   * [Funcţionarea unui fişier Makefile](#Funcţionarea-unui-fişier-Makefile)
@@ -10,8 +9,9 @@
   * [Exemplu complet de Makefile](#exemplu-complet-de-makefile)
 - [Depanarea programelor](#depanarea-programelor)
   * [GDB](#gdb)
-  * [Rularea GDB](#rularea-gdb)
   * [Comenzi de bază GDB](#Comenzi-de-bază-GDB)
+  * [DDD]
+  * [VSCode + gdb]
   * [Resurse utile](#resurse-utile)
 
 ## GNU Make
@@ -468,6 +468,70 @@ $6 = 0x0
 **GNU DDD** este un front-end grafic pentru depanatorul de linie de comandă GDB. Pe lângă caracteristicile obișnuite de interfață, cum ar fi vizualizarea textelor sursă, DDD a devenit faimos prin afișarea grafică interactivă a datelor, în care structurile de date sunt afișate sub formă de grafice.
 
 ![Image](https://github.com/rdemeter/so/blob/master/lab2/figs/ddd_all.png?raw=true)
+
+## VS Code + gdb
+
+Se instalează gdb, sudo apt install gdb, și extensia C/C++ pentru VS Code, Extensions -> C/C++ (Microsoft).
+
+main.cpp
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 5;
+    int y = 0;
+    int z = x / y; // BUG
+    cout << z << endl;
+    return 0;
+}
+```
+VS Code folosec două fișiere:
+- tasks.json → pentru compilare
+- launch.json → pentru debug
+
+.vscode/tasks.json
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g", "main.cpp", "-o", "a.out"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
+```
+.vscode/launch.json
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug C++",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/a.out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "build"
+        }
+    ]
+}
+```
+Comenzile gdb se execută cu **-exec <comanda_gdb>**
 
 ## Resurse utile
 
