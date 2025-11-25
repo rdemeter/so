@@ -10,8 +10,8 @@
 - [Depanarea programelor](#depanarea-programelor)
   * [GDB](#gdb)
   * [Comenzi de bază GDB](#Comenzi-de-bază-GDB)
-  * [DDD](#DDD)
-  * [VS Code + gdb](#VS-Code-+-gdb)
+  * [DDD](#ddd)
+  * [VS Code cu gdb](#VS-Code-cu-gdb)
   * [Resurse utile](#resurse-utile)
 
 ## GNU Make
@@ -465,11 +465,13 @@ Run till exit from #0	f (a=1, b=2) at exemplul-6.c:9
 (gdb) print bug
 $6 = 0x0
 ```
+## DDD
+
 **GNU DDD** este un front-end grafic pentru depanatorul de linie de comandă GDB. Pe lângă caracteristicile obișnuite de interfață, cum ar fi vizualizarea textelor sursă, DDD a devenit faimos prin afișarea grafică interactivă a datelor, în care structurile de date sunt afișate sub formă de grafice.
 
 ![Image](https://github.com/rdemeter/so/blob/master/lab2/figs/ddd_all.png?raw=true)
 
-## VS Code + gdb
+## VS Code cu gdb
 
 Se instalează gdb, sudo apt install gdb, și extensia C/C++ pentru VS Code, Extensions -> C/C++ (Microsoft).
 
