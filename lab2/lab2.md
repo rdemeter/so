@@ -10,8 +10,8 @@
 - [Depanarea programelor](#depanarea-programelor)
   * [GDB](#gdb)
   * [Comenzi de bază GDB](#Comenzi-de-bază-GDB)
-  * [DDD]
-  * [VSCode + gdb]
+  * [DDD](#DDD)
+  * [VS Code + gdb](#VS-Code-+-gdb)
   * [Resurse utile](#resurse-utile)
 
 ## GNU Make
