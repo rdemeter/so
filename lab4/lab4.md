@@ -18,6 +18,7 @@
   * [mtrace](#mtrace)
   * [Dublă dezalocare](#dublă-dezalocare)
   * [Valgrind](#valgrind)
+  * [Electric Fence](#electric-fence)
 - [Alte utilitare pentru depanarea problemelor de lucru cu memoria](#alte-utilitare-pentru-depanarea-problemelor-de-lucru-cu-memoria)
 - [Resurse utile](#resurse-utile)
 
@@ -568,13 +569,21 @@ Valgrind apar erori în 3 contexte:
 Valgrind este un utilitar de bază în depanarea programelor. Este facil de folosit (nu este intrusiv, nu necesită modificarea surselor) şi permite detectarea unui număr important de erori de programare apărute ca urmare a gestiunii defectuoase a memoriei.
 Informaţii complete despre modul de utilizare a Valgrind şi a utilitarelor asociate se găsesc în paginile de documentaţie Valgrind: http://valgrind.org/docs/manual/index.html
 
+## Electric Fence
+În exemplul client-server din capitolul Makefile, s-a folosit opțiunea -lefence
+```console
+gcc client.o user.o sock.o log.o -lefence -o client
+gcc server.o cli_handler.o sock.o log.o -lefence -o server
+```
+
+Opțiunea **-lefence** se referă la biblioteca Electric Fence, care este o bibliotecă de debugging pentru memorie (malloc/free), creată pentru a detecta erori precum: depășirea limitelor alocate (out-of-bounds), acces la memorie deja liberată (use-after-free), underruns, etc. În loc să returneze o zonă compactă de memorie, Electric Fence alocă memorie astfel încât, imediat după (sau înainte de) zona reală să fie o pagină memorie inaccesibilă — astfel orice acces dincolo de zona corectă generează imediat un segfault (erore), ajutând la identificarea exactă a locului bug-ului. Electric Fence consumă mult mai multă memorie — fiecare malloc produce pagini suplimentare pentru protecția „gardului electric”. De aceea, de regulă se leagă doar pentru faza de testare / debugging, nu în versiunea finală de producție.
+
 # Alte utilitare pentru depanarea problemelor de lucru cu memoria
 Utilitarele prezentate mai sus nu sunt singurele folosite pentru detectarea problemelor apărute în lucrul cu memoria. Alte utilitare sunt:
 - http://en.wikipedia.org/wiki/Category:Memory_management_software
 - dmalloc
 - mpatrol
 - DUMA
-- Electric Fence
 
 # Resurse utile
 - Linux System Programming - Chapter 8 - Memory Management
