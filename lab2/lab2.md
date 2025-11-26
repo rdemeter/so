@@ -302,7 +302,9 @@ gcc -Wall -g -c -o server.o server.c
 gcc -Wall -g -c -o cli_handler.o cli_handler.c
 gcc server.o cli_handler.o sock.o log.o -lefence -o server
 ```
-Regulile implicite intră în vigoare şi se obţin, pe rând, fişierele obiect şi fişierele executabile. Variabila LDLIBS este folosită pentru a preciza bibliotecile cu care se face link-editarea pentru obţinerea executabilului.
+Regulile implicite intră în vigoare şi se obţin, pe rând, fişierele obiect şi fişierele executabile. Variabila LDLIBS este folosită pentru a preciza bibliotecile cu care se face link-editarea pentru obţinerea executabilelor client și server.
+
+Opțiunea **-lefence** se referă la biblioteca Electric Fence, care este o bibliotecă de debugging pentru memorie (malloc/free), creată pentru a detecta erori precum: depășirea limitelor alocate (out-of-bounds), acces la memorie deja liberată (use-after-free), underruns, etc. În loc să returneze o zonă compactă de memorie, Electric Fence alocă memorie astfel încât, imediat după (sau înainte de) zona reală să fie o pagină memorie inaccesibilă — astfel orice acces dincolo de zona corectă generează imediat un segfault (erore), ajutând la identificarea exactă a locului bug-ului. Electric Fence consumă mult mai multă memorie — fiecare malloc produce pagini suplimentare pentru protecția „gardului electric”. De aceea, de regulă se leagă doar pentru faza de testare / debugging, nu în versiunea finală de producție.
 
 # Depanarea programelor
 
