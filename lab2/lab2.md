@@ -7,6 +7,7 @@
   * [Folosirea variabilelor](#folosirea-variabilelor)
   * [Folosirea regulilor implicite](#folosirea-regulilor-implicite)
   * [Exemplu complet de Makefile](#exemplu-complet-de-makefile)
+  * [Exemplu de utilizare Makefile](#exemplu-de-utilizare-makefile)
 - [Depanarea programelor](#depanarea-programelor)
   * [GDB](#gdb)
   * [Comenzi de bază GDB](#Comenzi-de-bază-GDB)
@@ -304,9 +305,23 @@ gcc server.o cli_handler.o sock.o log.o -lefence -o server
 ```
 Regulile implicite intră în vigoare şi se obţin, pe rând, fişierele obiect şi fişierele executabile. Variabila LDLIBS este folosită pentru a preciza bibliotecile cu care se face link-editarea pentru obţinerea executabilelor client și server.
 
+## Exemplu de utilizare Makefile
+
+În continuare se prezintă pașii pentru descărcare, dezarhivare, configurare, compilare și instalarea unei versiuni specifice de wget.
+
+```console
+wget https://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz
+tar -xvf wget-1.21.4.tar.gz
+cd wget-1.21.4
+./configure
+make
+make install
+```
+Se poate configura proiectul cu ./configure --prefix=/home/user/local --disable-ssl, care dezactivează suportul de ssl/tls și instalarea devine din directorul /usr/local/ în /home/user/local, pentru a nu cere permisiuni de root. Compilarea se face cu make sau make -j6, daca se dorește o compilare paralelă folosind 6 job-uri.
+
 # Depanarea programelor
 
-Exist câteva unelte GNU care pot fi folosite atunci când nu reuşim să facem un program să ne asculte. gdb, acronimul de la "Gnu DeBugger" este probabil cel mai util dintre ele, dar există și altele, cum ar fi ElectricFence, gprof sau mtrace. gdb va fi prezentat pe scurt în secţiunile ce urmează.
+Există câteva unelte GNU care pot fi folosite atunci când nu reuşim să facem un program să se execute corect. gdb, acronimul de la "Gnu DeBugger" este cel mai util dintre ele, dar există și altele, cum ar fi ElectricFence, gprof sau mtrace. gdb va fi prezentat pe scurt în secţiunea ce urmează.
 
 ## GDB
 
