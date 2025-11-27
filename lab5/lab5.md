@@ -20,17 +20,17 @@
     + [Inchiderea și ștergerea](#inchiderea-și-ștergerea-1)
   * [Resurse utile](#resurse-utile)
 
-Linux pune la dispoziție urmatoarele mecanisme de comunicare intre procese (IPC - Inter Process Communication):
-- fisiere
-- pipe-uri (anonime si cu nume, studiate in lucrarea anterioara)
+Linux pune la dispoziție următoarele mecanisme de comunicare între procese (IPC - Inter Process Communication):
+- fișiere (studiate la materia Limbaje de programare)
+- pipe-uri (anonime și cu nume, studiate in lucrarea anterioara)
 - semafoare (semaphores) - realizează sincronizarea execuțiilor unor procese
 - cozi de mesaje (message queues) - realizează schimbul de mesaje cu orice proces sau server
 - memorie partajată (shared memory) - realizează partajarea memoriei între procese
-- socket (care se vor studia la materia Retele de Calculatoare)
+- socket (care se vor studia la materia Rețele de Calculatoare)
 
 Obiectele de tip IPC pe care se concentrează laboratorul de față sunt gestionate global de sistem și rămân în viață chiar dacă procesul creator moare. Faptul că aceste resurse sunt globale în sistem are implicații contradictorii. Pe de o parte, dacă un proces se termină, datele plasate în obiecte IPC pot fi accesate ulterior de alte procese; pe de altă parte, procesul proprietar trebuie să se ocupe și de dealocarea resurselor, altfel ele rămân în sistem până la ștergerea lor manuală sau până la un reboot. Faptul că obiectele IPC sunt globale în sistem poate duce la apariția unor probleme: cum numărul de mesaje care se află în cozile de mesaje din sistem e limitat global, un proces care trimite multe asemenea mesaje poate bloca toate celelalte procese.
 
-ATENTIE!!! Pentru folosirea API-ului trebuie să includeți la linking biblioteca 'rt' (-lrt).
+ATENTIE!!! Pentru folosirea API-ului trebuie să includeți la linking biblioteca -lrt sau -lpthread.
 
 # Pipe-uri
 
@@ -122,12 +122,12 @@ Parametrii sunt:
 - pathname - reprezintă numele de cale al fişierului FIFO.
 - mode - reprezintă un întreg ce indică drepturile de acces ale fişierului FIFO.
 
-Apelul returnează 0 în caz de succes si -1 în caz de eroare.
+Apelul returnează 0 în caz de succes și -1 în caz de eroare.
 
 Observaţii: după ce FIFO a fost creat, acestuia i se pot aplica toate funcţiile pentru operaţii cu fişiere: open, close, read, write la fel ca şi altor fişiere.
 
 Modul de comportare al unui FIFO este afectat de flagul O_NONBLOCK astfel:
-- Dacă O_NONBLOCK nu este specificat (cazul normal), atunci un open  pentru citire se va bloca până când un alt proces deschide acelaşi FIFO pentru scriere. Analog, dacă deschiderea este pentru scriere, se poate produce blocare până când un alt proces efectuează deschiderea pentru citire.
+- Dacă O_NONBLOCK nu este specificat (cazul normal), atunci un open pentru citire se va bloca până când un alt proces deschide acelaşi FIFO pentru scriere. Analog, dacă deschiderea este pentru scriere, se poate produce blocare până când un alt proces efectuează deschiderea pentru citire.
 - Dacă se specifică O_NONBLOCK, atunci deschiderea pentru citire revine imediat, dar o deschidere pentru scriere poate returna eroare cu errno având valoarea ENXIO, dacă nu există un alt proces care a deschis acelaşi FIFO pentru citire.
 Atunci când ultimul proces care scrie într-un FIFO îl închide, se va genera un "sfârşit de fişier" pentru procesul care citeşte din FIFO.
 
@@ -317,7 +317,7 @@ int main(void)
 {
   sem_t *my_sem;
   int rc, pvalue;
-  /* create semaphore with initial value of 1 */
+  /* open semaphore with read and write permission */
   my_sem = sem_open(SEM_NAME, O_RDWR);
   if(my_sem == SEM_FAILED) {
     printf("sem_open failed\n");
@@ -362,8 +362,8 @@ Pentru a evita deadlock-urile, se folosesc diverse tehnici și strategii, cum ar
 
 Acestea permit proceselor schimbarea de date între procese sub forma de mesaje.
 - la nivel de sistem sunt indentificabile printr-un string de forma "/nume".
-- la nivel codului, o coada de mesage este reprezentata de un descriptor de tipul mqd_t.
-- header-ele necesare pentru lucrul cu aceste obiecte sunt <fcntl.h>, <sys/types.h> si <mqueue.h>.
+- la nivel codului, o coadă de mesage este reprezentată de un descriptor de tipul mqd_t.
+- header-ele necesare pentru lucrul cu aceste obiecte sunt <fcntl.h>, <sys/types.h> și <mqueue.h>.
 
 ### Crearea și deschiderea
 Funcțiile de creare și deschidere sunt similare ca forma și semantică celor de la semafoare:
