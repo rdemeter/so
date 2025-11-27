@@ -254,7 +254,7 @@ Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au d
 
 <table border="0">
   <tr>
-    <td>![](https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png)</td>
+    <td>![image](https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png?raw=true)</td>
     <td>1. se execută procesil server_sem, se creează semaforul cu valoarea inițialaă 1, se decrementează semaforul, apelând sem_wait, și se blocheaza procesul la funcțiagetchar().
         2. se execută procesul client_sem și se blochează la wait_sem, pentru ca semaforul are valoarea 0.
         3. se apasă pe o tastă și se citește cu getchar()
