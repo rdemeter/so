@@ -255,7 +255,7 @@ Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au d
 <table border="0" style="border-collapse:collapse;">
   <tr>
     <td style="border:0;">
-      <img src="https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png?raw=true" width="250">
+      <img src="https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png?raw=true" width="500">
     </td>
     <td style="border:0; padding-left:15px;">
       1. se execută procesul <b>server_sem</b>, se creează semaforul cu valoarea inițială 1,
