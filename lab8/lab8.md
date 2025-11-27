@@ -217,22 +217,10 @@ Fiecare etapă poate fi interuptă de alt proces sau fir de execuție.
 Presupunem că două thread-uri execută în același timp: x = x + 1; și x inițial este 0.
 
 Execuție posibilă:
-Thread 1: load R1 ← x   ; R1 = 0
-→ INTERRUPT → se comută pe Thread 2
 
-Thread 2:
-load R2 ← x   ; R2 = 0
-add  R2 ← R2 + 1  ; R2 = 1
-store x ← R2      ; x = 1
-→ Se revine la Thread 1
+![Image](https://github.com/rdemeter/so/blob/master/lab8/figs/race.png?raw=true)
 
-Thread 1:
-add  R1 ← R1 + 1  ; R1 = 1
-store x ← R1      ; x = 1
-
-Rezultatul final: x = 1
-
-Dar două incrementări ar fi trebuit să dea x = 2. Asta este un race condition.
+Rezultatul final: x = 1. Dar două incrementări ar fi trebuit să dea x = 2. Asta este un race condition.
 
 Dacă operația ar fi atomică, atunci:
 x = x + 1 (atomic)
