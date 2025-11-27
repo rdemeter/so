@@ -197,8 +197,7 @@ $gcc fifoclient.c -o fifoclient
 
 ## Semafoare
 
-Semafoarele sunt resurse IPC folosite pentru sincronizarea între procese (e.g. pentru controlul accesului la resurse). Operațiile asupra unui semafor pot fi de setare sau verificare a valorii (care poate fi mai mare sau
-egala cu 0) sau de test and set. Un semafor poate fi privit ca un contor ce poate fi incrementat și decrementat, dar a cărui valoare nu poate scadea sub 0.
+Semafoarele sunt mecanisme IPC folosite pentru sincronizarea proceselor, în special pentru controlul accesului la resurse partajate. Un semafor funcționează ca un contor nenegativ, asupra căruia se pot face operații de incrementare și decrementare. Când un proces încearcă să decrementeze un semafor a cărui valoare este deja 0, acesta este blocat automat, iar planificatorul nu îl mai poate alege pentru execuție până când semaforul nu este incrementat de alt proces. Astfel, semaforul nu doar coordonează accesul la resurse, ci și determină explicit care procese pot fi planificate pentru a rula.
 
 Semafoarele POSIX sunt de 2 tipuri:
 - cu nume, folosite în general pentru sincronizare între procese distincte;
