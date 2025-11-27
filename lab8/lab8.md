@@ -206,6 +206,41 @@ Thread 0 says global_counter=4
 ```
 
 **Exemplu**: Detectarea race-urilor la modificarea variabilelor partajate de mai multe fire de executie.
+De ce apare race condition? Pentru că operațiile aparent simple, cum ar fi x = x + 1, NU sunt atomice. Chiar dacă în cod pare o singură instrucțiune, procesorul o execută în mai multe etape, de exemplu:
+```c
+1. load R ← x      ; se citește valoarea din memorie în registru
+2. add  R ← R + 1  ; se face adunarea în registru
+3. store x ← R     ; se scrie rezultatul în memorie
+```
+Fiecare etapă poate fi interuptă de alt proces sau fir de execuție.
+
+Presupunem că două thread-uri execută în același timp: x = x + 1; și x inițial este 0.
+
+Execuție posibilă:
+Thread 1: load R1 ← x   ; R1 = 0
+→ INTERRUPT → se comută pe Thread 2
+
+Thread 2:
+load R2 ← x   ; R2 = 0
+add  R2 ← R2 + 1  ; R2 = 1
+store x ← R2      ; x = 1
+→ Se revine la Thread 1
+
+Thread 1:
+add  R1 ← R1 + 1  ; R1 = 1
+store x ← R1      ; x = 1
+
+Rezultatul final: x = 1
+
+Dar două incrementări ar fi trebuit să dea x = 2. Asta este un race condition.
+
+Dacă operația ar fi atomică, atunci:
+x = x + 1 (atomic)
+x = x + 1 (atomic)
+→ x = 2
+
+Dar pentru că operația este descompusă în instrucțiuni separate, două thread-uri "se calcă pe picioare" și rezultatul devine imprevizibil, chiar dacă codul pare corect.
+
 ```c
 #include <pthread.h>
 #include <stdio.h>
