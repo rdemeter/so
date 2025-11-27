@@ -252,15 +252,20 @@ int sem_unlink(const char *name);
 ```
 Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au deschis apelează sem_close sau se termină. Totuși, chiar și în acest caz, apelul sem_unlink nu va bloca!
 
-<table border="0">
+<table border="0" style="border-collapse:collapse;">
   <tr>
-    <td>![image](https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png?raw=true)</td>
-    <td>1. se execută procesil server_sem, se creează semaforul cu valoarea inițialaă 1, se decrementează semaforul, apelând sem_wait, și se blocheaza procesul la funcțiagetchar().
-        2. se execută procesul client_sem și se blochează la wait_sem, pentru ca semaforul are valoarea 0.
-        3. se apasă pe o tastă și se citește cu getchar()
-        4. sem_post va debloca procesul client.
-        5. se execută clientul
-        6. se termină procesul server.</td>
+    <td style="border:0;">
+      <img src="https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png?raw=true" width="250">
+    </td>
+    <td style="border:0; padding-left:15px;">
+      1. se execută procesul <b>server_sem</b>, se creează semaforul cu valoarea inițială 1,
+      se decrementează semaforul apelând <code>sem_wait</code> și se blochează procesul la funcția <code>getchar()</code>.<br><br>
+      2. se execută procesul <b>client_sem</b> și se blochează la <code>sem_wait</code>, pentru că semaforul are valoarea 0.<br><br>
+      3. se apasă pe o tastă și se citește cu <code>getchar()</code>.<br><br>
+      4. <code>sem_post</code> va debloca procesul client.<br><br>
+      5. se execută clientul<br><br>
+      6. se termină procesul server.
+    </td>
   </tr>
 </table>
 
