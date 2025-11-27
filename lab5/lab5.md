@@ -259,11 +259,11 @@ Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au d
     </td>
     <td style="border:0; padding-left:15px;">
       1. se execută procesul <b>server_sem</b>, se creează semaforul cu valoarea inițială 1,
-      se decrementează semaforul apelând <code>sem_wait</code> și se blochează procesul la funcția <code>getchar()</code>.<br>
-      2. se execută procesul <b>client_sem</b> și se blochează la <code>sem_wait</code>, pentru că semaforul are valoarea 0.<br>
+      se decrementează semaforul apelând <code>sem_wait()</code> și se blochează procesul la funcția <code>getchar()</code>.<br>
+      2. se execută procesul <b>client_sem</b> și se blochează la <code>sem_wait()</code>, pentru că semaforul are valoarea 0.<br>
       3. se apasă pe o tastă și se citește cu <code>getchar()</code>.<br>
-      4. <code>sem_post</code> va debloca procesul client.<br><br>
-      5. se execută clientul<br><br>
+      4. <code>sem_post()</code> va debloca procesul client.<br>
+      5. se execută în continuare procesul client<br>
       6. se termină procesul server.
     </td>
   </tr>
