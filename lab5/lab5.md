@@ -367,7 +367,7 @@ Un deadlock se produce atunci când următoarele condiții sunt îndeplinite sim
 <table border="0" style="border-collapse:collapse;">
   <tr>
     <td style="border:0;">
-      <img src="https://raw.githubusercontent.com/rdemeter/so/blob/master/lab5/figs/deadlock3.png" style="max-width:none; height:auto;">
+      <img src="https://raw.githubusercontent.com/rdemeter/so/master/lab5/figs/deadlock3.png" style="max-width:none; height:auto;">
     </td>
     <td style="border:0;">
       Se consideră două procese care prelucrează resurse. Pentru cele două resurse se creează câte un semafor S1 și S2 cu valoarea inițială 1. Iată secvența de execuție a proceselor:<br>
