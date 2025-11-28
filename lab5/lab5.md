@@ -263,7 +263,7 @@ Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au d
 <table border="0" style="border-collapse:collapse;">
   <tr>
     <td style="border:0;">
-      <img src="https://github.com/rdemeter/so/blob/master/lab5/figs/ipc_sem.png?raw=true" style="max-width:none; height:auto;">
+      <img src="https:raw.githubusercontent.com/rdemeter/so/master/lab5/figs/ipc_sem.png" style="max-width:none; height:auto;">
     </td>
     <td style="border:0;">
       1. se execută procesul <b>server_sem</b>, se creează semaforul cu valoarea inițială 1,
@@ -352,7 +352,7 @@ $gcc client_sem.c -o client_sem -lpthread
 
 Deadlock-ul este o situație în care două sau mai multe procese sau thread-uri (fire de execuție) se blochează reciproc și niciunul dintre ele nu poate face progres. Aceasta este o problemă comună în sistemele concurente, în special în contextul gestionării resurselor partajate.
 
-![](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
+![image](https://https:raw.githubusercontent.com/rdemeter/so/master/lab5/figs/deadlock.jpg)
 
 Un deadlock se produce atunci când următoarele condiții sunt îndeplinite simultan:
 
