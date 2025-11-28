@@ -9,6 +9,7 @@
     + [Crearea și deschiderea](#crearea-și-deschiderea)
     + [Decrementare, incrementare și aflarea valorii](#decrementare--incrementare-și-aflarea-valorii)
     + [Inchiderea și distrugerea](#inchiderea-și-distrugerea)
+    + [Deadlock](#deadlock)
   * [Cozi de mesaje](#cozi-de-mesaje)
     + [Crearea și deschiderea](#crearea-și-deschiderea-1)
     + [Trimiterea și recepționarea de mesaje](#trimiterea-și-recepționarea-de-mesaje)
@@ -347,11 +348,11 @@ int main(void)
 ```
 $gcc client_sem.c -o client_sem -lpthread
 ```
-**Exercitiu**: Să se modifice aplicația, astfel încât procesele să aștepte după resursele partajate, așa cum este ilustrat în figură, producând interblocarea proceselor, **deadlock**. 
+## Deadlock
+
+Deadlock-ul este o situație în care două sau mai multe procese sau thread-uri (fire de execuție) se blochează reciproc și niciunul dintre ele nu poate face progres. Aceasta este o problemă comună în sistemele concurente, în special în contextul gestionării resurselor partajate.
 
 ![](https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock.jpg)
-
-Deadlock-ul este o situație în care două sau mai multe procese sau thread-uri (sau fire de execuție) se blochează reciproc și niciunul dintre ele nu poate face progres. Aceasta este o problemă comună în sistemele concurente, în special în contextul gestionării resurselor partajate.
 
 Un deadlock se produce atunci când următoarele condiții sunt îndeplinite simultan:
 
@@ -369,10 +370,11 @@ Un deadlock se produce atunci când următoarele condiții sunt îndeplinite sim
       <img src="https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock3.png?raw=true">
     </td>
     <td style="border:0;">
+      Se consideră două procese care prelucrează resurse. Pentru cele două resurse se creează câte un semafor S1 și S2 cu valoarea inițială 1. Iată secvența de execuție a proceselor:<br>
       t0. se pornesc procesele 1 și 2,<br>
       t1. se decrementează semafoarele pentru resursele 1 și 2,<br>
       t2. se folosesc resursele 1 și 2 în procesele 1 și 2,<br>
-      t3. se încearcă accesul la resursa folosită de procesul celălalt,<br>
+      t3. se încearcă accesul la resursa folosită de celălalt proces,<br>
       t4. nu se ajunge la pasul t4, pentru că procesele s-au autoblocat resiproc.</b>
     </td>
   </tr>
