@@ -199,6 +199,14 @@ $gcc fifoclient.c -o fifoclient
 
 Semafoarele sunt mecanisme IPC folosite pentru sincronizarea proceselor, în special pentru controlul accesului la resurse partajate. Un semafor funcționează ca un contor nenegativ, asupra căruia se pot face operații de incrementare și decrementare. Când un proces încearcă să decrementeze un semafor a cărui valoare este deja 0, acesta este blocat automat, iar planificatorul nu îl mai poate alege pentru execuție până când semaforul nu este incrementat de alt proces. Astfel, semaforul nu doar coordonează accesul la resurse, ci și determină explicit care procese pot fi planificate pentru a rula.
 
+Semafoarele au fost introduse de **Edsger Dijkstra**, iar el a numit cele două operații fundamentale:
+- **P(s)** – operația de wait (așteaptă până când semaforul permite intrarea; decrementează semaforul)
+- **V(s)** – operația de signal (eliberează resursa; incrementează semaforul)
+
+În implementările POSIX moderne:
+- sem_wait(sem) este echivalentul operației **P(sem)**. Așteaptă dacă semaforul este 0; altfel îl decrementează
+- sem_post(sem) este echivalentul operației **V(sem)**. Incrementează semaforul și poate trezi un alt thread
+
 Semafoarele POSIX sunt de 2 tipuri:
 - cu nume, folosite în general pentru sincronizare între procese distincte;
 - fără nume, ce pot fi folosite doar pentru sincronizarea între firele de execuție ale unui proces sau între procese înrudite.
