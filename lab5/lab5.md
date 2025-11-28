@@ -355,6 +355,21 @@ Un deadlock se produce atunci când următoarele condiții sunt îndeplinite sim
 
 - Așteptare ciclică (Circular Wait): Există un cerc închis de procese sau thread-uri în care fiecare așteaptă resursele eliberate de următorul proces sau thread din cerc. Acest cerc de așteptare creează o situație de impas.
 
+<table border="0" style="border-collapse:collapse;">
+  <tr>
+    <td style="border:0;">
+      <img src="https://github.com/rdemeter/so/blob/master/lab5/figs/deadlock3.png?raw=true">
+    </td>
+    <td style="border:0;">
+      t0. se pornesc procesele 1 și 2,<br>
+      t1. se decrementează semafoarele pentru resursele 1 și 2,<br>
+      t2. se folosesc resursele 1 și 2 în procesele 1 și 2,<br>
+      t3. se încearcă accesul la resursa folosită de procesul celălalt,<br>
+      t4. nu se ajunge la pasul t4, pentru că procesele s-au autoblocat resiproc.</b>
+    </td>
+  </tr>
+</table>
+
 Pentru a evita deadlock-urile, se folosesc diverse tehnici și strategii, cum ar fi evitarea blocării reciproce, detecția deadlock-ului cu eliberare de resurse sau utilizarea algoritmilor de planificare care minimizează șansele de a se produce deadlock. Gestionarea deadlock-ului este o parte esențială a proiectării și dezvoltării sistemelor concurente și a sistemelor de operare.
 
 ## Cozi de mesaje
