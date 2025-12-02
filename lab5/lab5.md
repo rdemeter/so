@@ -219,7 +219,7 @@ In contiunare vor fi luate în discuție semafoarele cu nume. Diferențele faț�
 
 ### Crearea și deschiderea
 
-Un proces poate crea sau deschide un semafor existent cu funcția sem_open:
+Un proces poate crea sau deschide un semafor existent cu funcția sem_open():
 ```
 sem_t* sem_open(const char *name, int oflag);
 sem_t* sem_open(const char *name, int oflag, mode_t mode, unsigned int value);
@@ -228,37 +228,37 @@ Comportamentul este similar cu cel de la deschiderea fișierelor. Dacă flag-ul 
 
 ### Decrementare, incrementare și aflarea valorii
 
-Un semafor este decrementat cu funcția sem_wait:
+Un semafor este decrementat cu funcția sem_wait():
 ```
 int sem_wait(sem_t *sem);
 ```
 Dacă semaforul are valoarea zero, funcția blochează până când un alt proces "deblochează" (incrementează) semaforul.
-Pentru a incerca decrementarea unui semafor fără riscul de a rămâne blocat la acesta, un proces poate apela sem_trywait:
+Pentru a încerca decrementarea unui semafor fără riscul de a rămâne blocat la acesta, un proces poate apela sem_trywait():
 ```
 int sem_trywait(sem_t *sem);
 ```
-In cazul în care semaforul are deja valoarea zero, funcția va intoarce -1 iar errno va fi setat la EAGAIN. Un semafor este incrementat cu funcția sem_post:
+În cazul în care semaforul are deja valoarea zero, funcția va intoarce -1 iar errno va fi setat la EAGAIN. Un semafor este incrementat cu funcția sem_post():
 ```
 int sem_post(sem_t *sem);
 ```
-In cazul în care semaforul are valoarea zero, un proces blocat în sem_wait pe acesta va fi deblocat.
-Valoarea unui semafor (a contorului) se poate afla cu sem_getvalue:
+În cazul în care semaforul are valoarea zero, un proces blocat în sem_wait pe acesta va fi deblocat.
+Valoarea unui semafor (a contorului) se poate afla cu sem_getvalue():
 ```
 int sem_getvalue(sem_t *sem, int *pvalue);
 ```
-In cazul în care există procese blocate la semafor, implementarea apelului pe Linux va returna zero în valoarea referită de pvalue.
+În cazul în care există procese blocate la semafor, implementarea apelului pe Linux va returna zero în valoarea referită de pvalue.
 Toate aceste funcții întorc zero în caz de succes.
 
 ### Inchiderea și distrugerea
-Un proces închide (notifică faptul că nu mai folosește) un semafor printr-un apel sem_close:
+Un proces închide (notifică faptul că nu mai folosește) un semafor printr-un apel sem_close():
 ```
 int sem_close(sem_t *sem);
 ```
-Un proces poate șterge un semafor printr-un apel sem_unlink:
+Un proces poate șterge un semafor printr-un apel sem_unlink():
 ```
 int sem_unlink(const char *name);
 ```
-Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au deschis apelează sem_close sau se termină. Totuși, chiar și în acest caz, apelul sem_unlink nu va bloca!
+Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au deschis apelează sem_close() sau se termină.
 
 <table border="0" style="border-collapse:collapse;">
   <tr>
@@ -375,7 +375,7 @@ Un deadlock se produce atunci când următoarele condiții sunt îndeplinite sim
       t1. se decrementează semafoarele pentru resursele 1 și 2,<br>
       t2. se folosesc resursele 1 și 2 în procesele 1 și 2,<br>
       t3. se încearcă accesul la resursa folosită de celălalt proces,<br>
-      t4. nu se ajunge la pasul t4, pentru că procesele s-au autoblocat resiproc.</b>
+      t4. nu se ajunge la pasul t4, pentru că procesele s-au autoblocat reciproc.</b>
     </td>
   </tr>
 </table>
@@ -390,7 +390,7 @@ Acestea permit proceselor schimbarea de date între procese sub forma de mesaje.
 - header-ele necesare pentru lucrul cu aceste obiecte sunt <fcntl.h>, <sys/types.h> și <mqueue.h>.
 
 ### Crearea și deschiderea
-Funcțiile de creare și deschidere sunt similare ca forma și semantică celor de la semafoare:
+Funcțiile de creare și deschidere sunt similare ca formă și semantică celor de la semafoare:
 ```
 mqd_t mq_open(const char *name, int oflag);
 mqd_t mq_open(const char *name, int oflag, mode_t mode, struct mq_attr *attr);
@@ -411,13 +411,13 @@ struct mq_attr {
 ```
 ### Trimiterea și recepționarea de mesaje
 
-Pentru a trimite un mesaj (de lungime cunoscută, stocat într-un buffer) în coadă se apelează mq_send:
+Pentru a trimite un mesaj (de lungime cunoscută, stocat într-un buffer) în coadă se apelează mq_send():
 ```
 mqd_t mq_send(mqd_t mqdes, const char *buffer, size_t length, unsigned priority);
 ```
 Mesajele sunt ținute în coadă în ordine descrescătoare a priorității.
 În cazul în care coada este plină, apelul blochează. Dacă este o coadă non-blocantă (O_NONBLOCK), funcția va întoarce -1 iar errno va fi setat la EAGAIN.
-Pentru a primi un mesaj dintr-o coadă (și anume: cel mai vechi mesaj cu cea mai mare prioritate) se folosește mq_receive:
+Pentru a primi un mesaj dintr-o coadă (și anume: cel mai vechi mesaj cu cea mai mare prioritate) se folosește mq_receive():
 ```
 ssize_t mq_receive(mqd_t mqdes, char *buffer, size_t length, unsigned *priority);
 ```
@@ -427,11 +427,11 @@ Dacă priority este non-NULL, zona de memorie către care face referire va reți
 ATENTIE!!! La primirea unui mesaj, lungimea buffer-ului trebuie să fie cel puțin egală cu dimensiunea maximă a mesajelor pentru coada respectivă, iar la trimitere cel mult egală. Dimensiunea maximă implicită se poate afla pe Linux din /proc/sys/kernel/msgmax.
 
 ### Inchiderea și ștergerea
-Închiderea (eliberarea "referinței") unei cozi este posibilă prin apelul mq_close:
+Închiderea (eliberarea "referinței") unei cozi este posibilă prin apelul mq_close():
 ```
 mqd_t mq_close(mqd_t mqdes);
 ```
-Ștergerea se realizează cu un apel mq_unlink:
+Ștergerea se realizează cu un apel mq_unlink():
 ```
 mqd_t mq_unlink(const char *name);
 ```
@@ -548,13 +548,13 @@ Ca flag de acces trebuie specificat fie O_RDONLY fie O_RDWR.
 
 ### Redimensionarea
 
-O zonă de memorie partajată nou creată are dimensiunea inițială zero. Pentru a o dimensiona se folosește ftruncate:
+O zonă de memorie partajată nou creată are dimensiunea inițială zero. Pentru a o dimensiona se folosește ftruncate():
 ```
 int ftruncate(int fd, off_t length);
 ```
 
 ### Maparea și eliberarea
-Pentru a putea utiliza o zona de memorie partajată după deschidere, aceasta trebuie mapată în spațiul de memorie al procesului. Aceasta se realizează printr-un apel mmap:
+Pentru a putea utiliza o zona de memorie partajată după deschidere, aceasta trebuie mapată în spațiul de memorie al procesului. Aceasta se realizează printr-un apel mmap():
 ```
 void *mmap(void *address, size_t length, int protection, int flags, int fd, off_t offset);
 ```
@@ -565,7 +565,7 @@ folosirea apelului
 ```
 mem = mmap(0, shm_len, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 ```
-Când maparea nu mai este necesară, prin apelul munmap se realiează demaparea:
+Când maparea nu mai este necesară, prin apelul munmap() se realiează demaparea:
 ```
 int munmap(void *address, size_t length);
 ```
