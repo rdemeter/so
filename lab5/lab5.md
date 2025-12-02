@@ -350,6 +350,7 @@ Un deadlock se produce atunci când următoarele condiții sunt îndeplinite sim
 - Nicio eliberare a resurselor (No Preemption): Resursele nu pot fi luate de la un proces sau thread și acordate altuia în mod forțat. Ele pot fi eliberate numai voluntar de către procesul sau thread-ul care le deține.
 
 - Așteptare ciclică (Circular Wait): Există un cerc închis de procese sau thread-uri în care fiecare așteaptă resursele eliberate de următorul proces sau thread din cerc. Acest cerc de așteptare creează o situație de impas.
+
 | Imagine                                                                           | Explicații                                             |
 |-----------------------------------------------------------------------------------|--------------------------------------------------------|
 | ![](https://raw.githubusercontent.com/rdemeter/so/master/lab5/figs/deadlock3.png) | Se consideră două procese care prelucrează resurse. Pentru cele două resurse se creează câte un semafor S1 și S2 cu valoarea inițială 1. Iată secvența de execuție a proceselor:<br> t0. se pornesc procesele 1 și 2,<br> t1. se decrementează semafoarele pentru resursele 1 și 2,<br> t2. se folosesc resursele 1 și 2 în procesele 1 și 2,<br> t3. se încearcă accesul la resursa folosită de celălalt proces,<br> t4. nu se ajunge la pasul t4, pentru că procesele s-au autoblocat reciproc.</b> |
