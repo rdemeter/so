@@ -345,13 +345,14 @@ Structurile **elif** și **else** sunt opționale.
 
 Condiția poate aparea în două formate:
 
-[ conditie_efectiva ]
+```console
+[ condiție_efectivă ] sau test condiție_efectivă
+```
+Operatori numerici comuni: **-eq** egal, **-ne** diferit, **-gt** mai mare, **-lt** mai mic, **-ge** mai mare sau egal, **-le** mai mic sau egal
 
-sau
+Operatori pentru stringuri: **=** egal, **!=** diferit, **-z** string gol, **-n** string ne-gol
 
-test conditie_efectiva
-
-Pentru condițiile posibile consultați pagina de manual a utilitarului **test**.
+Verificări pentru directoare / fișiere: **-f** fișier obișnuit, **-d** director, **-e** fișier sau director există, **-r** are permisiune de citire, **-w** scriere, **-x** executare
 
 ATENTIE! Dacă folosiți prima variantă este nevoie de spatiu după [ si inainte de ].
 
@@ -368,11 +369,11 @@ if test "$var" = "alfa" -o "$var" = "beta"; then
 fi
 
 if test -f "$i"; then
-    echo "$i este un fisier"
+    echo "$i este un fișier"
 elif test -d "$i"; then
     echo "$i este un director"
 else
-    echo "$i nu este nici fisier nici director"
+    echo "$i nu este nici fișier nici director"
 fi
 ```
 
@@ -499,7 +500,7 @@ fun2 alfa
 
 # Pattern matching
 
-In interactiunea cu sistemul de fișiere se dorește selectarea rapidă a mai multor fișiere după câteva caracteristici de nume comune. Operația efectuată de shell se numește pattern matching. Există următoarele caractere speciale:
+In interacțiunea cu sistemul de fișiere se dorește selectarea rapidă a mai multor fișiere după câteva caracteristici de nume comune. Operația efectuată de shell se numește pattern matching. Există următoarele caractere speciale:
 
 -	'*' - se potriveste cu orice șir de caracter, inclusiv șirul vid
 -	? - se potriveste cu un singur caracter
@@ -662,7 +663,6 @@ $ dd if=/dev/zero of=/dev/hdX bs=512 count=1
 Variabilele, structurile de control și procedurile sunt întâlnite în toate limbajele de programare. Ce face însă un script shell indicat pentru sarcini administrative și repetitive este posibilitatea de îmbinare a comenzilor simple, de lucru cu fișierele sistemului pentru a obține informatiile dorite și pentru a adăuga o nouă funcționalitate. De obicei aceste sarcini necesită o procesare sofisticată. În aceste situații se folosesc filtrele de text.
 
 Comenzi folosite ca și filtre de text sunt head, tail, grep, sort, uniq, tr, cut.
-
 
 ## head, tail
 
@@ -869,7 +869,6 @@ $ echo -en "alfa\nbeta\nbeta\nalfa\nbeta\ngamma\nalfa\n" | sort | uniq -c
 ## wc
 
 Comanda **wc** (word count) este folosită pentru a contoriza numărul de linii, de cuvinte sau de caractere dintr-un text sau de la intrarea standard. Pentru aceasta i se pot specifica opțiunile -c, -w, -l.
-
 
 ## cut
 
