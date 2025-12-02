@@ -261,6 +261,7 @@ int sem_unlink(const char *name);
 Distrugerea efectivă a semaforului are loc după ce toate procesele care l-au deschis apelează sem_close() sau se termină.
 
 | Imagine | Explicație |
+|---------|------------|
 | ![]("https://raw.githubusercontent.com/rdemeter/so/master/lab5/figs/ipc_sem.png") |
       1. se execută procesul <b>server_sem</b>, se creează semaforul cu valoarea inițială 1,
       se decrementează semaforul apelând <code>sem_wait()</code> și se blochează procesul la funcția <code>getchar()</code>.<br>
