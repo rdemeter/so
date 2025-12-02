@@ -7,7 +7,7 @@
     + [Pipe-uri cu nume](#Pipe-uri-cu-nume)
   * [Semafoare](#semafoare)
     + [Crearea și deschiderea](#crearea-și-deschiderea)
-    + [Decrementare, incrementare și aflarea valorii](#decrementare--incrementare-și-aflarea-valorii)
+    + [Decrementare, incrementare și aflarea valorii](#decrementare-incrementare-și-aflarea-valorii)
     + [Inchiderea și distrugerea](#inchiderea-și-distrugerea)
     + [Deadlock](#deadlock)
   * [Cozi de mesaje](#cozi-de-mesaje)
