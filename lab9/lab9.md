@@ -271,7 +271,7 @@ int main(void)
 }
 ```
 
-## 5. Froblema filozofilor
+## 5. Problema filozofilor
 
 Problema se referă la mai mulți filozofi (thread-uri) așezați la o masă circulară. Pe masă se află 5 farfurii și 5 tacâmuri, astfel încât fiecare filozof are un tacâm în stânga și unul în dreapta lui. În timp ce stau la masă, filozofii pot face două acțiuni: mănâncă sau se gândesc. Pentru a mânca, un filozof are nevoie de două tacâmuri (pe care le poate folosi doar dacă nu sunt luate de către vecinii săi).
 
@@ -333,4 +333,3 @@ La această problemă avem următoarele constrângeri:
 - bărbierul doarme atunci când nu sunt clienți
 - când vine un client, acesta fie trezește bărbierul, fie așteaptă dacă bărbierul este ocupat
 - dacă toate scaunele sunt ocupate, clientul pleacă
-- 
