@@ -5,7 +5,9 @@
   * [2. Problema producător-consumator](#2-problema-producător-consumator)
   * [3. Problema grădinii ornamentale](#3-problema-grădinii-ornamentale)
   * [4. Problema scriitor-cititor](#4-problema-scriitor-cititor)
-  * [5. Problema H2O](#5-problema-H2O)
+  * [5. Problema filozofilor](#5-problema-filozofilor)
+  * [6. Problema H2O](#6-problema-H2O)
+  * [7. Problema bărbierului](#7-problema-bărbierului)
 
 ## 1. Problema rezervării biletelor
 
@@ -269,7 +271,13 @@ int main(void)
 }
 ```
 
-## 5. Problema H2O
+## 5. Froblema filozofilor
+
+Problema se referă la mai mulți filozofi (thread-uri) așezați la o masă circulară. Pe masă se află 5 farfurii și 5 tacâmuri, astfel încât fiecare filozof are un tacâm în stânga și unul în dreapta lui. În timp ce stau la masă, filozofii pot face două acțiuni: mănâncă sau se gândesc. Pentru a mânca, un filozof are nevoie de două tacâmuri (pe care le poate folosi doar dacă nu sunt luate de către vecinii săi).
+
+Rezolvarea trebuie să aibă în vedere dezvoltarea unui algoritm prin care să nu se ajungă la un deadlock (situația în care fiecare filozof ține câte un tacâm în mână și așteaptă ca vecinul să elibereze celălalt tacâm de care are nevoie).
+
+## 6. Problema H2O
 
 Thread-urile reprezintă atomi de hidrogen sau oxigen. O moleculă de apă se formează din doi atomi de hidrogen și unul de oxigen
 - Dacă există doi atomi de hidrogen, vor trebui să aștepte un atom de oxigen
@@ -316,3 +324,13 @@ int main(void)
   return 0;
 }
 ```
+## 7. Problema bărbierului
+
+Avem o frizerie cu un bărbier (un thread), un scaun de bărbier, N scaune de așteptare și M clienți (M thread-uri).
+
+La această problemă avem următoarele constrângeri:
+
+- bărbierul doarme atunci când nu sunt clienți
+- când vine un client, acesta fie trezește bărbierul, fie așteaptă dacă bărbierul este ocupat
+- dacă toate scaunele sunt ocupate, clientul pleacă
+- 
