@@ -198,7 +198,8 @@ Astfel, fişierul Makefile.ex2 de mai sus poate fi simplificat, folosind reguli 
 Exemplu 10. Makefile.ex4
 ```c
 CC = gcc
-CFLAGS = -Wall -g all: intro-04
+CFLAGS = -Wall -g
+all: intro-04
 intro-04: intro-04.o
 intro-04.o: intro-04.c
 .PHONY: clean
